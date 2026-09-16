@@ -579,23 +579,6 @@
       letter-spacing: -.035em;
     }
     .confirmation-card p { color: var(--muted); line-height: 1.65; }
-    .zelle-instruction {
-      margin: 24px 0 18px;
-      padding: 19px 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      color: var(--ink) !important;
-      font: 400 1.22rem/1.5 "Newsreader", serif;
-    }
-    .zelle-placeholder {
-      display: inline-block;
-      color: var(--wine);
-      font-family: "DM Sans", sans-serif;
-      font-size: .83rem;
-      font-weight: 600;
-      letter-spacing: .03em;
-    }
-    .confirmation-honesty { font-size: .82rem; }
     .confirmation-done {
       width: 100%;
       margin-top: 9px;
@@ -911,20 +894,8 @@
         </button>
         <p class="print-kicker">Fine-art print</p>
         <h2 id="print-title">Make it part of your space.</h2>
-        <p class="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; every order is personally confirmed.</p>
+        <p class="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.</p>
         <form class="order-form" id="order-form">
-          <div class="form-field">
-            <label for="buyer-name">Name</label>
-            <input id="buyer-name" name="name" type="text" autocomplete="name" required />
-          </div>
-          <div class="form-field">
-            <label for="buyer-email">Email</label>
-            <input id="buyer-email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="form-field full">
-            <label for="shipping-address">Shipping address</label>
-            <textarea id="shipping-address" name="address" autocomplete="street-address" required></textarea>
-          </div>
           <div class="form-field full">
             <label for="print-size">Print size</label>
             <select id="print-size" name="size" required>
@@ -935,8 +906,9 @@
               <option value="26 × 38|220">26 × 38 — $220</option>
             </select>
           </div>
-          <button class="order-submit" type="submit">Submit order request</button>
-          <p class="payment-note">Your email app will open with the order details ready to send. Payment is completed afterward by Zelle; no card is charged on this site.</p>
+          <button class="order-submit" type="submit">Continue to secure checkout</button>
+          <p class="payment-note">You'll pay by card on the next screen (Stripe Checkout). Shipping address is collected there.</p>
+          <p class="payment-note" id="order-error" hidden></p>
         </form>
       </div>
     </div>
@@ -947,11 +919,9 @@
       <button class="close print-close" type="button" aria-label="Close order confirmation">
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
       </button>
-      <p class="print-kicker">Order request</p>
+      <p class="print-kicker">Order confirmed</p>
       <h2 id="confirmation-title">Thank you.</h2>
-      <p>Thanks for submitting your order!</p>
-      <p class="zelle-instruction">To complete payment, please send <strong id="zelle-amount"></strong> via Zelle to <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
-      <p class="confirmation-honesty">Your email app has opened with the order request ready to send. Please send that email so Avigail receives your artwork choice and shipping details.</p>
+      <p>Your payment went through and Avigail has been notified with your artwork choice, size, and shipping address. You'll also get a receipt by email. Your print will ship soon — reach out to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> with any questions.</p>
       <button class="confirmation-done" type="button">Done</button>
     </div>
   </dialog>
@@ -977,9 +947,11 @@
     const printImage = document.getElementById('print-image');
     const printArtworkName = document.getElementById('print-artwork-name');
     const orderForm = document.getElementById('order-form');
+    const orderSubmit = orderForm.querySelector('.order-submit');
+    const orderError = document.getElementById('order-error');
     const confirmationDialog = document.getElementById('confirmation-dialog');
-    const zelleAmount = document.getElementById('zelle-amount');
     let selectedArtwork = '';
+    let selectedImage = '';
 
     document.querySelectorAll('.art-button').forEach(button => {
       button.addEventListener('click', () => {
@@ -987,10 +959,12 @@
         const card = button.closest('.art-card');
         if (card.dataset.category === 'watercolor') {
           selectedArtwork = button.dataset.title;
+          selectedImage = button.dataset.src;
           printImage.src = button.dataset.src;
           printImage.alt = thumb.alt;
           printArtworkName.textContent = selectedArtwork;
           orderForm.reset();
+          orderError.hidden = true;
           printDialog.showModal();
           return;
         }
@@ -1013,24 +987,39 @@
       });
     });
 
-    orderForm.addEventListener('submit', event => {
+    orderForm.addEventListener('submit', async event => {
       event.preventDefault();
       if (!orderForm.reportValidity()) return;
 
       const [size, amount] = document.getElementById('print-size').value.split('|');
-      const name = document.getElementById('buyer-name').value.trim();
-      const email = document.getElementById('buyer-email').value.trim();
-      const address = document.getElementById('shipping-address').value.trim();
-      const subject = `Print order request — ${selectedArtwork}`;
-      const body = `Hello Avigail,\n\nI'd like to order a ${size} print of “${selectedArtwork}” for $${amount}.\n\nName: ${name}\nEmail: ${email}\nShipping address:\n${address}\n\nI will complete payment by Zelle to +1 848 373 6066.`;
-      const mailLink = document.createElement('a');
-      mailLink.href = `mailto:meyersonavigail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      mailLink.click();
+      orderError.hidden = true;
+      orderSubmit.disabled = true;
+      orderSubmit.textContent = 'Redirecting to checkout…';
 
-      zelleAmount.textContent = `$${amount}`;
-      printDialog.close();
-      confirmationDialog.showModal();
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ artwork: selectedArtwork, size, amount, image: selectedImage }),
+        });
+        const data = await response.json();
+        if (!response.ok || !data.url) throw new Error(data.error || 'Could not start checkout.');
+        window.location.href = data.url;
+      } catch (err) {
+        orderError.textContent = err.message || 'Something went wrong starting checkout. Please try again.';
+        orderError.hidden = false;
+        orderSubmit.disabled = false;
+        orderSubmit.textContent = 'Continue to secure checkout';
+      }
     });
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('order') === 'success') {
+      confirmationDialog.showModal();
+      params.delete('order');
+      const newUrl = window.location.pathname + (params.toString() ? `?${params}` : '');
+      window.history.replaceState({}, '', newUrl);
+    }
   </script>
 </body>
 </html>
