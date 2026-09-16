@@ -1,0 +1,1036 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#f5f0e8" />
+  <meta name="description" content="Discover Art by Avigail: expressive Jewish portraiture, holy scenes, and sacred imagery in original oil paintings and watercolors." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Art by Avigail | Jewish Fine Art" />
+  <meta property="og:description" content="Expressive portraits and holy scenes in oil and watercolor. Explore the selected works of Jewish artist Avigail." />
+  <meta property="og:image" content="assets/hero-kotel-gallery.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Art by Avigail | Jewish Fine Art" />
+  <meta name="twitter:description" content="Expressive portraits and holy scenes in oil and watercolor." />
+  <meta name="twitter:image" content="assets/hero-kotel-gallery.jpg" />
+  <link rel="icon" href="data:," />
+  <title>Art by Avigail | Jewish Portraits & Holy Scenes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f5f0e8;
+      --paper-light: #fbf9f5;
+      --ink: #271d19;
+      --muted: #6b5c54;
+      --wine: #315f78;
+      --gold: #b88132;
+      --line: #d7cbbd;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper-light);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    button, a { font: inherit; }
+    a { color: inherit; }
+
+    .hero {
+      min-height: min(920px, 100svh);
+      display: grid;
+      grid-template-columns: minmax(320px, .8fr) minmax(480px, 1.2fr);
+      background: var(--paper);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(64px, 8vw, 130px) clamp(30px, 6vw, 100px);
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      margin: 0 0 18px;
+      font-size: .74rem;
+      line-height: 1;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--wine);
+      font-weight: 600;
+    }
+    .hero h1 {
+      margin: 0;
+      font: 400 clamp(3.2rem, 6.4vw, 6.8rem)/.88 "Newsreader", serif;
+      letter-spacing: -.045em;
+    }
+    .hero-title-prefix { display: block; }
+    .hero-logo {
+      width: min(100%, 430px);
+      height: auto;
+      margin-top: 8px;
+    }
+    .tagline {
+      max-width: 470px;
+      margin: 30px 0 38px;
+      font: 400 clamp(1.25rem, 2vw, 1.75rem)/1.35 "Newsreader", serif;
+      color: #59453c;
+    }
+    .cta {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--wine);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 19px;
+      font-size: .86rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      transition: background .2s ease;
+    }
+    .cta:hover { background: #24485c; }
+    .cta svg { width: 18px; height: 18px; }
+    .hero-art {
+      margin: 24px 24px 24px 0;
+      min-height: 620px;
+      background: #dbe1df;
+      overflow: hidden;
+    }
+    .hero-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .section {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+      padding: clamp(76px, 10vw, 140px) 0;
+    }
+    .section-label {
+      margin: 0 0 18px;
+      color: var(--wine);
+      font-size: .74rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .section-title {
+      margin: 0;
+      font: 400 clamp(2.8rem, 5vw, 5rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+
+    .about-wrap { background: #efe5d9; }
+    .about {
+      display: grid;
+      grid-template-columns: minmax(280px, .75fr) minmax(340px, 1fr);
+      gap: clamp(44px, 8vw, 110px);
+      align-items: center;
+    }
+    .about-image {
+      position: relative;
+      max-width: 480px;
+      margin-left: auto;
+      padding: 20px 20px 0 0;
+    }
+    .about-image::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto auto;
+      width: 78%;
+      height: 75%;
+      background: var(--wine);
+    }
+    .about-image img {
+      position: relative;
+      width: 100%;
+      box-shadow: 0 18px 42px rgba(65, 41, 30, .12);
+    }
+    .about-copy { max-width: 620px; }
+    .about-copy .section-title { margin-bottom: 28px; }
+    .about-copy p {
+      margin: 0;
+      font: 400 clamp(1.15rem, 1.8vw, 1.45rem)/1.65 "Newsreader", serif;
+      color: #4e3d35;
+    }
+    .about-copy p + p { margin-top: 1em; }
+    .signature-line {
+      width: 64px;
+      height: 2px;
+      background: var(--gold);
+      margin-top: 34px;
+    }
+
+    .collection-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 40px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 48px;
+    }
+    .collection-note {
+      max-width: 390px;
+      margin: 0 0 6px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .collection-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: -18px 0 46px;
+    }
+    .collection-tab {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 15px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: .83rem;
+      font-weight: 600;
+    }
+    .collection-tab[aria-pressed="true"] { background: var(--wine); color: white; border-color: var(--wine); }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(42px, 7vw, 88px) clamp(28px, 5vw, 64px);
+      align-items: start;
+    }
+    .art-card { margin: 0; min-width: 0; }
+    .art-card[hidden] { display: none; }
+    .art-button {
+      width: 100%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: zoom-in;
+      text-align: left;
+    }
+    .art-frame {
+      aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background: #eee8df;
+      box-shadow: 0 15px 34px rgba(46, 31, 22, .08);
+    }
+    .art-frame::after {
+      content: "Art by Avigail";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 2;
+      color: rgba(39, 29, 25, .22);
+      font: 500 clamp(1.15rem, 2.5vw, 1.85rem)/1 "Newsreader", serif;
+      letter-spacing: .045em;
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, .55);
+      transform: translate(-50%, -50%) rotate(-12deg);
+      pointer-events: none;
+      user-select: none;
+    }
+    .art-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform .5s cubic-bezier(.2,.7,.2,1);
+    }
+    .art-button:hover img { transform: scale(1.018); }
+    .art-button.no-image-zoom:hover img { transform: none; }
+    .kesubah-frame {
+      aspect-ratio: 3 / 4;
+      padding: 8px;
+    }
+    .kesubah-frame img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transition: none;
+    }
+    .art-button:hover .kesubah-frame img { transform: none; }
+    .card-copy { padding-top: 20px; }
+    .card-copy h3 {
+      margin: 0 0 8px;
+      font: 500 clamp(1.55rem, 2.5vw, 2.05rem)/1.1 "Newsreader", serif;
+    }
+    .card-copy p {
+      margin: 0 0 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 520px;
+    }
+    .medium {
+      color: var(--wine);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .faq-wrap { background: #28201d; color: #f8f2e9; }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: clamp(42px, 8vw, 110px);
+      align-items: start;
+    }
+    .faq-wrap .section-label { color: #d2a45e; }
+    .faq-list { border-top: 1px solid rgba(255,255,255,.28); }
+    details { border-bottom: 1px solid rgba(255,255,255,.28); }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 23px 42px 23px 0;
+      position: relative;
+      font: 500 clamp(1.2rem, 2vw, 1.55rem)/1.25 "Newsreader", serif;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 4px;
+      top: 20px;
+      font: 400 1.6rem/1 "DM Sans", sans-serif;
+      color: #d2a45e;
+    }
+    details[open] summary::after { content: "−"; }
+    details p {
+      margin: -5px 42px 22px 0;
+      color: #d5cbc2;
+      line-height: 1.65;
+    }
+
+    footer {
+      background: #1f1917;
+      color: #f8f2e9;
+      text-align: center;
+      padding: clamp(68px, 9vw, 120px) 20px 30px;
+    }
+    footer h2 {
+      margin: 0 auto 22px;
+      max-width: 760px;
+      font: 400 clamp(2.6rem, 6vw, 5.4rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+    footer .contact-note {
+      margin: 0 auto 78px;
+      max-width: 560px;
+      color: #d5cbc2;
+      line-height: 1.65;
+    }
+    .footer-line {
+      width: min(100%, var(--max));
+      height: 1px;
+      margin: 0 auto 24px;
+      background: rgba(255,255,255,.2);
+    }
+    .footer-bottom {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: #b9aba2;
+      font-size: .78rem;
+    }
+
+    #lightbox {
+      width: 100vw;
+      max-width: none;
+      height: 100dvh;
+      max-height: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      color: white;
+      background: rgba(18, 14, 13, .97);
+    }
+    #lightbox::backdrop { background: rgba(18, 14, 13, .97); }
+    .lightbox {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    }
+    .lightbox-top { display: flex; justify-content: flex-end; }
+    .close {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 50%;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .close svg { width: 21px; height: 21px; }
+    .lightbox-stage { min-height: 0; display: grid; place-items: center; position: relative; padding: 8px 0 16px; }
+    .lightbox-stage::after {
+      content: "Art by Avigail";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      color: rgba(39, 29, 25, .24);
+      font: 500 clamp(1.45rem, 3.5vw, 2.7rem)/1 "Newsreader", serif;
+      letter-spacing: .05em;
+      white-space: nowrap;
+      text-shadow: 0 1px 5px rgba(255, 255, 255, .55);
+      transform: translate(-50%, -50%) rotate(-12deg);
+      pointer-events: none;
+      user-select: none;
+    }
+    .lightbox-stage img { max-width: min(94vw, 1180px); max-height: calc(100dvh - 144px); object-fit: contain; }
+    .lightbox-meta {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: #cabfb9;
+      font-size: .84rem;
+    }
+    .lightbox-meta strong { color: white; font-weight: 500; }
+
+    .print-dialog {
+      width: min(980px, calc(100vw - 32px));
+      max-width: none;
+      max-height: calc(100dvh - 32px);
+      margin: auto;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: var(--paper-light);
+      box-shadow: 0 28px 90px rgba(26, 18, 14, .32);
+      overflow: auto;
+    }
+    .print-dialog::backdrop { background: rgba(25, 18, 15, .78); }
+    .print-modal {
+      display: grid;
+      grid-template-columns: minmax(280px, .85fr) minmax(380px, 1.15fr);
+      min-height: min(700px, calc(100dvh - 32px));
+    }
+    .print-preview {
+      min-width: 0;
+      padding: clamp(24px, 4vw, 48px);
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 20px;
+      background: #e9e1d7;
+      border-right: 1px solid var(--line);
+    }
+    .print-preview-image-wrap {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: #eee8df;
+      box-shadow: 0 16px 38px rgba(46, 31, 22, .12);
+      overflow: hidden;
+    }
+    .print-preview-image-wrap::after {
+      content: "Art by Avigail";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      color: rgba(39, 29, 25, .22);
+      font: 500 clamp(1.15rem, 2.5vw, 1.8rem)/1 "Newsreader", serif;
+      letter-spacing: .045em;
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, .55);
+      transform: translate(-50%, -50%) rotate(-12deg);
+      pointer-events: none;
+      user-select: none;
+    }
+    .print-preview img { width: 100%; height: 100%; object-fit: contain; }
+    .print-preview figcaption {
+      width: 100%;
+      max-width: 380px;
+      color: var(--muted);
+      font-size: .82rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .print-preview figcaption strong { color: var(--ink); font-weight: 600; }
+    .print-panel {
+      position: relative;
+      padding: clamp(34px, 5vw, 64px);
+    }
+    .print-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border-color: rgba(39, 29, 25, .3);
+      color: var(--ink);
+    }
+    .print-kicker {
+      margin: 0 48px 13px 0;
+      color: var(--wine);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .print-panel h2 {
+      margin: 0 48px 18px 0;
+      font: 400 clamp(2.35rem, 5vw, 4rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+    .print-pitch {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font: 400 1.08rem/1.62 "Newsreader", serif;
+    }
+    .order-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+    }
+    .form-field { display: grid; gap: 7px; min-width: 0; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: #fff;
+      color: var(--ink);
+      padding: 12px 13px;
+      font: 400 .92rem/1.4 "DM Sans", sans-serif;
+    }
+    .form-field textarea { min-height: 82px; resize: vertical; }
+    .form-field select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--wine) 50%), linear-gradient(135deg, var(--wine) 50%, transparent 50%);
+      background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 38px;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .order-submit {
+      grid-column: 1 / -1;
+      border: 0;
+      background: var(--wine);
+      color: white;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: .025em;
+    }
+    .order-submit:hover { background: #24485c; }
+    .payment-note {
+      grid-column: 1 / -1;
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.55;
+    }
+    .confirmation-dialog {
+      width: min(560px, calc(100vw - 32px));
+      max-width: none;
+      margin: auto;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: var(--paper-light);
+      box-shadow: 0 28px 90px rgba(26, 18, 14, .32);
+    }
+    .confirmation-dialog::backdrop { background: rgba(25, 18, 15, .78); }
+    .confirmation-card { position: relative; padding: clamp(36px, 7vw, 66px); }
+    .confirmation-card h2 {
+      margin: 0 48px 17px 0;
+      font: 400 clamp(2.35rem, 6vw, 3.6rem)/1 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+    .confirmation-card p { color: var(--muted); line-height: 1.65; }
+    .zelle-instruction {
+      margin: 24px 0 18px;
+      padding: 19px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--ink) !important;
+      font: 400 1.22rem/1.5 "Newsreader", serif;
+    }
+    .zelle-placeholder {
+      display: inline-block;
+      color: var(--wine);
+      font-family: "DM Sans", sans-serif;
+      font-size: .83rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+    .confirmation-honesty { font-size: .82rem; }
+    .confirmation-done {
+      width: 100%;
+      margin-top: 9px;
+      border: 0;
+      background: var(--wine);
+      color: white;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .cta:focus-visible, .collection-tab:focus-visible, .art-button:focus-visible, summary:focus-visible, .close:focus-visible, .order-submit:focus-visible, .confirmation-done:focus-visible {
+      outline: 3px solid #d5a04f;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; min-height: 0; }
+      .hero-copy { padding-top: 70px; padding-bottom: 52px; }
+      .hero-art { margin: 0 20px 20px; min-height: 440px; }
+      .about { grid-template-columns: 1fr; }
+      .about-image { margin: 0 auto; max-width: 430px; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .collection-intro { align-items: start; flex-direction: column; }
+      .print-modal { grid-template-columns: 1fr; }
+      .print-preview {
+        grid-template-columns: minmax(100px, 160px) minmax(0, 1fr);
+        padding: 22px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .print-preview-image-wrap { max-width: 160px; }
+      .print-preview figcaption { display: grid; align-content: center; }
+    }
+    @media (max-width: 620px) {
+      .hero-copy { padding: 58px 20px 44px; }
+      .hero h1 { font-size: clamp(3.1rem, 18vw, 4.6rem); }
+      .hero-logo { width: min(100%, 360px); margin-top: 5px; }
+      .tagline { margin-top: 24px; }
+      .hero-art { margin: 0; min-height: 0; aspect-ratio: 16 / 9; background: var(--paper-light); }
+      .hero-art img { width: 100%; height: 100%; object-position: center; }
+      .section { width: min(calc(100% - 34px), var(--max)); padding: 78px 0; }
+      .gallery { grid-template-columns: 1fr; gap: 58px; }
+      .art-card:nth-child(even) { margin-top: 0; }
+      .about-image { padding: 14px 14px 0 0; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+      .lightbox-meta { flex-direction: column; gap: 5px; }
+      .print-dialog { width: calc(100vw - 18px); max-height: calc(100dvh - 18px); }
+      .print-modal { min-height: calc(100dvh - 18px); }
+      .print-preview { grid-template-columns: 96px minmax(0, 1fr); padding: 14px; gap: 14px; }
+      .print-preview-image-wrap { max-width: 96px; }
+      .print-preview figcaption { font-size: .74rem; }
+      .print-panel { padding: 34px 20px 28px; }
+      .print-panel h2 { font-size: 2.35rem; }
+      .order-form { grid-template-columns: 1fr; }
+      .form-field.full, .order-submit, .payment-note { grid-column: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .art-frame img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Fine art portfolio</p>
+        <h1 id="hero-title" aria-label="Art by Avigail"><span class="hero-title-prefix" aria-hidden="true">Art by</span><img class="hero-logo" src="assets/avigail-logo.png" alt="" /></h1>
+        <p class="tagline">Portraits and holy scenes, painted with warmth, reverence, and a vivid sense of color.</p>
+        <a class="cta" href="#collection">
+          Explore Paintings
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+        </a>
+      </div>
+      <div class="hero-art">
+        <img src="assets/hero-kotel-gallery.jpg" alt="Framed painting of the Western Wall beneath a radiant sunburst sky" />
+      </div>
+    </section>
+
+    <section class="about-wrap" aria-labelledby="about-title">
+      <div class="section about">
+        <div class="about-image">
+          <img src="assets/avigail-portrait.jpg" alt="Avigail standing with arms outstretched before a mountain landscape" />
+        </div>
+        <div class="about-copy">
+          <p class="section-label">Meet Avigail</p>
+          <h2 class="section-title" id="about-title">About the Artist</h2>
+          <p>Avigail Meyerson is an artist from New Jersey whose passion for creativity and artistic expression has been woven into her life from an early age. Working across pencil, oil, acrylic, and watercolor, she specializes in oil and watercolor painting, combining strong technical skill with a distinctive and expressive artistic voice.</p>
+          <p>Known especially for her ability to capture the likeness and character of her subjects, Avigail brings both precision and personality to her work. Her paintings are vibrant, intentional, and deeply personal—each one created with its own story and meaning.</p>
+          <p>This sense of depth is especially present in her Judaica, where Avigail draws inspiration from Jewish tradition, symbolism, and the stories behind the subjects she paints. Through rich color and thoughtful composition, she strives to create artwork that is not only beautiful, but meaningful—pieces that connect with the viewer on a deeper level.</p>
+          <div class="signature-line" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="collection" aria-labelledby="collection-title">
+      <div class="collection-intro">
+        <div>
+          <p class="section-label">Selected paintings</p>
+          <h2 class="section-title" id="collection-title">Collection</h2>
+        </div>
+        <p class="collection-note">A selection of portraits, sacred text, and holy scenes in oil and watercolor.</p>
+      </div>
+
+      <div class="collection-tabs" aria-label="Browse collection categories">
+        <button class="collection-tab" type="button" data-filter="watercolor" aria-pressed="true">Watercolor Portraits</button>
+        <button class="collection-tab" type="button" data-filter="commissions" aria-pressed="false">Commissions</button>
+        <button class="collection-tab" type="button" data-filter="kesubahs" aria-pressed="false">Kesubahs</button>
+      </div>
+
+      <div class="gallery">
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/kotel-commission-studio.webp" data-title="Radiance at the Western Wall" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/kotel-commission-studio.webp" alt="Framed painting of the Western Wall in golden light beneath a radiant blue sky, displayed in full on a white gallery wall under track lighting" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Radiance at the Western Wall</h3>
+            <p>Golden stone, gathered figures, and a sky opening into light.</p>
+            <span class="medium">Oil painting</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/oil-portrait-blue.jpg" data-title="Memories of Zaidy" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/oil-portrait-blue.jpg" alt="Framed oil portrait of a smiling bearded man against blue brushwork, displayed above a wooden console in a living room with a vase and armchair" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Memories of Zaidy</h3>
+            <p>A warm expression emerges through layered, tactile strokes of blue and earth.</p>
+            <span class="medium">Oil painting</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button" type="button" data-src="assets/father-and-daughter.jpg" data-title="Father and Daughter" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/father-and-daughter.jpg" alt="Framed oil portrait displayed on a living-room wall, showing a smiling bearded father in a black hat holding his young daughter against a magenta-purple background" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Father and Daughter</h3>
+            <p>A joyful embrace rendered in expressive strokes of warm color.</p>
+            <span class="medium">Oil painting</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/ray-of-sunshine.png" data-title="Who Is For God" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/ray-of-sunshine.png" alt="Framed oil painting of a radiant golden sunburst with Hebrew lettering and a figure in its glow against a deep blue mountain scene, signed Avigail and displayed in full on a white gallery wall under a spotlight" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Who Is For God</h3>
+            <p>A radiant golden glow rises through Hebrew lettering against a deep blue mountain scene.</p>
+            <span class="medium">Oil painting</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/sunshine-on-mountain.jpg" data-title="Stories of Our Mountain" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/sunshine-on-mountain.jpg" alt="Framed watercolor of the Temple beneath rainbow-colored beams of light, Hebrew text, mountains, and tiny figures, displayed in full above a beige sofa in a living room" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Stories of Our Mountain</h3>
+            <p>A profound expression of the enduring bond between Hashem and His people, revealed through the holiness of His chosen mountain and the eternal connection it represents.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="kesubahs" hidden>
+          <button class="art-button" type="button" data-src="assets/ketubah.jpg" data-title="Custom Kesubah" data-medium="Watercolor and ink">
+            <span class="art-frame kesubah-frame"><img src="assets/ketubah.jpg" alt="Framed Hebrew text surrounded by a watercolor landscape of hills, trees and a winding river" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Custom Kesubah</h3>
+            <p>Sacred text rests within a gentle landscape of hills, trees, and flowing water.</p>
+            <span class="medium">Watercolor and ink</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="kesubahs" hidden>
+          <button class="art-button" type="button" data-src="assets/kesubah-mountains.jpg" data-title="River Rocks" data-medium="Watercolor and ink">
+            <span class="art-frame kesubah-frame"><img src="assets/kesubah-mountains.jpg" alt="Gold-framed kesubah with Hebrew text surrounded by watercolor mountains and a flowing stream" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>River Rocks</h3>
+            <p>Hebrew text is framed by layered mountain peaks, green valleys, and clear flowing water.</p>
+            <span class="medium">Watercolor and ink</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="kesubahs" hidden>
+          <button class="art-button" type="button" data-src="assets/kesubah-trees.jpg" data-title="Canopy of Trees" data-medium="Watercolor and ink">
+            <span class="art-frame kesubah-frame"><img src="assets/kesubah-trees.jpg" alt="White-framed kesubah with Hebrew text surrounded by watercolor trees and leafy branches" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Canopy of Trees</h3>
+            <p>Watercolor branches and abundant greenery encircle the sacred text.</p>
+            <span class="medium">Watercolor and ink</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rebbe-of-slonim.jpg" data-title="Rebbe of Slonim" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rebbe-of-slonim.jpg" alt="Watercolor portrait of a bearded man in a black hat over orange and green washes" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rebbe of Slonim</h3>
+            <p>A composed gaze framed by translucent washes of vivid color.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rabbi-lopiansky.jpg" data-title="Rabbi Lopiansky" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rabbi-lopiansky.jpg" alt="Watercolor portrait of a bearded man with glasses wearing a blue striped shirt" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Lopiansky</h3>
+            <p>Cool blue washes and warm facial tones capture a moment of animated expression.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rabbi-dessler.jpg" data-title="Rabbi Dessler" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rabbi-dessler.jpg" alt="Watercolor portrait of a bearded man in a dark hat against yellow, green and blue washes" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Dessler</h3>
+            <p>A reflective portrait set against a bright field of yellow, green, and blue.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rabbi-jaeger.jpg" data-title="Rabbi Jaeger" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rabbi-jaeger.jpg" alt="Watercolor portrait of an older bearded man in a brown hat against pink, green and violet washes" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Jaeger</h3>
+            <p>Expressive features meet a soft halo of pink, green, and violet.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/new-watercolor-portrait.jpg" data-title="Rabbi Shmuelevitz" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/new-watercolor-portrait.jpg" alt="Watercolor portrait of a bearded man in a black hat resting his cheek on his hand against teal-blue washes" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Shmuelevitz</h3>
+            <p>A contemplative portrait shaped by loose teal-blue washes and a quiet, thoughtful pose.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="faq-wrap" aria-labelledby="faq-title">
+      <div class="section faq-grid">
+        <div>
+          <p class="section-label">Questions</p>
+          <h2 class="section-title" id="faq-title">Frequently asked</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>Does Avigail accept commissions?</summary>
+            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, please <a href="mailto:meyersonavigail@gmail.com">get in touch</a> to discuss your vision and project.</p>
+          </details>
+          <details>
+            <summary>Are prints available?</summary>
+            <p>Yes. Prints are available for the Watercolor Portraits collection in four sizes. Select a portrait to view pricing and request an order.</p>
+          </details>
+          <details>
+            <summary>Can artwork be shipped?</summary>
+            <p>Yes. Original artwork can be shipped.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="section-label">Commissions & inquiries</p>
+    <h2>Bring meaningful art into your space.</h2>
+    <p class="contact-note">For commissions, original artwork, shipping, or other inquiries, email <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> or call <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
+    <div class="footer-line" aria-hidden="true"></div>
+    <div class="footer-bottom">
+      <span>Art by Avigail</span>
+      <span>Original oil paintings and watercolors</span>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" aria-labelledby="lightbox-title">
+    <div class="lightbox">
+      <div class="lightbox-top">
+        <button class="close" type="button" aria-label="Close artwork view">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+      </div>
+      <div class="lightbox-stage"><img id="lightbox-image" alt="" /></div>
+      <div class="lightbox-meta"><strong id="lightbox-title"></strong><span id="lightbox-medium"></span></div>
+    </div>
+  </dialog>
+
+  <dialog class="print-dialog" id="print-dialog" aria-labelledby="print-title">
+    <div class="print-modal">
+      <figure class="print-preview">
+        <div class="print-preview-image-wrap"><img id="print-image" alt="" /></div>
+        <figcaption><strong id="print-artwork-name"></strong><span>Watercolor</span></figcaption>
+      </figure>
+      <div class="print-panel">
+        <button class="close print-close" type="button" aria-label="Close order window">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+        <p class="print-kicker">Fine-art print</p>
+        <h2 id="print-title">Make it part of your space.</h2>
+        <p class="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; every order is personally confirmed.</p>
+        <form class="order-form" id="order-form">
+          <div class="form-field">
+            <label for="buyer-name">Name</label>
+            <input id="buyer-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="form-field">
+            <label for="buyer-email">Email</label>
+            <input id="buyer-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-field full">
+            <label for="shipping-address">Shipping address</label>
+            <textarea id="shipping-address" name="address" autocomplete="street-address" required></textarea>
+          </div>
+          <div class="form-field full">
+            <label for="print-size">Print size</label>
+            <select id="print-size" name="size" required>
+              <option value="" selected disabled>Select a size</option>
+              <option value="10 × 14|50">10 × 14 — $50</option>
+              <option value="14 × 20|80">14 × 20 — $80</option>
+              <option value="18 × 26|140">18 × 26 — $140</option>
+              <option value="26 × 38|220">26 × 38 — $220</option>
+            </select>
+          </div>
+          <button class="order-submit" type="submit">Submit order request</button>
+          <p class="payment-note">Your email app will open with the order details ready to send. Payment is completed afterward by Zelle; no card is charged on this site.</p>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="confirmation-dialog" id="confirmation-dialog" aria-labelledby="confirmation-title">
+    <div class="confirmation-card">
+      <button class="close print-close" type="button" aria-label="Close order confirmation">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+      <p class="print-kicker">Order request</p>
+      <h2 id="confirmation-title">Thank you.</h2>
+      <p>Thanks for submitting your order!</p>
+      <p class="zelle-instruction">To complete payment, please send <strong id="zelle-amount"></strong> via Zelle to <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
+      <p class="confirmation-honesty">Your email app has opened with the order request ready to send. Please send that email so Avigail receives your artwork choice and shipping details.</p>
+      <button class="confirmation-done" type="button">Done</button>
+    </div>
+  </dialog>
+
+  <script>
+    const tabs = document.querySelectorAll('.collection-tab');
+    const cards = document.querySelectorAll('.art-card');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.filter;
+        tabs.forEach(item => item.setAttribute('aria-pressed', String(item === tab)));
+        cards.forEach(card => {
+          card.hidden = card.dataset.category !== filter;
+        });
+      });
+    });
+
+    const dialog = document.getElementById('lightbox');
+    const dialogImage = document.getElementById('lightbox-image');
+    const dialogTitle = document.getElementById('lightbox-title');
+    const dialogMedium = document.getElementById('lightbox-medium');
+    const printDialog = document.getElementById('print-dialog');
+    const printImage = document.getElementById('print-image');
+    const printArtworkName = document.getElementById('print-artwork-name');
+    const orderForm = document.getElementById('order-form');
+    const confirmationDialog = document.getElementById('confirmation-dialog');
+    const zelleAmount = document.getElementById('zelle-amount');
+    let selectedArtwork = '';
+
+    document.querySelectorAll('.art-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const thumb = button.querySelector('img');
+        const card = button.closest('.art-card');
+        if (card.dataset.category === 'watercolor') {
+          selectedArtwork = button.dataset.title;
+          printImage.src = button.dataset.src;
+          printImage.alt = thumb.alt;
+          printArtworkName.textContent = selectedArtwork;
+          orderForm.reset();
+          printDialog.showModal();
+          return;
+        }
+        dialogImage.src = button.dataset.src;
+        dialogImage.alt = thumb.alt;
+        dialogTitle.textContent = button.dataset.title;
+        dialogMedium.textContent = button.dataset.medium;
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelector('.close').addEventListener('click', () => dialog.close());
+    printDialog.querySelector('.print-close').addEventListener('click', () => printDialog.close());
+    confirmationDialog.querySelector('.print-close').addEventListener('click', () => confirmationDialog.close());
+    confirmationDialog.querySelector('.confirmation-done').addEventListener('click', () => confirmationDialog.close());
+
+    [dialog, printDialog, confirmationDialog].forEach(modal => {
+      modal.addEventListener('click', event => {
+        if (event.target === modal) modal.close();
+      });
+    });
+
+    orderForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!orderForm.reportValidity()) return;
+
+      const [size, amount] = document.getElementById('print-size').value.split('|');
+      const name = document.getElementById('buyer-name').value.trim();
+      const email = document.getElementById('buyer-email').value.trim();
+      const address = document.getElementById('shipping-address').value.trim();
+      const subject = `Print order request — ${selectedArtwork}`;
+      const body = `Hello Avigail,\n\nI'd like to order a ${size} print of “${selectedArtwork}” for $${amount}.\n\nName: ${name}\nEmail: ${email}\nShipping address:\n${address}\n\nI will complete payment by Zelle to +1 848 373 6066.`;
+      const mailLink = document.createElement('a');
+      mailLink.href = `mailto:meyersonavigail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      mailLink.click();
+
+      zelleAmount.textContent = `$${amount}`;
+      printDialog.close();
+      confirmationDialog.showModal();
+    });
+  </script>
+</body>
+</html>
