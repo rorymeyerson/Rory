@@ -693,10 +693,26 @@
     .cm-form .form-field.full { grid-column: 1 / -1; }
     .cm-form label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
     .cm-form input[type=file] { padding: 10px; background: #fff; border: 1px dashed var(--line); width: 100%; }
-    .cm-form .cm-cta { grid-column: 1 / -1; justify-self: start; }
+    .cm-form .cm-cta, .cm-form .cs-btn { grid-column: 1 / -1; justify-self: start; }
     .cm-types-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 5vw, 64px); max-width: 920px; margin-left: auto; margin-right: auto; }
     .cm-types-two .cm-type h4 { font-size: 1.8rem; }
     .cm-types-two .cm-type p { font-size: 1rem; }
+    .cs-banner { position: relative; min-height: 380px; display: grid; place-items: center; text-align: center; color: #fff; background: linear-gradient(rgba(25, 18, 15, .45), rgba(25, 18, 15, .45)), url("assets/commission-banner.jpg") center / cover; margin-bottom: 70px; }
+    .cs-banner-inner { padding: 40px 24px; max-width: 640px; }
+    .cs-banner h3 { font: 500 clamp(2.4rem, 5vw, 3.8rem)/1.05 "Newsreader", serif; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 14px; }
+    .cs-banner p { margin: 0; font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,.92); }
+    .cs-intro { max-width: 760px; margin: 0 auto 90px; text-align: center; }
+    .cs-intro h4, .cs-text h4 { font: 500 clamp(1.8rem, 3vw, 2.4rem)/1.1 "Newsreader", serif; margin: 0 0 18px; }
+    .cs-text h4 { text-transform: uppercase; letter-spacing: .05em; font-size: clamp(1.5rem, 2.6vw, 2rem); }
+    .cs-intro p, .cs-text p { color: var(--muted); line-height: 1.75; margin: 0 0 26px; }
+    .cs-btn { background: var(--ink); color: #fff; border: 0; padding: 14px 28px; font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+    .cs-btn:hover { background: var(--wine); }
+    .cs-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 70px); align-items: center; margin-bottom: 36px; }
+    .cs-row-flip .cs-media { order: 2; }
+    .cs-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 15px 34px rgba(46, 31, 22, .1); }
+    .cs-examples { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(200px, 1fr); gap: 18px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 100px; scroll-snap-type: x mandatory; }
+    .cs-examples img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #eee8df; scroll-snap-align: start; }
+    @media (max-width: 900px) { .cs-row { grid-template-columns: 1fr; } .cs-row-flip .cs-media { order: 0; } .cs-examples { grid-auto-columns: 62%; } }
     @media (max-width: 900px) {
       .cm-hero, .cm-form-wrap { grid-template-columns: 1fr; }
       .cm-types, .cm-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -907,52 +923,45 @@
       </div>
 
       <div class="commission-panel" id="commissions" hidden>
-        <div class="cm-hero">
-          <div>
-            <p class="cm-kicker">Commissions</p>
-            <h3>A painting made for your family, to be passed down.</h3>
-            <p>Commissioning a piece from Avigail means owning something made only for you: the words of your kesubah set in a hand-painted landscape, or a beloved face or holy place in rich oils.</p>
-            <p>Every commission is a collaboration. You share your vision and photos, approve a sketch, and Avigail brings it to life by hand.</p>
-            <ul class="cm-points">
-              <li>Personal collaboration from first sketch to final brushstroke</li>
-              <li>Original artwork, signed by the artist</li>
-              <li>Carefully packed and shipped to your door</li>
-            </ul>
-            <button class="cm-cta" type="button" data-scroll="cm-form">Start your commission</button>
-          </div>
-          <img src="assets/father-and-daughter.jpg" alt="Commissioned oil portrait of a father holding his young daughter, hanging in a living room" />
-        </div>
-
-        <h3 class="cm-heading">Two ways to commission</h3>
-        <p class="cm-sub">Every piece is designed with you and painted by hand.</p>
-        <div class="cm-types cm-types-two">
-          <div class="cm-type">
-            <span class="art-frame"><img src="assets/kesubah-mountains-cropped.jpg" alt="Custom kesubah example" /></span>
-            <h4>Custom kesubah</h4>
-            <p>The words of your kesubah surrounded by a hand-painted watercolor landscape, designed with you as a couple and made to hang in your home for a lifetime.</p>
-            <button type="button" data-type="Custom kesubah">Start a custom kesubah</button>
-          </div>
-          <div class="cm-type">
-            <span class="art-frame"><img src="assets/oil-portrait-blue.jpg" alt="Commissioned oil painting example" /></span>
-            <h4>Oil painting</h4>
-            <p>A portrait of someone you love, Jerusalem, or a holy scene, painted in rich, layered oils as a lasting family heirloom.</p>
-            <button type="button" data-type="Oil painting">Start an oil painting</button>
+        <div class="cs-banner">
+          <div class="cs-banner-inner">
+            <h3>Commission Artwork</h3>
+            <p>Original kesubahs and oil paintings, created by hand for you and your family.</p>
           </div>
         </div>
 
-        <div class="cm-steps-wrap">
-          <p class="cm-kicker">How it works</p>
-          <h3 class="cm-heading">From your idea to your wall</h3>
-          <p class="cm-sub">A simple, personal process, so you know exactly what you're getting before the painting begins.</p>
-          <div class="cm-steps">
-            <div class="cm-step"><span>01</span><h4>Share your vision</h4><p>Send photos and tell Avigail about the person, place, or occasion.</p></div>
-            <div class="cm-step"><span>02</span><h4>Approve the sketch</h4><p>Avigail prepares a sketch and composition for you to review before any paint is applied.</p></div>
-            <div class="cm-step"><span>03</span><h4>The painting</h4><p>Avigail paints your piece by hand and shares progress along the way.</p></div>
-            <div class="cm-step"><span>04</span><h4>Delivered to you</h4><p>Your signed original is carefully packed and shipped to your door.</p></div>
+        <div class="cs-intro">
+          <h4>A Piece Made Only for You</h4>
+          <p>Commissioning a piece from Avigail is an invitation to own something truly one of a kind. Every commission begins with a personal conversation about your vision, the people or places that matter to you, and the space it will live in. Avigail prepares a sketch for your approval, then paints your piece by hand, signed and made to be passed down.</p>
+          <button class="cs-btn" type="button" data-scroll="cm-form">Commission art now</button>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-media"><img src="assets/ketubah-landscape.jpg" alt="Custom watercolor kesubah of a river winding through green hills, framed on a gallery wall" /></div>
+          <div class="cs-text">
+            <h4>Custom Kesubah</h4>
+            <p>Your kesubah is the first document of your marriage, and it deserves to be beautiful. Avigail surrounds the words of your kesubah with a hand-painted watercolor landscape chosen together with you: rivers, mountains, trees, or a place that holds meaning for you as a couple. The result is a piece of art you'll see in your home every day.</p>
+            <button class="cs-btn" type="button" data-type="Custom kesubah">Let's get started</button>
           </div>
-          <div class="cm-occasions" aria-label="Popular occasions">
-            <span>Weddings</span><span>Anniversaries</span><span>Bar &amp; Bat Mitzvahs</span><span>Memorial portraits</span><span>Gifts for a Rebbe</span><span>New homes</span>
+        </div>
+        <div class="cs-examples" aria-label="Kesubah examples">
+          <img src="assets/ketubah-cropped.jpg" alt="River in the Valley kesubah" />
+          <img src="assets/kesubah-mountains-cropped.jpg" alt="River Rocks kesubah" />
+          <img src="assets/kesubah-trees-cropped.jpg" alt="Canopy of Trees kesubah" />
+        </div>
+
+        <div class="cs-row cs-row-flip">
+          <div class="cs-media"><img src="assets/father-and-daughter.jpg" alt="Commissioned oil portrait of a father holding his daughter, hanging in a living room" /></div>
+          <div class="cs-text">
+            <h4>Custom Oil Painting</h4>
+            <p>From a portrait of a parent or grandparent to the Kotel at sunrise, Avigail paints in rich, layered oils that capture warmth, character, and light. Each painting is designed with you, from size and composition to color, and painted by hand as a lasting family heirloom.</p>
+            <button class="cs-btn" type="button" data-type="Oil painting">Let's get started</button>
           </div>
+        </div>
+        <div class="cs-examples" aria-label="Oil painting examples">
+          <img src="assets/oil-portrait-blue.jpg" alt="Memories of Zaidy oil portrait" />
+          <img src="assets/kotel-commission-studio.webp" alt="Radiance at the Western Wall oil painting" />
+          <img src="assets/ray-of-sunshine.png" alt="Who Is For God oil painting" />
         </div>
 
         <div class="cm-form-wrap" id="cm-form">
@@ -973,7 +982,7 @@
               </select></div>
             <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /></div>
             <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
-            <button class="cm-cta" type="submit">Send request</button>
+            <button class="cs-btn" type="submit">Send request</button>
           </form>
         </div>
       </div>
@@ -1084,7 +1093,7 @@
     document.querySelectorAll('[data-scroll="cm-form"]').forEach(btn => btn.addEventListener('click', () => {
       document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
     }));
-    document.querySelectorAll('.cm-type button').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.cm-type button, .cs-btn[data-type]').forEach(btn => btn.addEventListener('click', () => {
       document.getElementById('cm-type').value = btn.dataset.type;
       document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
     }));
