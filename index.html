@@ -638,6 +638,20 @@
       html { scroll-behavior: auto; }
       .art-frame img { transition: none; }
     }
+    .gallery.wc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 36px; }
+    .gallery.wc-grid .art-card { display: flex; flex-direction: column; }
+    .gallery.wc-grid .art-card[hidden] { display: none; }
+    .gallery.wc-grid .art-frame { aspect-ratio: 3 / 4; }
+    .gallery.wc-grid .art-frame img { object-fit: cover; object-position: center top; }
+    .gallery.wc-grid .card-copy { padding-top: 18px; display: flex; flex-direction: column; flex: 1; }
+    .gallery.wc-grid .card-copy h3 { font-size: 1.6rem; }
+    .gallery.wc-grid .card-copy p { min-height: 3.1em; font-size: .95rem; }
+    .buy-row { display: flex; justify-content: flex-end; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+    .buy-now { background: var(--wine); color: #fff; border: 0; border-radius: 999px; padding: 11px 22px; font-weight: 600; font-size: .88rem; cursor: pointer; box-shadow: 0 6px 16px rgba(49, 95, 120, .25); transition: background .2s; }
+    .buy-now:hover { background: #274d62; }
+    .buy-now:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    @media (max-width: 900px) { .gallery.wc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 18px; } }
+    @media (max-width: 560px) { .gallery.wc-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -688,7 +702,7 @@
         <button class="collection-tab" type="button" data-filter="kesubahs" aria-pressed="false">Kesubahs</button>
       </div>
 
-      <div class="gallery">
+      <div class="gallery wc-grid">
         <figure class="art-card" data-category="commissions" hidden>
           <button class="art-button no-image-zoom" type="button" data-src="assets/kotel-commission-studio.webp" data-title="Radiance at the Western Wall" data-medium="Oil painting">
             <span class="art-frame"><img src="assets/kotel-commission-studio.webp" alt="Framed painting of the Western Wall in golden light beneath a radiant blue sky, displayed in full on a white gallery wall under track lighting" /></span>
@@ -778,13 +792,14 @@
         </figure>
 
         <figure class="art-card" data-category="watercolor">
-          <button class="art-button" type="button" data-src="assets/rebbe-of-slonim.jpg" data-title="Rebbe of Slonim" data-medium="Watercolor">
-            <span class="art-frame"><img src="assets/rebbe-of-slonim.jpg" alt="Watercolor portrait of a bearded man in a black hat over orange and green washes" /></span>
+          <button class="art-button" type="button" data-src="assets/rebbe-of-slonim-cropped.jpg" data-title="Rebbe of Slonim" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rebbe-of-slonim-cropped.jpg" alt="Watercolor portrait of a bearded man in a black hat over orange and green washes" /></span>
           </button>
           <figcaption class="card-copy">
             <h3>Rebbe of Slonim</h3>
             <p>A composed gaze framed by translucent washes of vivid color.</p>
             <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -796,6 +811,7 @@
             <h3>Rabbi Lopiansky</h3>
             <p>Cool blue washes and warm facial tones capture a moment of animated expression.</p>
             <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -807,6 +823,7 @@
             <h3>Rabbi Dessler</h3>
             <p>A reflective portrait set against a bright field of yellow, green, and blue.</p>
             <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -818,6 +835,7 @@
             <h3>Rabbi Jaeger</h3>
             <p>Expressive features meet a soft halo of pink, green, and violet.</p>
             <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -829,6 +847,7 @@
             <h3>Rabbi Shmuelevitz</h3>
             <p>A contemplative portrait shaped by loose teal-blue washes and a quiet, thoughtful pose.</p>
             <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
           </figcaption>
         </figure>
       </div>
@@ -952,19 +971,32 @@
     let selectedArtwork = '';
     let selectedImage = '';
 
+    function openPrintOrder(button) {
+      const thumb = button.querySelector('img');
+      selectedArtwork = button.dataset.title;
+      selectedImage = button.dataset.src;
+      printImage.src = button.dataset.src;
+      printImage.alt = thumb.alt;
+      printArtworkName.textContent = selectedArtwork;
+      orderForm.reset();
+      orderError.hidden = true;
+      orderSubmit.disabled = false;
+      orderSubmit.textContent = 'Continue to secure checkout';
+      printDialog.showModal();
+    }
+
+    document.querySelectorAll('.buy-now').forEach(buyButton => {
+      buyButton.addEventListener('click', () => {
+        openPrintOrder(buyButton.closest('.art-card').querySelector('.art-button'));
+      });
+    });
+
     document.querySelectorAll('.art-button').forEach(button => {
       button.addEventListener('click', () => {
         const thumb = button.querySelector('img');
         const card = button.closest('.art-card');
         if (card.dataset.category === 'watercolor') {
-          selectedArtwork = button.dataset.title;
-          selectedImage = button.dataset.src;
-          printImage.src = button.dataset.src;
-          printImage.alt = thumb.alt;
-          printArtworkName.textContent = selectedArtwork;
-          orderForm.reset();
-          orderError.hidden = true;
-          printDialog.showModal();
+          openPrintOrder(button);
           return;
         }
         dialogImage.src = button.dataset.src;
