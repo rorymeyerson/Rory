@@ -2,11 +2,16 @@ const Stripe = require('stripe');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const VALID_SIZES = {
-  '10 × 14': 50,
-  '14 × 20': 80,
-  '18 × 26': 140,
-  '26 × 38': 220,
+const PRICES = {
+  watercolor: {
+    '10 × 14': 50,
+    '14 × 20': 80,
+    '18 × 26': 140,
+    '26 × 38': 220,
+  },
+  kesubah: {
+    '12 × 18': 300,
+  },
 };
 
 module.exports = async (req, res) => {
@@ -15,13 +20,18 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { artwork, size, image } = req.body || {};
+  const { artwork, size, image, product = 'watercolor' } = req.body || {};
+  const sizes = PRICES[product];
+  if (!sizes) {
+    res.status(400).json({ error: 'Invalid product.' });
+    return;
+  }
 
   if (typeof artwork !== 'string' || !artwork.trim()) {
     res.status(400).json({ error: 'Missing artwork.' });
     return;
   }
-  const amount = VALID_SIZES[size];
+  const amount = sizes[size];
   if (!amount) {
     res.status(400).json({ error: 'Invalid print size.' });
     return;
@@ -39,7 +49,7 @@ module.exports = async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `${artwork} — ${size} print`,
+              name: `${artwork} — ${size} ${product === 'kesubah' ? 'kesubah print' : 'print'}`,
               images: imageUrl ? [imageUrl] : undefined,
             },
             unit_amount: amount * 100,

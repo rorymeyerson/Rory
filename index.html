@@ -639,6 +639,7 @@
       .art-frame img { transition: none; }
     }
     .gallery.wc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 36px; }
+    .gallery.wc-grid { align-items: stretch; }
     .gallery.wc-grid .art-card { display: flex; flex-direction: column; }
     .gallery.wc-grid .art-card[hidden] { display: none; }
     .gallery.wc-grid .art-frame { aspect-ratio: 3 / 4; }
@@ -758,35 +759,38 @@
         </figure>
 
         <figure class="art-card" data-category="kesubahs" hidden>
-          <button class="art-button" type="button" data-src="assets/ketubah.jpg" data-title="Custom Kesubah" data-medium="Watercolor and ink">
-            <span class="art-frame kesubah-frame"><img src="assets/ketubah.jpg" alt="Framed Hebrew text surrounded by a watercolor landscape of hills, trees and a winding river" /></span>
+          <button class="art-button" type="button" data-src="assets/ketubah-cropped.jpg" data-title="River in the Valley" data-medium="Watercolor and ink">
+            <span class="art-frame"><img src="assets/ketubah-cropped.jpg" alt="Framed Hebrew text surrounded by a watercolor landscape of hills, trees and a winding river" /></span>
           </button>
           <figcaption class="card-copy">
-            <h3>Custom Kesubah</h3>
-            <p>Sacred text rests within a gentle landscape of hills, trees, and flowing water.</p>
+            <h3>River in the Valley</h3>
+            <p>The words of the kesubah rest within a gentle landscape of hills, trees, and flowing water.</p>
             <span class="medium">Watercolor and ink</span>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
           </figcaption>
         </figure>
 
         <figure class="art-card" data-category="kesubahs" hidden>
-          <button class="art-button" type="button" data-src="assets/kesubah-mountains.jpg" data-title="River Rocks" data-medium="Watercolor and ink">
-            <span class="art-frame kesubah-frame"><img src="assets/kesubah-mountains.jpg" alt="Gold-framed kesubah with Hebrew text surrounded by watercolor mountains and a flowing stream" /></span>
+          <button class="art-button" type="button" data-src="assets/kesubah-mountains-cropped.jpg" data-title="River Rocks" data-medium="Watercolor and ink">
+            <span class="art-frame"><img src="assets/kesubah-mountains-cropped.jpg" alt="Gold-framed kesubah with Hebrew text surrounded by watercolor mountains and a flowing stream" /></span>
           </button>
           <figcaption class="card-copy">
             <h3>River Rocks</h3>
-            <p>Hebrew text is framed by layered mountain peaks, green valleys, and clear flowing water.</p>
+            <p>The words of the kesubah are framed by layered mountain peaks, green valleys, and clear flowing water.</p>
             <span class="medium">Watercolor and ink</span>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
           </figcaption>
         </figure>
 
         <figure class="art-card" data-category="kesubahs" hidden>
-          <button class="art-button" type="button" data-src="assets/kesubah-trees.jpg" data-title="Canopy of Trees" data-medium="Watercolor and ink">
-            <span class="art-frame kesubah-frame"><img src="assets/kesubah-trees.jpg" alt="White-framed kesubah with Hebrew text surrounded by watercolor trees and leafy branches" /></span>
+          <button class="art-button" type="button" data-src="assets/kesubah-trees-cropped.jpg" data-title="Canopy of Trees" data-medium="Watercolor and ink">
+            <span class="art-frame"><img src="assets/kesubah-trees-cropped.jpg" alt="White-framed kesubah with Hebrew text surrounded by watercolor trees and leafy branches" /></span>
           </button>
           <figcaption class="card-copy">
             <h3>Canopy of Trees</h3>
-            <p>Watercolor branches and abundant greenery encircle the sacred text.</p>
+            <p>Watercolor branches and abundant greenery encircle the words of the kesubah.</p>
             <span class="medium">Watercolor and ink</span>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
           </figcaption>
         </figure>
 
@@ -898,25 +902,19 @@
     <div class="print-modal">
       <figure class="print-preview">
         <div class="print-preview-image-wrap"><img id="print-image" alt="" /></div>
-        <figcaption><strong id="print-artwork-name"></strong><span>Watercolor</span></figcaption>
+        <figcaption><strong id="print-artwork-name"></strong><span id="print-medium">Watercolor</span></figcaption>
       </figure>
       <div class="print-panel">
         <button class="close print-close" type="button" aria-label="Close order window">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
         </button>
-        <p class="print-kicker">Fine-art print</p>
+        <p class="print-kicker" id="print-kicker">Fine-art print</p>
         <h2 id="print-title">Make it part of your space.</h2>
-        <p class="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.</p>
+        <p class="print-pitch" id="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.</p>
         <form class="order-form" id="order-form">
           <div class="form-field full">
             <label for="print-size">Print size</label>
-            <select id="print-size" name="size" required>
-              <option value="" selected disabled>Select a size</option>
-              <option value="10 × 14|50">10 × 14 — $50</option>
-              <option value="14 × 20|80">14 × 20 — $80</option>
-              <option value="18 × 26|140">18 × 26 — $140</option>
-              <option value="26 × 38|220">26 × 38 — $220</option>
-            </select>
+            <select id="print-size" name="size" required></select>
           </div>
           <button class="order-submit" type="submit">Continue to secure checkout</button>
           <p class="payment-note">You'll pay by card on the next screen (Stripe Checkout). Shipping address is collected there.</p>
@@ -965,14 +963,40 @@
     let selectedArtwork = '';
     let selectedImage = '';
 
-    function openPrintOrder(button) {
+    const PRODUCTS = {
+      watercolor: {
+        kicker: 'Fine-art print',
+        medium: 'Watercolor',
+        pitch: 'Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.',
+        sizes: [['10 × 14', 50], ['14 × 20', 80], ['18 × 26', 140], ['26 × 38', 220]],
+      },
+      kesubah: {
+        kicker: 'Kesubah print',
+        medium: 'Watercolor and ink',
+        pitch: 'A fine-art print of Avigail’s hand-painted kesubah, with the words of the kesubah set within her original watercolor artwork. Checkout is secure and your shipping details are collected on the next step.',
+        sizes: [['12 × 18', 300]],
+      },
+    };
+    const printSize = document.getElementById('print-size');
+    let selectedProduct = 'watercolor';
+
+    function openPrintOrder(button, product = 'watercolor') {
       const thumb = button.querySelector('img');
+      const config = PRODUCTS[product];
+      selectedProduct = product;
       selectedArtwork = button.dataset.title;
       selectedImage = button.dataset.src;
       printImage.src = button.dataset.src;
       printImage.alt = thumb.alt;
       printArtworkName.textContent = selectedArtwork;
+      document.getElementById('print-kicker').textContent = config.kicker;
+      document.getElementById('print-medium').textContent = config.medium;
+      document.getElementById('print-pitch').textContent = config.pitch;
       orderForm.reset();
+      const single = config.sizes.length === 1;
+      printSize.innerHTML = (single ? '' : '<option value="" selected disabled>Select a size</option>') +
+        config.sizes.map(([size, price]) => `<option value="${size}|${price}">${size} — $${price}</option>`).join('');
+      if (single) printSize.selectedIndex = 0;
       orderError.hidden = true;
       orderSubmit.disabled = false;
       orderSubmit.textContent = 'Continue to secure checkout';
@@ -981,7 +1005,7 @@
 
     document.querySelectorAll('.buy-now').forEach(buyButton => {
       buyButton.addEventListener('click', () => {
-        openPrintOrder(buyButton.closest('.art-card').querySelector('.art-button'));
+        openPrintOrder(buyButton.closest('.art-card').querySelector('.art-button'), buyButton.dataset.product || 'watercolor');
       });
     });
 
@@ -1025,7 +1049,7 @@
         const response = await fetch('/api/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ artwork: selectedArtwork, size, amount, image: selectedImage }),
+          body: JSON.stringify({ artwork: selectedArtwork, size, amount, image: selectedImage, product: selectedProduct }),
         });
         const data = await response.json();
         if (!response.ok || !data.url) throw new Error(data.error || 'Could not start checkout.');
