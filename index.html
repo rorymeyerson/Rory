@@ -657,6 +657,50 @@
     .buy-now:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     @media (max-width: 900px) { .gallery.wc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 18px; } }
     @media (max-width: 560px) { .gallery.wc-grid { grid-template-columns: 1fr; } }
+
+    /* Commissions panel */
+    .commission-panel[hidden], .gallery[hidden] { display: none; }
+    .cm-hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 64px); align-items: center; margin-bottom: 80px; }
+    .cm-hero img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 15px 34px rgba(46, 31, 22, .1); }
+    .cm-kicker { color: var(--wine); font-size: .75rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin: 0 0 14px; }
+    .cm-hero h3 { font: 500 clamp(2.2rem, 4.2vw, 3.4rem)/1.05 "Newsreader", serif; margin: 0 0 22px; }
+    .cm-hero p { color: var(--muted); line-height: 1.7; margin: 0 0 16px; max-width: 520px; }
+    .cm-points { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 12px; }
+    .cm-points li { padding-left: 26px; position: relative; line-height: 1.5; }
+    .cm-points li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 1px; background: var(--gold); }
+    .cm-cta { display: inline-block; background: var(--wine); color: #fff; text-decoration: none; border: 0; border-radius: 999px; padding: 13px 26px; font-weight: 600; font-size: .9rem; cursor: pointer; box-shadow: 0 6px 16px rgba(49, 95, 120, .25); }
+    .cm-cta:hover { background: #274d62; }
+    .cm-heading { font: 500 clamp(1.9rem, 3.4vw, 2.6rem)/1.1 "Newsreader", serif; margin: 0 0 10px; }
+    .cm-sub { color: var(--muted); margin: 0 0 36px; line-height: 1.6; }
+    .cm-types { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; margin-bottom: 90px; }
+    .cm-type { display: flex; flex-direction: column; }
+    .cm-type .art-frame { aspect-ratio: 3 / 4; }
+    .cm-type .art-frame img { object-fit: cover; }
+    .cm-type h4 { font: 500 1.45rem/1.15 "Newsreader", serif; margin: 18px 0 8px; }
+    .cm-type p { color: var(--muted); font-size: .93rem; line-height: 1.55; margin: 0 0 16px; flex: 1; }
+    .cm-type button { align-self: flex-start; background: none; border: 0; padding: 0 0 3px; border-bottom: 1px solid var(--wine); color: var(--wine); font-weight: 600; font-size: .85rem; cursor: pointer; }
+    .cm-steps-wrap { background: var(--paper); margin: 0 calc(50% - 50vw) 90px; padding: 72px calc(50vw - 50%); }
+    .cm-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; counter-reset: step; }
+    .cm-step { border-top: 1px solid var(--gold); padding-top: 20px; }
+    .cm-step span { display: block; font: 500 2.4rem/1 "Newsreader", serif; color: var(--gold); margin-bottom: 12px; }
+    .cm-step h4 { font: 500 1.3rem/1.2 "Newsreader", serif; margin: 0 0 8px; }
+    .cm-step p { color: var(--muted); font-size: .93rem; line-height: 1.6; margin: 0; }
+    .cm-occasions { display: flex; flex-wrap: wrap; gap: 10px; margin: 30px 0 0; }
+    .cm-occasions span { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-size: .82rem; color: var(--muted); background: var(--paper-light); }
+    .cm-form-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 70px); align-items: start; }
+    .cm-form-wrap aside p { color: var(--muted); line-height: 1.7; }
+    .cm-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .cm-form .form-field.full { grid-column: 1 / -1; }
+    .cm-form label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .cm-form input[type=file] { padding: 10px; background: #fff; border: 1px dashed var(--line); width: 100%; }
+    .cm-form .cm-cta { grid-column: 1 / -1; justify-self: start; }
+    @media (max-width: 900px) {
+      .cm-hero, .cm-form-wrap { grid-template-columns: 1fr; }
+      .cm-types, .cm-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .cm-types, .cm-steps, .cm-form { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -704,6 +748,7 @@
         <button class="collection-tab" type="button" data-filter="watercolor" aria-pressed="true">Watercolor Portraits</button>
         <button class="collection-tab" type="button" data-filter="commissions" aria-pressed="false">Originals</button>
         <button class="collection-tab" type="button" data-filter="kesubahs" aria-pressed="false">Kesubahs</button>
+        <button class="collection-tab" type="button" data-filter="commission-info" aria-pressed="false">Commissions</button>
       </div>
 
       <div class="gallery wc-grid">
@@ -857,6 +902,92 @@
           </figcaption>
         </figure>
       </div>
+
+      <div class="commission-panel" id="commissions" hidden>
+        <div class="cm-hero">
+          <div>
+            <p class="cm-kicker">Commissions</p>
+            <h3>A painting made for your family, to be passed down.</h3>
+            <p>Commissioning a piece from Avigail means owning something made only for you: a beloved face, a meaningful place, or the words of your kesubah, painted by hand with care and intention.</p>
+            <p>Every commission is a collaboration. You share your vision and photos, approve a sketch, and Avigail brings it to life in oil or watercolor.</p>
+            <ul class="cm-points">
+              <li>Personal collaboration from first sketch to final brushstroke</li>
+              <li>Original artwork, signed by the artist</li>
+              <li>Carefully packed and shipped to your door</li>
+            </ul>
+            <button class="cm-cta" type="button" data-scroll="cm-form">Start your commission</button>
+          </div>
+          <img src="assets/father-and-daughter.jpg" alt="Commissioned oil portrait of a father holding his young daughter, hanging in a living room" />
+        </div>
+
+        <h3 class="cm-heading">What Avigail paints</h3>
+        <p class="cm-sub">Choose a starting point. Every piece is tailored to you.</p>
+        <div class="cm-types">
+          <div class="cm-type">
+            <span class="art-frame"><img src="assets/rabbi-jaeger.jpg" alt="Watercolor portrait example" /></span>
+            <h4>Watercolor portrait</h4>
+            <p>Luminous washes of color around a face you love: a parent, grandparent, or rebbe.</p>
+            <button type="button" data-type="Watercolor portrait">Start a watercolor portrait</button>
+          </div>
+          <div class="cm-type">
+            <span class="art-frame"><img src="assets/oil-portrait-blue.jpg" alt="Oil portrait example" /></span>
+            <h4>Oil portrait</h4>
+            <p>Rich, layered brushwork for a lasting heirloom, ideal for memorial and family portraits.</p>
+            <button type="button" data-type="Oil portrait">Start an oil portrait</button>
+          </div>
+          <div class="cm-type">
+            <span class="art-frame"><img src="assets/kesubah-mountains-cropped.jpg" alt="Custom kesubah example" /></span>
+            <h4>Custom kesubah</h4>
+            <p>Your kesubah text surrounded by a hand-painted landscape chosen with you as a couple.</p>
+            <button type="button" data-type="Custom kesubah">Start a custom kesubah</button>
+          </div>
+          <div class="cm-type">
+            <span class="art-frame"><img src="assets/kotel-commission-studio.webp" alt="Custom painting example" /></span>
+            <h4>Custom painting</h4>
+            <p>Jerusalem, a holy scene, or a place that matters to your family, painted at the size your space needs.</p>
+            <button type="button" data-type="Custom painting">Start a custom painting</button>
+          </div>
+        </div>
+
+        <div class="cm-steps-wrap">
+          <p class="cm-kicker">How it works</p>
+          <h3 class="cm-heading">From your idea to your wall</h3>
+          <p class="cm-sub">A simple, personal process, so you know exactly what you're getting before the painting begins.</p>
+          <div class="cm-steps">
+            <div class="cm-step"><span>01</span><h4>Share your vision</h4><p>Send photos and tell Avigail about the person, place, or occasion.</p></div>
+            <div class="cm-step"><span>02</span><h4>Approve the sketch</h4><p>Avigail prepares a sketch and composition for you to review before any paint is applied.</p></div>
+            <div class="cm-step"><span>03</span><h4>The painting</h4><p>Avigail paints your piece by hand and shares progress along the way.</p></div>
+            <div class="cm-step"><span>04</span><h4>Delivered to you</h4><p>Your signed original is carefully packed and shipped to your door.</p></div>
+          </div>
+          <div class="cm-occasions" aria-label="Popular occasions">
+            <span>Weddings</span><span>Anniversaries</span><span>Bar &amp; Bat Mitzvahs</span><span>Memorial portraits</span><span>Gifts for a Rebbe</span><span>New homes</span>
+          </div>
+        </div>
+
+        <div class="cm-form-wrap" id="cm-form">
+          <aside>
+            <p class="cm-kicker">Request a commission</p>
+            <h3 class="cm-heading">Let's create something meaningful.</h3>
+            <p>Tell Avigail what you have in mind. She personally reviews every request and will reach out to talk through your vision, size, and timeline.</p>
+            <p>Prefer email? Write to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a>.</p>
+          </aside>
+          <form class="cm-form" id="commission-form">
+            <div class="form-field"><label for="cm-name">Name</label><input id="cm-name" name="name" required /></div>
+            <div class="form-field"><label for="cm-email">Email</label><input id="cm-email" name="email" type="email" required /></div>
+            <div class="form-field"><label for="cm-phone">Phone</label><input id="cm-phone" name="phone" type="tel" /></div>
+            <div class="form-field"><label for="cm-type">Commission type</label>
+              <select id="cm-type" name="type" required>
+                <option value="" selected disabled>Choose one</option>
+                <option>Watercolor portrait</option><option>Oil portrait</option><option>Custom kesubah</option><option>Custom painting</option>
+              </select></div>
+            <div class="form-field"><label for="cm-occasion">Occasion</label><input id="cm-occasion" name="occasion" placeholder="Wedding, gift, memorial…" /></div>
+            <div class="form-field"><label for="cm-date">Needed by</label><input id="cm-date" name="date" type="date" /></div>
+            <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /></div>
+            <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
+            <button class="cm-cta" type="submit">Send request</button>
+          </form>
+        </div>
+      </div>
     </section>
 
     <section class="faq-wrap" aria-labelledby="faq-title">
@@ -954,8 +1085,20 @@
         cards.forEach(card => {
           card.hidden = card.dataset.category !== filter;
         });
+        const showCommissions = filter === 'commission-info';
+        document.getElementById('commissions').hidden = !showCommissions;
+        document.querySelector('.gallery').hidden = showCommissions;
       });
     });
+
+
+    document.querySelectorAll('[data-scroll="cm-form"]').forEach(btn => btn.addEventListener('click', () => {
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
+    }));
+    document.querySelectorAll('.cm-type button').forEach(btn => btn.addEventListener('click', () => {
+      document.getElementById('cm-type').value = btn.dataset.type;
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
+    }));
 
     const dialog = document.getElementById('lightbox');
     const dialogImage = document.getElementById('lightbox-image');
