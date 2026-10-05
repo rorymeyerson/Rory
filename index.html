@@ -694,12 +694,15 @@
     .cm-form label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
     .cm-form input[type=file] { padding: 10px; background: #fff; border: 1px dashed var(--line); width: 100%; }
     .cm-form .cm-cta { grid-column: 1 / -1; justify-self: start; }
+    .cm-types-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 5vw, 64px); max-width: 920px; margin-left: auto; margin-right: auto; }
+    .cm-types-two .cm-type h4 { font-size: 1.8rem; }
+    .cm-types-two .cm-type p { font-size: 1rem; }
     @media (max-width: 900px) {
       .cm-hero, .cm-form-wrap { grid-template-columns: 1fr; }
       .cm-types, .cm-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 560px) {
-      .cm-types, .cm-steps, .cm-form { grid-template-columns: 1fr; }
+      .cm-types, .cm-types-two, .cm-steps, .cm-form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -908,8 +911,8 @@
           <div>
             <p class="cm-kicker">Commissions</p>
             <h3>A painting made for your family, to be passed down.</h3>
-            <p>Commissioning a piece from Avigail means owning something made only for you: a beloved face, a meaningful place, or the words of your kesubah, painted by hand with care and intention.</p>
-            <p>Every commission is a collaboration. You share your vision and photos, approve a sketch, and Avigail brings it to life in oil or watercolor.</p>
+            <p>Commissioning a piece from Avigail means owning something made only for you: the words of your kesubah set in a hand-painted landscape, or a beloved face or holy place in rich oils.</p>
+            <p>Every commission is a collaboration. You share your vision and photos, approve a sketch, and Avigail brings it to life by hand.</p>
             <ul class="cm-points">
               <li>Personal collaboration from first sketch to final brushstroke</li>
               <li>Original artwork, signed by the artist</li>
@@ -920,32 +923,20 @@
           <img src="assets/father-and-daughter.jpg" alt="Commissioned oil portrait of a father holding his young daughter, hanging in a living room" />
         </div>
 
-        <h3 class="cm-heading">What Avigail paints</h3>
-        <p class="cm-sub">Choose a starting point. Every piece is tailored to you.</p>
-        <div class="cm-types">
-          <div class="cm-type">
-            <span class="art-frame"><img src="assets/rabbi-jaeger.jpg" alt="Watercolor portrait example" /></span>
-            <h4>Watercolor portrait</h4>
-            <p>Luminous washes of color around a face you love: a parent, grandparent, or rebbe.</p>
-            <button type="button" data-type="Watercolor portrait">Start a watercolor portrait</button>
-          </div>
-          <div class="cm-type">
-            <span class="art-frame"><img src="assets/oil-portrait-blue.jpg" alt="Oil portrait example" /></span>
-            <h4>Oil portrait</h4>
-            <p>Rich, layered brushwork for a lasting heirloom, ideal for memorial and family portraits.</p>
-            <button type="button" data-type="Oil portrait">Start an oil portrait</button>
-          </div>
+        <h3 class="cm-heading">Two ways to commission</h3>
+        <p class="cm-sub">Every piece is designed with you and painted by hand.</p>
+        <div class="cm-types cm-types-two">
           <div class="cm-type">
             <span class="art-frame"><img src="assets/kesubah-mountains-cropped.jpg" alt="Custom kesubah example" /></span>
             <h4>Custom kesubah</h4>
-            <p>Your kesubah text surrounded by a hand-painted landscape chosen with you as a couple.</p>
+            <p>The words of your kesubah surrounded by a hand-painted watercolor landscape, designed with you as a couple and made to hang in your home for a lifetime.</p>
             <button type="button" data-type="Custom kesubah">Start a custom kesubah</button>
           </div>
           <div class="cm-type">
-            <span class="art-frame"><img src="assets/kotel-commission-studio.webp" alt="Custom painting example" /></span>
-            <h4>Custom painting</h4>
-            <p>Jerusalem, a holy scene, or a place that matters to your family, painted at the size your space needs.</p>
-            <button type="button" data-type="Custom painting">Start a custom painting</button>
+            <span class="art-frame"><img src="assets/oil-portrait-blue.jpg" alt="Commissioned oil painting example" /></span>
+            <h4>Oil painting</h4>
+            <p>A portrait of someone you love, Jerusalem, or a holy scene, painted in rich, layered oils as a lasting family heirloom.</p>
+            <button type="button" data-type="Oil painting">Start an oil painting</button>
           </div>
         </div>
 
@@ -978,7 +969,7 @@
             <div class="form-field"><label for="cm-type">Commission type</label>
               <select id="cm-type" name="type" required>
                 <option value="" selected disabled>Choose one</option>
-                <option>Watercolor portrait</option><option>Oil portrait</option><option>Custom kesubah</option><option>Custom painting</option>
+                <option>Custom kesubah</option><option>Oil painting</option>
               </select></div>
             <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /></div>
             <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
