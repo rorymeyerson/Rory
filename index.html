@@ -973,6 +973,7 @@
             <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /></div>
             <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
             <button class="cs-btn" type="submit">Send request</button>
+            <p class="payment-note" id="cm-note" hidden></p>
           </form>
         </div>
       </div>
@@ -1087,6 +1088,30 @@
       document.getElementById('cm-type').value = btn.dataset.type;
       document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
     }));
+
+
+    document.getElementById('commission-form').addEventListener('submit', event => {
+      event.preventDefault();
+      const form = event.target;
+      if (!form.reportValidity()) return;
+      const get = id => document.getElementById(id).value.trim();
+      const photos = document.getElementById('cm-photos').files.length;
+      const subject = `Commission request: ${get('cm-type')} from ${get('cm-name')}`;
+      const body = [
+        `Name: ${get('cm-name')}`,
+        `Email: ${get('cm-email')}`,
+        `Phone: ${get('cm-phone') || '-'}`,
+        `Commission type: ${get('cm-type')}`,
+        '',
+        get('cm-details'),
+        '',
+        photos ? `(I have ${photos} reference photo${photos > 1 ? 's' : ''} to attach.)` : '',
+      ].join('\n');
+      window.location.href = `mailto:meyersonavigail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const note = document.getElementById('cm-note');
+      note.textContent = 'Your email app should open with your request filled in. Please attach your reference photos there and press send. If nothing opened, email meyersonavigail@gmail.com directly.';
+      note.hidden = false;
+    });
 
     const dialog = document.getElementById('lightbox');
     const dialogImage = document.getElementById('lightbox-image');
