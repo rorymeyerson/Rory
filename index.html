@@ -967,12 +967,14 @@
     const PRODUCTS = {
       watercolor: {
         kicker: 'Fine-art print',
+        heading: 'Make it part of your space.',
         medium: 'Watercolor',
         pitch: 'Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.',
         sizes: [['10 × 14', 50], ['14 × 20', 80], ['18 × 26', 140], ['26 × 38', 220]],
       },
       kesubah: {
         kicker: 'Kesubah print',
+        heading: 'Begin your home with beauty.',
         medium: 'Watercolor and ink',
         pitch: 'A fine-art print of Avigail’s hand-painted kesubah, with the words of the kesubah set within her original watercolor artwork. Checkout is secure and your shipping details are collected on the next step.',
         sizes: [['12 × 18', 300]],
@@ -991,6 +993,7 @@
       printImage.alt = thumb.alt;
       printArtworkName.textContent = selectedArtwork;
       document.getElementById('print-kicker').textContent = config.kicker;
+      document.getElementById('print-title').textContent = config.heading;
       document.getElementById('print-medium').textContent = config.medium;
       document.getElementById('print-pitch').textContent = config.pitch;
       orderForm.reset();
