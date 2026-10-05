@@ -441,7 +441,7 @@
     .print-preview-image-wrap {
       width: 100%;
       max-width: 380px;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 3 / 4;
       display: grid;
       place-items: center;
       position: relative;
@@ -463,7 +463,7 @@
       pointer-events: none;
       user-select: none;
     }
-    .print-preview img { width: 100%; height: 100%; object-fit: contain; }
+    .print-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
     .print-preview figcaption {
       width: 100%;
       max-width: 380px;
@@ -531,6 +531,7 @@
       font: 400 .92rem/1.4 "DM Sans", sans-serif;
     }
     .form-field textarea { min-height: 82px; resize: vertical; }
+    .form-field select.single-option { background-image: none; padding-right: 13px; pointer-events: none; }
     .form-field select {
       appearance: none;
       background-image: linear-gradient(45deg, transparent 50%, var(--wine) 50%), linear-gradient(135deg, var(--wine) 50%, transparent 50%);
@@ -997,6 +998,8 @@
       printSize.innerHTML = (single ? '' : '<option value="" selected disabled>Select a size</option>') +
         config.sizes.map(([size, price]) => `<option value="${size}|${price}">${size} — $${price}</option>`).join('');
       if (single) printSize.selectedIndex = 0;
+      printSize.classList.toggle('single-option', single);
+      printSize.tabIndex = single ? -1 : 0;
       orderError.hidden = true;
       orderSubmit.disabled = false;
       orderSubmit.textContent = 'Continue to secure checkout';
