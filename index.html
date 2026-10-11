@@ -890,8 +890,9 @@
       .hero-copy { padding: calc(var(--nav-h) + 12px) 20px 48px; }
     }
 
-    /* ---- Hero variants (preview) ---- */
-    .hero-plaque, .hero-scroll { display: none; }
+    /* ---- Hero opening: painting drifts in while the signature is written ---- */
+    :root { --frame: clamp(20px, 3vw, 44px); }
+    .hero { min-height: 0; height: calc(100svh - 64px); max-height: 980px; }
     .hero-copy {
       position: absolute;
       z-index: 2;
@@ -901,73 +902,32 @@
       margin: 0;
       padding: 0;
     }
+    .hero h1 { line-height: 0; }
     .hero-logo {
+      display: block;
       width: clamp(200px, 25vw, 400px);
+      height: auto;
       margin: 0;
+      overflow: visible;
       filter: drop-shadow(0 2px 10px rgba(20,30,45,.35)) drop-shadow(0 0 1px rgba(20,30,45,.25));
     }
-    .hero-art img { filter: brightness(1.05) saturate(1.04); }
+    .hero-art img {
+      filter: brightness(1.05) saturate(1.04);
+      transform-origin: 40% 38%;
+      animation: heroDrift 9s cubic-bezier(.2,.6,.2,1) both;
+    }
     .hero-art::after {
       background:
         radial-gradient(ellipse 34% 30% at 14% 13%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%),
         linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 16%);
     }
-    :root { --frame: clamp(20px, 3vw, 44px); }
-
-    /* Version A: nearly full screen, lighter, signature framed top-left */
-    .hero-v-a .hero { min-height: 0; height: calc(100svh - 64px); max-height: 980px; }
-
-    /* Version B: museum-style reveal */
-    .hero-v-b .hero { min-height: 0; height: 100svh; max-height: 1080px; }
-    .hero-v-b .hero-art img { animation: heroDrift 16s cubic-bezier(.2,.6,.2,1) both; transform-origin: 40% 38%; }
-    .hero-v-b .hero-logo { animation: signWrite 2.4s .5s cubic-bezier(.6,.05,.3,1) both; }
-    .hero-v-b .hero-plaque {
-      display: block;
-      position: absolute;
-      z-index: 2;
-      right: var(--frame);
-      bottom: var(--frame);
-      width: min(320px, calc(100% - 2 * var(--frame)));
-      padding: 20px 22px 18px;
-      background: rgba(251, 249, 245, .93);
-      -webkit-backdrop-filter: blur(6px);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 18px 40px rgba(18,30,46,.18);
-      animation: plaqueIn .9s 2.4s ease-out both;
-    }
-    .plaque-title { margin: 0; font: 400 1.32rem/1.15 "Newsreader", serif; color: var(--ink); }
-    .plaque-meta { margin: 6px 0 14px; font-size: .78rem; letter-spacing: .04em; color: var(--muted); }
-    .plaque-links { display: flex; gap: 18px; padding-top: 12px; border-top: 1px solid var(--line); }
-    .plaque-links a { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: var(--wine); }
-    .plaque-links a:hover { color: var(--gold); }
-    .hero-v-b .hero-scroll {
-      display: block;
-      position: absolute;
-      z-index: 2;
-      left: 50%;
-      bottom: 22px;
-      width: 26px; height: 42px;
-      margin-left: -13px;
-      border: 1.5px solid rgba(255,255,255,.85);
-      border-radius: 14px;
-      animation: plaqueIn .9s 2.8s ease-out both;
-    }
-    .hero-scroll span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: #fff; animation: scrollDot 1.8s ease-in-out infinite; }
     @keyframes heroDrift { from { transform: scale(1.14); } to { transform: scale(1); } }
-    @keyframes signWrite { from { clip-path: inset(0 100% 0 0); opacity: .2; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
-    @keyframes plaqueIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-    @keyframes scrollDot { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-v-b .hero-art img, .hero-v-b .hero-logo, .hero-v-b .hero-plaque, .hero-v-b .hero-scroll, .hero-scroll span { animation: none; }
-    }
+    @media (prefers-reduced-motion: reduce) { .hero-art img { animation: none; } }
     @media (max-width: 860px) {
-      .hero-copy { padding: 0; }
-      .hero-logo { width: clamp(190px, 52vw, 300px); }
+      .hero { height: calc(100svh - 56px); }
       .hero-copy { top: calc(var(--nav-h) + 4px); }
+      .hero-logo { width: clamp(190px, 52vw, 300px); }
       .hero-art::after { background: radial-gradient(ellipse 60% 26% at 30% 15%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%), linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 14%); }
-      .hero-v-a .hero { height: calc(100svh - 56px); }
-      .hero-v-b .hero-scroll { display: none; }
-      .hero-v-b .hero-plaque { left: var(--frame); right: var(--frame); width: auto; }
     }
   </style>
   <script type="application/ld+json">
@@ -992,7 +952,7 @@
   }
   </script>
 </head>
-<body class="hero-v-a">
+<body>
   <header class="site-nav" id="site-nav">
     <div class="nav-inner">
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
@@ -1011,20 +971,21 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title" aria-label="Avigail"><img class="hero-logo" src="assets/avigail-logo.png" alt="" /></h1>
+        <h1 id="hero-title" aria-label="Avigail">
+          <svg class="hero-logo" viewBox="0 0 986 429" aria-hidden="true" focusable="false">
+            <defs>
+              <mask id="sig-ink" maskUnits="userSpaceOnUse" x="-20" y="-20" width="1026" height="469">
+                <g id="sig-strokes" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"></g>
+                <rect id="sig-full" x="0" y="0" width="986" height="429" fill="#fff" opacity="1"></rect>
+              </mask>
+            </defs>
+            <image href="assets/avigail-logo.png" x="0" y="0" width="986" height="429" mask="url(#sig-ink)"></image>
+          </svg>
+        </h1>
       </div>
       <div class="hero-art">
         <img src="assets/hero-kotel-full.jpg" alt="Painting of the Western Wall beneath a radiant sunburst sky" fetchpriority="high" />
       </div>
-      <aside class="hero-plaque" aria-label="About this painting">
-        <p class="plaque-title">Radiance at the Western Wall</p>
-        <p class="plaque-meta">Oil on canvas &middot; Avigail Meyerson</p>
-        <div class="plaque-links">
-          <a href="#commissions" data-open-tab="commission-info">Commission a piece</a>
-          <a href="#collection" data-open-tab="watercolor">Shop prints</a>
-        </div>
-      </aside>
-      <a class="hero-scroll" href="#about" aria-label="Scroll to About"><span></span></a>
     </section>
 
     <section class="about-wrap" id="about" aria-labelledby="about-title">
@@ -1395,7 +1356,7 @@
     });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
-    document.querySelectorAll('#nav-links a, .plaque-links a').forEach(link => link.addEventListener('click', event => {
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
       closeMenu();
       const filter = link.dataset.openTab;
       if (filter) {
@@ -1432,6 +1393,52 @@
     window.addEventListener('scroll', markActive, { passive: true });
     document.querySelectorAll('.collection-tab').forEach(t => t.addEventListener('click', () => setTimeout(markActive, 0)));
     markActive();
+
+
+    // Signature: revealed along the path of her pen (A up and down, the word, then the curl that crosses the A)
+    (function () {
+      var STROKES = [{"d":"M9 285 L13 284 L17 282 L21 280 L25 278 L29 275 L33 272 L37 269 L41 267 L45 264 L49 261 L53 258 L57 255 L61 251 L65 248 L69 245 L73 241 L77 238 L81 234 L85 230 L89 227 L93 223 L97 219 L101 215 L104 211 L108 207 L112 203 L116 199 L119 195 L122 191 L130 183 L142 171 L148 163 L150 159 L153 155 L156 151 L159 147 L163 144 L167 142 L171 140 L174 139","w":18,"lift":true},{"d":"M175 138 L177 134 L180 130 L182 126 L185 122 L187 118 L189 114 L192 110 L194 106 L197 102 L199 98 L202 94 L204 90 L207 86 L209 82 L212 78 L214 74 L216 70 L219 66 L221 62 L222 60","w":26,"lift":false},{"d":"M222 60 L220 64 L218 68 L216 72 L213 76 L210 80 L208 84 L206 88 L203 92 L200 96 L198 100 L196 104 L193 108 L191 112 L188 116 L186 120 L183 124 L181 128 L179 132 L176 136 L175 138","w":26,"lift":false},{"d":"M175 139 L176 143 L177 147 L176 151 L175 155 L174 159 L173 163 L170 171 L162 184 L159 192 L158 196 L156 200 L154 204 L153 208 L151 212 L150 215 L150 217","w":18,"lift":false},{"d":"M149 218 L148 222 L146 226 L145 230 L144 234 L143 238 L142 242 L141 246 L140 250 L140 254 L139 258 L139 262 L140 266 L140 270 L141 274 L143 278 L146 282 L150 284 L154 285 L158 286 L162 286 L166 284 L170 282 L174 280 L178 277 L182 273 L186 269 L190 265 L193 261 L197 257 L200 253 L203 249 L206 245 L209 241 L212 237 L215 233 L218 230 L222 227 L226 225 L230 223 L232 220 L234 217 L236 213 L237 209 L239 205 L241 201 L243 197 L245 193 L247 189 L250 185 L252 181 L254 177 L254 175 L254 176 L252 180 L250 184 L248 188 L246 192 L244 196 L242 200 L240 204 L238 208 L236 212 L234 216 L233 220 L234 223 L235 227 L236 231 L236 235 L238 239 L240 243 L243 246 L247 247 L251 248 L255 247 L259 246 L263 244 L267 240 L271 236 L274 232 L278 228 L280 224 L283 220 L286 216 L288 212 L290 208 L292 204 L295 200 L297 196 L299 192 L302 188 L305 185 L306 181 L307 177 L308 173 L309 169 L310 165 L312 161 L312 158","w":26,"lift":false},{"d":"M306 187 L310 189 L314 190 L318 191 L322 191 L326 190 L330 188 L334 186 L338 184 L342 183 L346 182 L350 180 L353 178 L355 175 L357 171 L359 167 L362 163 L364 159 L367 155 L368 152 L368 153 L366 156 L363 160 L361 164 L359 168 L357 172 L355 176 L354 179 L354 183 L354 187 L354 191 L354 195 L354 199 L354 203 L354 208 L352 212 L350 216 L347 220 L345 224 L343 228 L341 232 L340 233 L342 231 L344 227 L346 223 L348 219 L350 215 L352 211 L355 208 L359 205 L363 204 L367 204 L371 204 L375 204 L379 202 L383 200 L386 196 L389 192 L392 188 L395 184 L398 180 L402 177 L405 173 L408 169 L412 166 L416 163 L420 162 L424 161 L428 160 L435 156 L442 152 L441 153 L438 158 L437 161 L437 165 L437 169 L436 173 L435 177 L435 181 L434 185 L433 189 L432 193 L431 197 L430 201 L429 205 L428 209 L428 213 L428 217 L426 220 L424 222 L420 224 L416 225 L412 228 L408 230 L404 233 L400 234 L396 234 L392 234 L388 232 L386 228 L385 224 L384 220 L384 216 L383 212 L383 208 L383 205 L383 204 L383 207 L383 211 L384 215 L384 219 L385 223 L386 227 L388 230 L391 233 L395 234 L399 234 L403 233 L407 231 L411 228 L415 226 L419 224 L423 223 L427 222 L430 224 L431 228 L432 232 L433 236 L434 240 L435 244 L436 247 L435 251 L433 255 L431 259 L428 263 L427 267 L425 271 L423 275 L420 279 L417 283 L414 287 L411 291 L408 295 L405 298 L401 299 L397 300 L393 301 L389 303 L385 306 L381 310 L377 314 L373 318 L369 322 L365 326 L361 330 L357 334 L353 338 L349 342 L345 346 L342 350 L338 354 L334 358 L331 362 L328 366 L324 370 L321 374 L318 378 L315 382 L312 386 L310 390 L307 394 L305 398 L303 402 L302 406 L302 410 L303 414 L306 416 L310 416 L314 415 L318 414 L322 413 L326 411 L330 409 L334 406 L338 403 L342 400 L346 397 L350 394 L354 390 L358 387 L362 383 L365 379 L369 375 L372 371 L375 367 L377 363 L380 359 L382 355 L385 351 L388 347 L390 343 L392 339 L394 335 L396 331 L398 327 L400 323 L402 319 L404 315 L405 311 L406 307 L406 303 L407 299 L409 294 L412 290 L415 286 L418 282 L421 278 L423 274 L426 270 L427 266 L429 262 L431 258 L434 254 L436 250 L438 248 L441 246 L445 244 L449 243 L453 240 L457 237 L461 233 L465 229 L469 225 L473 221 L477 218 L481 214 L485 210 L489 206 L493 203 L497 201 L501 200 L504 198 L507 195 L509 191 L512 187 L515 183 L519 179 L522 175 L526 171 L530 167 L534 163 L538 159 L542 155 L546 151 L549 149 L548 150 L545 152 L541 156 L537 160 L533 164 L529 168 L525 172 L521 176 L518 180 L514 184 L511 188 L508 192 L507 196 L507 200 L508 204 L510 208 L513 212 L517 214 L521 215 L525 215 L529 214 L533 213 L537 211 L541 208 L545 204 L549 202 L553 200 L557 198 L560 196 L561 192 L563 188 L564 184 L565 180 L566 176 L568 172 L569 168 L571 164 L572 160 L574 156 L576 152 L577 150 L576 151 L575 155 L573 159 L571 163 L570 167 L568 171 L567 175 L565 179 L564 183 L563 187 L561 191 L560 195 L561 199 L562 203 L563 207 L564 211 L566 215 L569 218 L573 220 L577 220 L581 220 L585 218 L589 216 L593 213 L597 209 L601 205 L605 201 L609 198 L613 196 L617 194 L620 191 L622 187 L623 183 L625 179 L627 175 L630 171 L632 167 L634 163 L636 159 L638 155 L638 154 L637 156 L635 160 L633 164 L631 168 L629 172 L626 176 L624 180 L622 184 L621 188 L620 192 L621 196 L622 200 L623 204 L624 208 L627 212 L631 215 L635 217 L639 218 L643 219 L647 219 L651 218 L655 217 L659 216 L663 215 L667 213 L671 211 L675 209 L679 207 L683 204 L687 202 L691 200 L695 199 L699 194 L702 187 L702 186 L701 190 L702 190 L704 182 L704 176 L704 172 L704 168 L705 164 L705 160 L706 156 L707 152 L709 148 L710 144 L712 140 L714 136 L715 132 L717 128 L719 124 L721 120 L723 116 L725 112 L727 108 L729 104 L731 100 L734 96 L736 92 L739 88 L742 84 L744 80 L747 76 L750 72 L753 68 L756 64 L760 60 L763 56 L766 52 L769 48 L773 44 L777 40 L781 36 L785 32 L789 29 L793 25 L797 22 L801 19 L805 16 L809 14 L813 12 L817 10 L821 8 L825 7 L829 8 L832 11 L833 15 L834 19 L833 23 L833 27 L832 31 L831 35 L830 39 L828 43 L827 47 L825 51 L823 55 L821 59 L819 63 L817 67 L814 71 L812 75 L809 79 L807 83 L804 87 L801 91 L798 95 L795 99 L792 103 L789 107 L786 111 L782 115 L779 119 L775 123 L771 127 L767 131 L763 135 L760 139 L756 143 L752 147 L748 150 L744 154 L740 158 L736 161 L732 165 L728 168 L724 172 L720 175 L716 177 L712 178 L708 179 L705 181 L703 184 L702 188 L701 192 L701 196 L702 200 L703 204 L704 208 L705 212 L706 216 L708 220 L710 224 L712 228 L715 232 L719 236 L723 240 L727 243 L731 245 L735 247 L739 249 L743 250 L747 251 L751 252 L755 253 L759 254 L763 254 L767 254 L771 254 L775 254 L779 254 L783 253 L787 253 L791 252 L795 252 L799 251 L803 250 L807 249 L811 248 L815 246 L819 245 L823 243 L827 242 L831 240 L835 238 L839 237 L843 235 L847 233 L851 231 L855 229 L859 227 L863 225 L867 223 L871 221 L875 219 L879 217 L883 214 L887 212 L891 210 L895 207 L899 205 L903 203 L907 201 L911 198 L915 196 L919 193 L923 191 L927 188 L931 186 L935 184 L939 181 L943 179 L947 177 L951 174 L955 172 L959 170 L963 167 L967 165 L971 162 L975 160 L979 158 L982 156","w":32,"lift":true},{"d":"M56 191 L52 192 L48 192 L44 192 L40 192 L36 190 L32 188 L28 186 L24 182 L22 178 L20 174 L19 170 L19 166 L20 162 L21 158 L24 154 L27 150 L31 147 L35 145 L39 144 L43 143 L47 143 L51 143 L55 144 L59 146 L63 147 L67 149 L71 152 L75 155 L79 158 L83 160 L87 163 L91 166 L95 168 L99 170 L103 172 L107 173 L111 174 L115 175 L119 176 L123 177 L127 178 L131 178 L135 178 L139 178 L143 177 L146 177 L150 177 L154 177 L158 177 L163 176 L167 176 L171 175 L175 174 L179 173 L183 173 L187 173 L191 172 L195 171 L199 170 L203 169 L207 168 L211 167 L215 166 L219 165 L223 164 L227 163 L231 162 L235 160 L239 160 L243 159 L247 159 L251 158 L255 158 L260 156 L264 154 L268 150 L272 148 L276 146 L280 145 L284 143 L288 142 L292 140 L296 138 L300 137 L304 135 L308 134 L312 132 L316 130 L320 128 L324 127 L328 125 L332 123 L336 121 L340 119 L344 118 L348 116 L352 114 L356 112 L360 110 L364 108 L368 106 L372 104 L376 102 L380 100 L384 98 L388 96 L392 94 L396 91 L399 88 L401 87","w":26,"lift":true}];
+      var NS = 'http://www.w3.org/2000/svg';
+      var group = document.getElementById('sig-strokes');
+      var full = document.getElementById('sig-full');
+      if (!group || !full) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var paths = [], lens = [];
+      STROKES.forEach(function (st) {
+        var p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', st.d); p.setAttribute('stroke-width', st.w);
+        group.appendChild(p);
+        var L = p.getTotalLength(); paths.push(p); lens.push(L);
+        p.style.strokeDasharray = L + ' ' + L; p.style.strokeDashoffset = L;
+      });
+      full.setAttribute('opacity', 0);
+      var groups = [];
+      STROKES.forEach(function (st, i) {
+        if (st.lift || !groups.length) groups.push({ items: [], total: 0 });
+        var g = groups[groups.length - 1];
+        g.items.push({ i: i, from: g.total, L: lens[i] }); g.total += lens[i];
+      });
+      var at = 450;
+      groups.forEach(function (g) { g.start = at; g.dur = Math.max(300, g.total / 2.0); at += g.dur + 150; });
+      var ease = function (t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
+      var easeLong = function (t) { return 1 - Math.pow(1 - t, 1.6); };
+      var start = null;
+      function step(now) {
+        if (start === null) start = now;
+        var el = now - start, done = true;
+        groups.forEach(function (g) {
+          var t = Math.min(1, Math.max(0, (el - g.start) / g.dur));
+          var drawn = g.total * (g.total > 1500 ? easeLong(t) : ease(t));
+          g.items.forEach(function (it) {
+            paths[it.i].style.strokeDashoffset = it.L - Math.min(it.L, Math.max(0, drawn - it.from));
+          });
+          if (t < 1) done = false;
+        });
+        if (!done) requestAnimationFrame(step);
+        else { full.style.transition = 'opacity .35s ease'; full.setAttribute('opacity', 1); }
+      }
+      requestAnimationFrame(step);
+    })();
 
     if (location.hash === '#commissions') openCommissions();
 
