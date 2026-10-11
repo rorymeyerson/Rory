@@ -1458,7 +1458,7 @@
       var ctx = canvas.getContext('2d');
       var ink = document.createElement('canvas'), ictx = ink.getContext('2d');
       var lastW = 0;
-      var logo = new Image(), scale = 1, dpr = 1, ready = false, raf = 0, start = null, lastEl = 0;
+      var logo = new Image(), scale = 1, dpr = 1, ready = false, raf = 0, lastEl = 0;
 
       function size() {
         var r = box.getBoundingClientRect();
@@ -1505,11 +1505,14 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(ink, 0, 0);
       }
+      // The clock advances by at most ~2 frames per tick, so if the phone stalls (for example while
+      // unpacking the painting) the pen pauses and carries on, instead of jumping to the end.
+      var elapsed = 0, prev = null;
       function step(now) {
-        if (start === null) start = now;
-        var el = now - start;
-        draw(el);
-        if (el < END + SETTLE) raf = requestAnimationFrame(step);
+        var dt = prev === null ? 0 : Math.min(now - prev, 34);
+        prev = now; elapsed += dt;
+        draw(elapsed);
+        if (elapsed < END + SETTLE) raf = requestAnimationFrame(step);
         else box.classList.add('sig-done');
       }
       function startDrift() {
@@ -1521,15 +1524,22 @@
         cancelAnimationFrame(raf);
         box.classList.remove('sig-done');
         startDrift();
-        start = null;
+        elapsed = 0; prev = null;
         draw(0);
         raf = requestAnimationFrame(step);
       }
-      // Start the painting's drift once it has loaded, so it never pops in mid-motion
-      if (heroImg && !reduced) {
-        if (heroImg.complete && heroImg.naturalWidth) startDrift();
-        else heroImg.addEventListener('load', startDrift, { once: true });
-      }
+      // Wait until the painting is loaded and decoded, so the drift and the pen start together
+      // and the phone isn't busy unpacking the image while the pen is writing.
+      var paintingReady = new Promise(function (resolve) {
+        if (!heroImg) return resolve();
+        var done = function () {
+          if (heroImg.decode) heroImg.decode().then(resolve, resolve); else resolve();
+        };
+        if (heroImg.complete && heroImg.naturalWidth) done();
+        else { heroImg.addEventListener('load', done, { once: true }); heroImg.addEventListener('error', resolve, { once: true }); }
+        setTimeout(resolve, 2500);
+      });
+      paintingReady.then(function () { if (!ready) startDrift(); });
       // If the signature can't animate quickly, show it as a plain image
       var fallbackTimer = setTimeout(function () { if (!ready) box.classList.add('sig-fallback'); }, 3000);
       logo.onerror = function () { box.classList.add('sig-fallback'); };
@@ -1538,10 +1548,13 @@
         clearTimeout(fallbackTimer);
         if (box.classList.contains('sig-fallback')) return;
         size();
+        draw(0);
         ready = true;
         canvas.hidden = false;
         box.classList.add('sig-ready');
-        play();
+        paintingReady.then(function () {
+          requestAnimationFrame(function () { requestAnimationFrame(play); });
+        });
       };
       logo.src = img.currentSrc || img.src;
 
