@@ -960,9 +960,9 @@
       </button>
       <nav class="nav-links" id="nav-links" aria-label="Main">
         <a href="#about">About</a>
-        <a href="#collection" data-open-tab="commissions">Collection</a>
+        <a href="#collection" data-open-tab="watercolor">Collection</a>
         <a href="#collection" data-open-tab="kesubahs">Kesubahs</a>
-        <a href="#collection" data-open-tab="watercolor">Prints</a>
+        <a href="#collection" data-open-tab="prints">Prints</a>
         <a href="#commissions" data-open-tab="commission-info">Commission</a>
         <a class="nav-cta" href="#contact">Contact</a>
       </nav>
@@ -1016,6 +1016,7 @@
         <button class="collection-tab" type="button" data-filter="watercolor" aria-pressed="true">Watercolor Portraits</button>
         <button class="collection-tab" type="button" data-filter="commissions" aria-pressed="false">Originals</button>
         <button class="collection-tab" type="button" data-filter="kesubahs" aria-pressed="false">Kesubahs</button>
+        <button class="collection-tab" type="button" data-filter="prints" aria-pressed="false">Prints</button>
         <button class="collection-tab" type="button" data-filter="commission-info" aria-pressed="false">Commissions</button>
       </div>
 
@@ -1319,7 +1320,7 @@
         const filter = tab.dataset.filter;
         tabs.forEach(item => item.setAttribute('aria-pressed', String(item === tab)));
         cards.forEach(card => {
-          card.hidden = card.dataset.category !== filter;
+          card.hidden = filter === 'prints' ? !card.querySelector('.buy-now') : card.dataset.category !== filter;
         });
         const showCommissions = filter === 'commission-info';
         document.getElementById('commissions').hidden = !showCommissions;
@@ -1385,7 +1386,8 @@
       });
       if (current === 'collection') {
         const pressed = document.querySelector('.collection-tab[aria-pressed="true"]');
-        current = `a[data-open-tab="${pressed ? pressed.dataset.filter : 'watercolor'}"]`;
+        const f = pressed ? pressed.dataset.filter : 'watercolor';
+        current = `a[data-open-tab="${f === 'commissions' ? 'watercolor' : f}"]`;
       }
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = 'a[href="#contact"]';
       navLinks.querySelectorAll('a').forEach(a => a.classList.toggle('active', !!current && a.matches(current) && !a.classList.contains('nav-cta')));
