@@ -876,6 +876,19 @@
       .hero-copy { width: calc(100% - 40px); padding: calc(var(--nav-h) + 24px) 0 44px; }
       .hero-art { aspect-ratio: auto; }
     }
+
+    /* Hero v2: no nav logo, signature higher and further left */
+    .nav-inner { justify-content: flex-end; }
+    .hero { align-items: flex-start; }
+    .hero-copy {
+      width: auto;
+      margin: 0;
+      padding: calc(var(--nav-h) + clamp(8px, 3vh, 36px)) clamp(22px, 4vw, 64px) 60px;
+    }
+    .hero-logo { margin-top: 0; margin-left: -6px; }
+    @media (max-width: 860px) {
+      .hero-copy { padding: calc(var(--nav-h) + 12px) 20px 48px; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -902,7 +915,6 @@
 <body>
   <header class="site-nav" id="site-nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="#top" aria-label="Art by Avigail, back to top"><img src="assets/avigail-logo.png" alt="" width="986" height="429" /></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -919,7 +931,6 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Fine art portfolio</p>
         <h1 id="hero-title" aria-label="Avigail"><img class="hero-logo" src="assets/avigail-logo.png" alt="" /></h1>
         <p class="tagline">Portraits and holy scenes, painted with warmth, reverence, and a vivid sense of color.</p>
         <a class="cta" href="#collection">
