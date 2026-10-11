@@ -827,6 +827,55 @@
     @media (max-width: 560px) {
       .cm-types, .cm-types-two, .cm-steps, .cm-form { grid-template-columns: 1fr; }
     }
+
+    /* Full-screen hero */
+    .site-nav { margin-bottom: calc(-1 * var(--nav-h)); background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; transition: background .3s, border-color .25s, box-shadow .25s; }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a { color: rgba(255,255,255,.88); }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a:hover, .site-nav:not(.scrolled):not(.menu-open) .nav-links a.active { color: #fff; }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a.nav-cta { background: rgba(255,255,255,.94); color: var(--ink); }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-toggle span { background: #fff; }
+    .site-nav.scrolled, .site-nav.menu-open { background: rgba(245, 240, 232, .94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      background: #3b5d7d;
+    }
+    .hero-art { position: absolute; inset: 0; margin: 0; min-height: 0; background: none; }
+    .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 42% center; }
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(18,26,36,.72) 0%, rgba(18,26,36,.45) 38%, rgba(18,26,36,0) 68%),
+        linear-gradient(180deg, rgba(18,26,36,.38) 0%, rgba(18,26,36,0) 22%);
+    }
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 40px, var(--max));
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 40px) 0 60px;
+    }
+    .hero .eyebrow { color: #e9d6b4; }
+    .hero .tagline { color: rgba(255,255,255,.92); text-shadow: 0 1px 14px rgba(0,0,0,.25); }
+    .hero .cta { background: #fff; color: var(--ink); }
+    .hero .cta:hover { background: var(--paper); }
+    .hero-logo { filter: drop-shadow(0 2px 12px rgba(0,0,0,.25)); }
+    @media (max-width: 860px) {
+      .hero { min-height: 100svh; }
+      .hero-copy { padding: calc(var(--nav-h) + 30px) 0 48px; }
+      .hero-art img { object-position: 40% center; }
+      .hero-art::after { background: linear-gradient(180deg, rgba(18,26,36,.45) 0%, rgba(18,26,36,.5) 55%, rgba(18,26,36,.25) 100%); }
+    }
+    @media (max-width: 620px) {
+      .hero-copy { width: calc(100% - 40px); padding: calc(var(--nav-h) + 24px) 0 44px; }
+      .hero-art { aspect-ratio: auto; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -859,10 +908,10 @@
       </button>
       <nav class="nav-links" id="nav-links" aria-label="Main">
         <a href="#about">About</a>
-        <a href="#collection" data-open-tab="watercolor">Collection</a>
+        <a href="#collection" data-open-tab="commissions">Collection</a>
         <a href="#collection" data-open-tab="kesubahs">Kesubahs</a>
-        <a href="#commissions" data-open-tab="commission-info">Commissions</a>
-        <a href="#faq">FAQ</a>
+        <a href="#collection" data-open-tab="watercolor">Prints</a>
+        <a href="#commissions" data-open-tab="commission-info">Commission</a>
         <a class="nav-cta" href="#contact">Contact</a>
       </nav>
     </div>
@@ -879,7 +928,7 @@
         </a>
       </div>
       <div class="hero-art">
-        <img src="assets/hero-kotel-gallery.jpg" alt="Framed painting of the Western Wall beneath a radiant sunburst sky" />
+        <img src="assets/hero-kotel-full.jpg" alt="Painting of the Western Wall beneath a radiant sunburst sky" fetchpriority="high" />
       </div>
     </section>
 
@@ -1239,13 +1288,13 @@
     const navToggle = nav.querySelector('.nav-toggle');
     const navLinks = document.getElementById('nav-links');
     function closeMenu() {
-      navLinks.classList.remove('open');
+      navLinks.classList.remove('open'); nav.classList.remove('menu-open');
       navToggle.setAttribute('aria-expanded', 'false');
       navToggle.setAttribute('aria-label', 'Open menu');
     }
     navToggle.addEventListener('click', () => {
       const open = !navLinks.classList.contains('open');
-      navLinks.classList.toggle('open', open);
+      navLinks.classList.toggle('open', open); nav.classList.toggle('menu-open', open);
       navToggle.setAttribute('aria-expanded', String(open));
       navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     });
@@ -1267,8 +1316,8 @@
     // Highlight the section currently in view
     const navMap = [
       ['about', 'a[href="#about"]'],
-      ['collection', 'a[data-open-tab="watercolor"]'],
-      ['faq', 'a[href="#faq"]'],
+      ['collection', 'collection'],
+      ['faq', null],
       ['contact', 'a[href="#contact"]']
     ];
     function markActive() {
@@ -1278,11 +1327,9 @@
         const el = document.getElementById(id);
         if (el && el.offsetTop <= y) current = sel;
       });
-      if (current === 'a[data-open-tab="watercolor"]') {
-        const commOpen = !document.getElementById('commissions').hidden;
-        const kesOpen = document.querySelector('.collection-tab[data-filter="kesubahs"]').getAttribute('aria-pressed') === 'true';
-        if (commOpen) current = 'a[data-open-tab="commission-info"]';
-        else if (kesOpen) current = 'a[data-open-tab="kesubahs"]';
+      if (current === 'collection') {
+        const pressed = document.querySelector('.collection-tab[aria-pressed="true"]');
+        current = `a[data-open-tab="${pressed ? pressed.dataset.filter : 'watercolor'}"]`;
       }
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = 'a[href="#contact"]';
       navLinks.querySelectorAll('a').forEach(a => a.classList.toggle('active', !!current && a.matches(current) && !a.classList.contains('nav-cta')));
