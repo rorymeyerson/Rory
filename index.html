@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script>document.documentElement.classList.add("js");</script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="color-scheme" content="light" />
@@ -912,9 +913,10 @@
       filter: drop-shadow(0 2px 10px rgba(20,30,45,.35)) drop-shadow(0 0 1px rgba(20,30,45,.25));
     }
     .hero-art img {
-      filter: brightness(1.05) saturate(1.04);
       transform-origin: 40% 38%;
-      animation: heroDrift 9s cubic-bezier(.2,.6,.2,1) both;
+      transform: scale(1.14);
+      will-change: transform;
+      backface-visibility: hidden;
     }
     .hero-art::after {
       background:
@@ -930,7 +932,12 @@
       height: 113.986%;/* 489 / 429 */
       pointer-events: none;
     }
-    .sig-ready .sig-img { visibility: hidden; }
+    .hero-art img.is-in { animation: heroDrift 9s cubic-bezier(.2,.6,.2,1) both; }
+    .no-drift .hero-art img, html:not(.js) .hero-art img { transform: none; }
+    .js .sig-img { visibility: hidden; }
+    .js .sig-box.sig-done .sig-img, .js .sig-box.sig-fallback .sig-img { visibility: visible; }
+    .sig-box.sig-done .sig-canvas { opacity: 0; transition: opacity .35s ease; }
+    .sig-img { transition: opacity .35s ease; }
     .hero-byline {
       margin: 0 0 4px 2px;
       font-size: clamp(.66rem, .9vw, .8rem);
@@ -943,7 +950,7 @@
     .sig-link { display: inline-block; cursor: pointer; border-radius: 6px; }
     .sig-link:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 6px; }
     @keyframes heroDrift { from { transform: scale(1.14); } to { transform: scale(1); } }
-    @media (prefers-reduced-motion: reduce) { .hero-art img { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .hero-art img, .hero-art img.is-in { animation: none; transform: none; } .js .sig-img { visibility: visible; } }
     @media (max-width: 860px) {
       .hero { height: calc(100svh - 56px); }
       .hero-copy { top: calc(var(--nav-h) + 4px); }
@@ -1450,6 +1457,7 @@
 
       var ctx = canvas.getContext('2d');
       var ink = document.createElement('canvas'), ictx = ink.getContext('2d');
+      var lastW = 0;
       var logo = new Image(), scale = 1, dpr = 1, ready = false, raf = 0, start = null, lastEl = 0;
 
       function size() {
@@ -1459,6 +1467,7 @@
         scale = (r.width / W) * dpr;
         canvas.width = ink.width = Math.round((W + 2 * PAD) * scale);
         canvas.height = ink.height = Math.round((H + 2 * PAD) * scale);
+        lastW = r.width;
       }
       function strokePiece(pc, len) {
         if (len <= 0) return;
@@ -1494,28 +1503,40 @@
         if (settle > 0) { ictx.globalAlpha = settle; ictx.drawImage(logo, 0, 0, W, H); ictx.globalAlpha = 1; }
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.shadowColor = 'rgba(20,30,45,.38)';
-        ctx.shadowBlur = 10 * dpr;
-        ctx.shadowOffsetY = 2 * dpr;
         ctx.drawImage(ink, 0, 0);
-        ctx.shadowColor = 'transparent';
       }
       function step(now) {
         if (start === null) start = now;
         var el = now - start;
         draw(el);
         if (el < END + SETTLE) raf = requestAnimationFrame(step);
+        else box.classList.add('sig-done');
+      }
+      function startDrift() {
+        if (!heroImg || reduced) return;
+        heroImg.classList.remove('is-in'); void heroImg.offsetWidth; heroImg.classList.add('is-in');
       }
       function play() {
         if (!ready || reduced) return;
         cancelAnimationFrame(raf);
-        if (heroImg) { heroImg.style.animation = 'none'; void heroImg.offsetWidth; heroImg.style.animation = ''; }
+        box.classList.remove('sig-done');
+        startDrift();
         start = null;
         draw(0);
         raf = requestAnimationFrame(step);
       }
+      // Start the painting's drift once it has loaded, so it never pops in mid-motion
+      if (heroImg && !reduced) {
+        if (heroImg.complete && heroImg.naturalWidth) startDrift();
+        else heroImg.addEventListener('load', startDrift, { once: true });
+      }
+      // If the signature can't animate quickly, show it as a plain image
+      var fallbackTimer = setTimeout(function () { if (!ready) box.classList.add('sig-fallback'); }, 3000);
+      logo.onerror = function () { box.classList.add('sig-fallback'); };
       logo.onload = function () {
-        if (reduced) return;          // keep the plain image for reduced motion
+        if (reduced) { box.classList.add('sig-done'); return; }
+        clearTimeout(fallbackTimer);
+        if (box.classList.contains('sig-fallback')) return;
         size();
         ready = true;
         canvas.hidden = false;
@@ -1524,10 +1545,15 @@
       };
       logo.src = img.currentSrc || img.src;
 
+      // Only redraw when the width really changes (iPhone fires resize as the address bar shows and hides)
       var resizeTimer = 0;
       window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () { if (ready) { size(); draw(lastEl); } }, 120);
+        resizeTimer = setTimeout(function () {
+          var w = box.getBoundingClientRect().width;
+          if (!ready || Math.abs(w - lastW) < 1) return;
+          lastW = w; size(); draw(lastEl);
+        }, 150);
       });
 
       // Clicking the signature returns to the top and replays the opening
