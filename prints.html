@@ -1,0 +1,1771 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>document.documentElement.classList.add("js");</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#f5f0e8" />
+  <meta name="description" content="Fine-art prints of Avigail Meyerson&#x27;s watercolor portraits and kesubahs. Choose a size and check out securely; your print ships to you." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://avigailmeyerson.com/prints" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fine-Art Prints | Art by Avigail" />
+  <meta property="og:description" content="Fine-art prints of Avigail Meyerson&#x27;s watercolor portraits and kesubahs. Choose a size and check out securely; your print ships to you." />
+  <meta property="og:image" content="https://avigailmeyerson.com/assets/hero-kotel-gallery.jpg" />
+  <meta property="og:url" content="https://avigailmeyerson.com/prints" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fine-Art Prints | Art by Avigail" />
+  <meta name="twitter:description" content="Fine-art prints of Avigail Meyerson&#x27;s watercolor portraits and kesubahs. Choose a size and check out securely; your print ships to you." />
+  <meta name="twitter:image" content="https://avigailmeyerson.com/assets/hero-kotel-gallery.jpg" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>Fine-Art Prints | Art by Avigail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f5f0e8;
+      --paper-light: #fbf9f5;
+      --ink: #271d19;
+      --muted: #6b5c54;
+      --wine: #315f78;
+      --gold: #b88132;
+      --line: #d7cbbd;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper-light);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+
+    /* Navbar */
+    :root { --nav-h: 68px; }
+    #top, #about, #collection, #commissions, #faq, #contact { scroll-margin-top: var(--nav-h); }
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(245, 240, 232, .9);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .site-nav.scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 6px 24px rgba(39, 29, 25, .06);
+    }
+    .nav-inner {
+      width: min(100% - 40px, var(--max));
+      height: var(--nav-h);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-brand img { width: auto; height: 34px; }
+    .nav-links { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 34px); }
+    .nav-links a {
+      position: relative;
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 6px 0;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.nav-cta {
+      color: var(--paper-light);
+      background: var(--ink);
+      padding: 10px 18px;
+      border-radius: 999px;
+    }
+    .nav-links a.nav-cta::after { display: none; }
+    .nav-links a.nav-cta:hover { background: var(--wine); color: #fff; }
+    .nav-toggle {
+      display: none;
+      width: 44px; height: 44px;
+      margin-right: -10px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      position: relative;
+    }
+    .nav-toggle span {
+      position: absolute;
+      left: 11px; width: 22px; height: 1.5px;
+      background: var(--ink);
+      transition: transform .25s, opacity .2s;
+    }
+    .nav-toggle span:nth-child(1) { top: 15px; }
+    .nav-toggle span:nth-child(2) { top: 21px; }
+    .nav-toggle span:nth-child(3) { top: 27px; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    @media (max-width: 820px) {
+      :root { --nav-h: 60px; }
+      .nav-brand img { height: 28px; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        top: var(--nav-h); left: 0; right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 20px 22px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 18px 30px rgba(39, 29, 25, .08);
+        display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 15px 0; border-bottom: 1px solid var(--line); font-size: .82rem; }
+      .nav-links a::after { display: none; }
+      .nav-links a.nav-cta { margin-top: 16px; text-align: center; border-bottom: 0; padding: 14px 18px; }
+    }
+    button, a { font: inherit; }
+    a { color: inherit; }
+
+    .hero {
+      min-height: min(920px, 100svh);
+      display: grid;
+      grid-template-columns: minmax(320px, .8fr) minmax(480px, 1.2fr);
+      background: var(--paper);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(64px, 8vw, 130px) clamp(30px, 6vw, 100px);
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      margin: 0 0 18px;
+      font-size: .74rem;
+      line-height: 1;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--wine);
+      font-weight: 600;
+    }
+    .hero h1 {
+      margin: 0;
+      font: 400 clamp(3.2rem, 6.4vw, 6.8rem)/.88 "Newsreader", serif;
+      letter-spacing: -.045em;
+    }
+    .hero-logo {
+      width: min(100%, 430px);
+      height: auto;
+      margin-top: 8px;
+    }
+    .tagline {
+      max-width: 470px;
+      margin: 30px 0 38px;
+      font: 400 clamp(1.25rem, 2vw, 1.75rem)/1.35 "Newsreader", serif;
+      color: #59453c;
+    }
+    .cta {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--wine);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 19px;
+      font-size: .86rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      transition: background .2s ease;
+    }
+    .cta:hover { background: #24485c; }
+    .cta svg { width: 18px; height: 18px; }
+    .hero-art {
+      margin: 24px 24px 24px 0;
+      min-height: 620px;
+      background: #dbe1df;
+      overflow: hidden;
+    }
+    .hero-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .section {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+      padding: clamp(76px, 10vw, 140px) 0;
+    }
+    .section-label {
+      margin: 0 0 18px;
+      color: var(--wine);
+      font-size: .74rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .section-title {
+      margin: 0;
+      font: 400 clamp(2.8rem, 5vw, 5rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+
+    .about-wrap { background: #efe5d9; }
+    .about {
+      display: grid;
+      grid-template-columns: minmax(280px, .75fr) minmax(340px, 1fr);
+      gap: clamp(44px, 8vw, 110px);
+      align-items: center;
+    }
+    .about-image {
+      position: relative;
+      max-width: 480px;
+      margin-left: auto;
+      padding: 20px 20px 0 0;
+    }
+    .about-image::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto auto;
+      width: 78%;
+      height: 75%;
+      background: var(--wine);
+    }
+    .about-image img {
+      position: relative;
+      width: 100%;
+      box-shadow: 0 18px 42px rgba(65, 41, 30, .12);
+    }
+    .about-copy { max-width: 620px; }
+    .about-copy .section-title { margin-bottom: 28px; }
+    .about-copy p {
+      margin: 0;
+      font: 400 clamp(1.15rem, 1.8vw, 1.45rem)/1.65 "Newsreader", serif;
+      color: #4e3d35;
+    }
+    .about-copy p + p { margin-top: 1em; }
+    .signature-line {
+      width: 64px;
+      height: 2px;
+      background: var(--gold);
+      margin-top: 34px;
+    }
+
+    .collection-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 40px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 48px;
+    }
+    .collection-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: -18px 0 46px;
+    }
+    .collection-tab {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 15px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: .83rem;
+      font-weight: 600;
+    }
+    .collection-tab[aria-pressed="true"] { background: var(--wine); color: white; border-color: var(--wine); }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(42px, 7vw, 88px) clamp(28px, 5vw, 64px);
+      align-items: start;
+    }
+    .art-card { margin: 0; min-width: 0; }
+    .art-card[hidden] { display: none; }
+    .art-button {
+      width: 100%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: zoom-in;
+      text-align: left;
+    }
+    .art-frame {
+      aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background: #eee8df;
+      box-shadow: 0 15px 34px rgba(46, 31, 22, .08);
+    }
+    .art-frame::after {
+      content: "Art by Avigail";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 2;
+      color: rgba(39, 29, 25, .22);
+      font: 500 clamp(1.15rem, 2.5vw, 1.85rem)/1 "Newsreader", serif;
+      letter-spacing: .045em;
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, .55);
+      transform: translate(-50%, -50%) rotate(-12deg);
+      pointer-events: none;
+      user-select: none;
+    }
+    .art-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform .5s cubic-bezier(.2,.7,.2,1);
+    }
+    .art-button:hover img { transform: scale(1.018); }
+    .art-button.no-image-zoom:hover img { transform: none; }
+    .kesubah-frame {
+      aspect-ratio: 3 / 4;
+      padding: 8px;
+    }
+    .kesubah-frame img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transition: none;
+    }
+    .art-button:hover .kesubah-frame img { transform: none; }
+    .card-copy { padding-top: 20px; }
+    .card-copy h3 {
+      margin: 0 0 8px;
+      font: 500 clamp(1.55rem, 2.5vw, 2.05rem)/1.1 "Newsreader", serif;
+    }
+    .card-copy p {
+      margin: 0 0 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 520px;
+    }
+    .medium {
+      color: var(--wine);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .faq-wrap { background: #28201d; color: #f8f2e9; }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: clamp(42px, 8vw, 110px);
+      align-items: start;
+    }
+    .faq-wrap .section-label { color: #d2a45e; }
+    .faq-list { border-top: 1px solid rgba(255,255,255,.28); }
+    details { border-bottom: 1px solid rgba(255,255,255,.28); }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 23px 42px 23px 0;
+      position: relative;
+      font: 500 clamp(1.2rem, 2vw, 1.55rem)/1.25 "Newsreader", serif;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 4px;
+      top: 20px;
+      font: 400 1.6rem/1 "DM Sans", sans-serif;
+      color: #d2a45e;
+    }
+    details[open] summary::after { content: "−"; }
+    details p {
+      margin: -5px 42px 22px 0;
+      color: #d5cbc2;
+      line-height: 1.65;
+    }
+
+    footer {
+      background: #1f1917;
+      color: #f8f2e9;
+      text-align: center;
+      padding: clamp(68px, 9vw, 120px) 20px 30px;
+    }
+    footer h2 {
+      margin: 0 auto 22px;
+      max-width: 760px;
+      font: 400 clamp(2.6rem, 6vw, 5.4rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+    footer .contact-note {
+      margin: 0 auto 78px;
+      max-width: 560px;
+      color: #d5cbc2;
+      line-height: 1.65;
+    }
+    .footer-line {
+      width: min(100%, var(--max));
+      height: 1px;
+      margin: 0 auto 24px;
+      background: rgba(255,255,255,.2);
+    }
+    .footer-bottom {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: #b9aba2;
+      font-size: .78rem;
+    }
+    .footer-legal {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      color: #8f817a;
+      font-size: .66rem;
+      line-height: 1.6;
+      letter-spacing: .01em;
+    }
+
+    #lightbox {
+      width: 100vw;
+      max-width: none;
+      height: 100dvh;
+      max-height: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      color: white;
+      background: rgba(18, 14, 13, .97);
+    }
+    #lightbox::backdrop { background: rgba(18, 14, 13, .97); }
+    .lightbox {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    }
+    .lightbox-top { display: flex; justify-content: flex-end; }
+    .close {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 50%;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .close svg { width: 21px; height: 21px; }
+    .lightbox-stage { min-height: 0; display: grid; place-items: center; position: relative; padding: 8px 0 16px; }
+    .lightbox-stage::after {
+      content: "Art by Avigail";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      color: rgba(39, 29, 25, .24);
+      font: 500 clamp(1.45rem, 3.5vw, 2.7rem)/1 "Newsreader", serif;
+      letter-spacing: .05em;
+      white-space: nowrap;
+      text-shadow: 0 1px 5px rgba(255, 255, 255, .55);
+      transform: translate(-50%, -50%) rotate(-12deg);
+      pointer-events: none;
+      user-select: none;
+    }
+    .lightbox-stage img { max-width: min(94vw, 1180px); max-height: calc(100dvh - 144px); object-fit: contain; }
+    .lightbox-meta {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: #cabfb9;
+      font-size: .84rem;
+    }
+    .lightbox-meta strong { color: white; font-weight: 500; }
+
+    .print-dialog {
+      width: min(980px, calc(100vw - 32px));
+      max-width: none;
+      max-height: calc(100dvh - 32px);
+      margin: auto;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: var(--paper-light);
+      box-shadow: 0 28px 90px rgba(26, 18, 14, .32);
+      overflow: auto;
+    }
+    .print-dialog::backdrop { background: rgba(25, 18, 15, .78); }
+    .print-modal {
+      display: grid;
+      grid-template-columns: minmax(280px, .85fr) minmax(380px, 1.15fr);
+      min-height: min(700px, calc(100dvh - 32px));
+    }
+    .print-preview {
+      min-width: 0;
+      padding: clamp(24px, 4vw, 48px);
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 20px;
+      background: #e9e1d7;
+      border-right: 1px solid var(--line);
+    }
+    .print-preview-image-wrap {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 3 / 4;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: #eee8df;
+      box-shadow: 0 16px 38px rgba(46, 31, 22, .12);
+      overflow: hidden;
+    }
+    .print-preview-image-wrap::after {
+      content: "Art by Avigail";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      color: rgba(39, 29, 25, .22);
+      font: 500 clamp(1.15rem, 2.5vw, 1.8rem)/1 "Newsreader", serif;
+      letter-spacing: .045em;
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, .55);
+      transform: translate(-50%, -50%) rotate(-12deg);
+      pointer-events: none;
+      user-select: none;
+    }
+    .print-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .print-preview figcaption {
+      width: 100%;
+      max-width: 380px;
+      color: var(--muted);
+      font-size: .82rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .print-preview figcaption strong { color: var(--ink); font-weight: 600; }
+    .print-panel {
+      position: relative;
+      padding: clamp(34px, 5vw, 64px);
+    }
+    .print-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border-color: rgba(39, 29, 25, .3);
+      color: var(--ink);
+    }
+    .print-kicker {
+      margin: 0 48px 13px 0;
+      color: var(--wine);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .print-panel h2 {
+      margin: 0 48px 18px 0;
+      font: 400 clamp(2.35rem, 5vw, 4rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+    .print-pitch {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font: 400 1.08rem/1.62 "Newsreader", serif;
+    }
+    .order-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+    }
+    .form-field { display: grid; gap: 7px; min-width: 0; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: #fff;
+      color: var(--ink);
+      padding: 12px 13px;
+      font: 400 .92rem/1.4 "DM Sans", sans-serif;
+    }
+    .form-field textarea { min-height: 82px; resize: vertical; }
+    .form-field select.single-option { background-image: none; padding-right: 13px; pointer-events: none; }
+    .form-field select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--wine) 50%), linear-gradient(135deg, var(--wine) 50%, transparent 50%);
+      background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 38px;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .order-submit {
+      grid-column: 1 / -1;
+      border: 0;
+      background: var(--wine);
+      color: white;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: .025em;
+    }
+    .order-submit:hover { background: #24485c; }
+    .payment-note {
+      grid-column: 1 / -1;
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.55;
+    }
+    .confirmation-dialog {
+      width: min(560px, calc(100vw - 32px));
+      max-width: none;
+      margin: auto;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: var(--paper-light);
+      box-shadow: 0 28px 90px rgba(26, 18, 14, .32);
+    }
+    .confirmation-dialog::backdrop { background: rgba(25, 18, 15, .78); }
+    .confirmation-card { position: relative; padding: clamp(36px, 7vw, 66px); }
+    .confirmation-card h2 {
+      margin: 0 48px 17px 0;
+      font: 400 clamp(2.35rem, 6vw, 3.6rem)/1 "Newsreader", serif;
+      letter-spacing: -.035em;
+    }
+    .confirmation-card p { color: var(--muted); line-height: 1.65; }
+    .confirmation-done {
+      width: 100%;
+      margin-top: 9px;
+      border: 0;
+      background: var(--wine);
+      color: white;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .cta:focus-visible, .collection-tab:focus-visible, .art-button:focus-visible, summary:focus-visible, .close:focus-visible, .order-submit:focus-visible, .confirmation-done:focus-visible {
+      outline: 3px solid #d5a04f;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; min-height: 0; }
+      .hero-copy { padding-top: 70px; padding-bottom: 52px; }
+      .hero-art { margin: 0 20px 20px; min-height: 440px; }
+      .about { grid-template-columns: 1fr; }
+      .about-image { margin: 0 auto; max-width: 430px; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .collection-intro { align-items: start; flex-direction: column; }
+      .print-modal { grid-template-columns: 1fr; }
+      .print-preview {
+        grid-template-columns: minmax(100px, 160px) minmax(0, 1fr);
+        padding: 22px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .print-preview-image-wrap { max-width: 160px; }
+      .print-preview figcaption { display: grid; align-content: center; }
+    }
+    @media (max-width: 620px) {
+      .hero-copy { padding: 58px 20px 44px; }
+      .hero h1 { font-size: clamp(3.1rem, 18vw, 4.6rem); }
+      .hero-logo { width: min(100%, 360px); margin-top: 5px; }
+      .tagline { margin-top: 24px; }
+      .hero-art { margin: 0; min-height: 0; aspect-ratio: 16 / 9; background: var(--paper-light); }
+      .hero-art img { width: 100%; height: 100%; object-position: center; }
+      .section { width: min(calc(100% - 34px), var(--max)); padding: 78px 0; }
+      .gallery { grid-template-columns: 1fr; gap: 58px; }
+      .art-card:nth-child(even) { margin-top: 0; }
+      .about-image { padding: 14px 14px 0 0; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+      .lightbox-meta { flex-direction: column; gap: 5px; }
+      .print-dialog { width: calc(100vw - 18px); max-height: calc(100dvh - 18px); }
+      .print-modal { min-height: calc(100dvh - 18px); }
+      .print-preview { grid-template-columns: 96px minmax(0, 1fr); padding: 14px; gap: 14px; }
+      .print-preview-image-wrap { max-width: 96px; }
+      .print-preview figcaption { font-size: .74rem; }
+      .print-panel { padding: 34px 20px 28px; }
+      .print-panel h2 { font-size: 2.35rem; }
+      .order-form { grid-template-columns: 1fr; }
+      .form-field.full, .order-submit, .payment-note { grid-column: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .art-frame img { transition: none; }
+    }
+    .gallery.wc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 36px; }
+    .gallery.wc-grid { align-items: stretch; }
+    .gallery.wc-grid .art-card { display: flex; flex-direction: column; }
+    .gallery.wc-grid .art-card[hidden] { display: none; }
+    .gallery.wc-grid .art-frame { aspect-ratio: 3 / 4; }
+    .gallery.wc-grid .art-frame img { object-fit: cover; object-position: center top; }
+    .gallery.wc-grid .card-copy { padding-top: 18px; display: flex; flex-direction: column; flex: 1; }
+    .gallery.wc-grid .card-copy h3 { font-size: 1.6rem; }
+    .gallery.wc-grid .card-copy p { min-height: 3.1em; font-size: .95rem; }
+    .sold-out { display: inline-block; border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 9px 18px; font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; background: var(--paper); }
+    .buy-row { display: flex; justify-content: flex-end; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+    .buy-now { background: var(--wine); color: #fff; border: 0; border-radius: 999px; padding: 11px 22px; font-weight: 600; font-size: .88rem; cursor: pointer; box-shadow: 0 6px 16px rgba(49, 95, 120, .25); transition: background .2s; }
+    .buy-now:hover { background: #274d62; }
+    .buy-now:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    @media (max-width: 900px) { .gallery.wc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 18px; } }
+    @media (max-width: 560px) { .gallery.wc-grid { grid-template-columns: 1fr; } }
+
+    /* Commissions panel */
+    .commission-panel[hidden], .gallery[hidden] { display: none; }
+    .cm-hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 64px); align-items: center; margin-bottom: 80px; }
+    .cm-hero img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 15px 34px rgba(46, 31, 22, .1); }
+    .cm-kicker { color: var(--wine); font-size: .75rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin: 0 0 14px; }
+    .cm-hero h3 { font: 500 clamp(2.2rem, 4.2vw, 3.4rem)/1.05 "Newsreader", serif; margin: 0 0 22px; }
+    .cm-hero p { color: var(--muted); line-height: 1.7; margin: 0 0 16px; max-width: 520px; }
+    .cm-points { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 12px; }
+    .cm-points li { padding-left: 26px; position: relative; line-height: 1.5; }
+    .cm-points li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 1px; background: var(--gold); }
+    .cm-cta { display: inline-block; background: var(--wine); color: #fff; text-decoration: none; border: 0; border-radius: 999px; padding: 13px 26px; font-weight: 600; font-size: .9rem; cursor: pointer; box-shadow: 0 6px 16px rgba(49, 95, 120, .25); }
+    .cm-cta:hover { background: #274d62; }
+    .cm-heading { font: 500 clamp(1.9rem, 3.4vw, 2.6rem)/1.1 "Newsreader", serif; margin: 0 0 10px; }
+    .cm-sub { color: var(--muted); margin: 0 0 36px; line-height: 1.6; }
+    .cm-types { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; margin-bottom: 90px; }
+    .cm-type { display: flex; flex-direction: column; }
+    .cm-type .art-frame { aspect-ratio: 3 / 4; }
+    .cm-type .art-frame img { object-fit: cover; }
+    .cm-type h4 { font: 500 1.45rem/1.15 "Newsreader", serif; margin: 18px 0 8px; }
+    .cm-type p { color: var(--muted); font-size: .93rem; line-height: 1.55; margin: 0 0 16px; flex: 1; }
+    .cm-type button { align-self: flex-start; background: none; border: 0; padding: 0 0 3px; border-bottom: 1px solid var(--wine); color: var(--wine); font-weight: 600; font-size: .85rem; cursor: pointer; }
+    .cm-steps-wrap { background: var(--paper); margin: 0 calc(50% - 50vw) 90px; padding: 72px calc(50vw - 50%); }
+    .cm-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; counter-reset: step; }
+    .cm-step { border-top: 1px solid var(--gold); padding-top: 20px; }
+    .cm-step span { display: block; font: 500 2.4rem/1 "Newsreader", serif; color: var(--gold); margin-bottom: 12px; }
+    .cm-step h4 { font: 500 1.3rem/1.2 "Newsreader", serif; margin: 0 0 8px; }
+    .cm-step p { color: var(--muted); font-size: .93rem; line-height: 1.6; margin: 0; }
+    .cm-occasions { display: flex; flex-wrap: wrap; gap: 10px; margin: 30px 0 0; }
+    .cm-occasions span { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-size: .82rem; color: var(--muted); background: var(--paper-light); }
+    .cm-form-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 70px); align-items: start; }
+    .cm-form-wrap aside p { color: var(--muted); line-height: 1.7; }
+    .cm-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .cm-form .form-field.full { grid-column: 1 / -1; }
+    .cm-form label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .cm-form input[type=file] { padding: 10px; background: #fff; border: 1px dashed var(--line); width: 100%; }
+    .cm-form .cm-cta, .cm-form .cs-btn { grid-column: 1 / -1; justify-self: start; }
+    .cm-types-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 5vw, 64px); max-width: 920px; margin-left: auto; margin-right: auto; }
+    .cm-types-two .cm-type h4 { font-size: 1.8rem; }
+    .cm-types-two .cm-type p { font-size: 1rem; }
+    .cs-banner { position: relative; min-height: 380px; display: grid; place-items: center; text-align: center; color: #fff; background: linear-gradient(rgba(25, 18, 15, .45), rgba(25, 18, 15, .45)), url("assets/commission-banner.jpg") center / cover; margin-bottom: 70px; }
+    .cs-banner-inner { padding: 40px 24px; max-width: 640px; }
+    .cs-banner h3 { font: 500 clamp(2.4rem, 5vw, 3.8rem)/1.05 "Newsreader", serif; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 14px; }
+    .cs-banner p { margin: 0; font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,.92); }
+    .cs-intro { max-width: 760px; margin: 0 auto 90px; text-align: center; }
+    .cs-intro h4, .cs-text h4 { font: 500 clamp(1.8rem, 3vw, 2.4rem)/1.1 "Newsreader", serif; margin: 0 0 18px; }
+    .cs-text h4 { text-transform: uppercase; letter-spacing: .05em; font-size: clamp(1.5rem, 2.6vw, 2rem); }
+    .cs-intro p, .cs-text p { color: var(--muted); line-height: 1.75; margin: 0 0 26px; }
+    .cs-btn { background: var(--ink); color: #fff; border: 0; padding: 14px 28px; font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+    .cs-btn:hover { background: var(--wine); }
+    .cs-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 70px); align-items: center; margin-bottom: 100px; }
+    .cs-row-flip .cs-media { order: 2; }
+    .cs-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 15px 34px rgba(46, 31, 22, .1); }
+    .cs-examples { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(200px, 1fr); gap: 18px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 100px; scroll-snap-type: x mandatory; }
+    .cs-examples img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #eee8df; scroll-snap-align: start; }
+    @media (max-width: 900px) { .cs-row { grid-template-columns: 1fr; } .cs-row-flip .cs-media { order: 0; } .cs-examples { grid-auto-columns: 62%; } }
+    @media (max-width: 900px) {
+      .cm-hero, .cm-form-wrap { grid-template-columns: 1fr; }
+      .cm-types, .cm-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .cm-types, .cm-types-two, .cm-steps, .cm-form { grid-template-columns: 1fr; }
+    }
+
+    /* Full-screen hero */
+    .site-nav { margin-bottom: calc(-1 * var(--nav-h)); background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; transition: background .3s, border-color .25s, box-shadow .25s; }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a { color: rgba(255,255,255,.88); }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a:hover, .site-nav:not(.scrolled):not(.menu-open) .nav-links a.active { color: #fff; }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a.nav-cta { background: rgba(255,255,255,.94); color: var(--ink); }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-toggle span { background: #fff; }
+    .site-nav.scrolled, .site-nav.menu-open { background: rgba(245, 240, 232, .94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      background: #3b5d7d;
+    }
+    .hero-art { position: absolute; inset: 0; margin: 0; min-height: 0; background: none; }
+    .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 42% center; }
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(18,26,36,.72) 0%, rgba(18,26,36,.45) 38%, rgba(18,26,36,0) 68%),
+        linear-gradient(180deg, rgba(18,26,36,.38) 0%, rgba(18,26,36,0) 22%);
+    }
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 40px, var(--max));
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 40px) 0 60px;
+    }
+    .hero .eyebrow { color: #e9d6b4; }
+    .hero .tagline { color: rgba(255,255,255,.92); text-shadow: 0 1px 14px rgba(0,0,0,.25); }
+    .hero .cta { background: #fff; color: var(--ink); }
+    .hero .cta:hover { background: var(--paper); }
+    .hero-logo { filter: drop-shadow(0 2px 12px rgba(0,0,0,.25)); }
+    @media (max-width: 860px) {
+      .hero { min-height: 100svh; }
+      .hero-copy { padding: calc(var(--nav-h) + 30px) 0 48px; }
+      .hero-art img { object-position: 40% center; }
+      .hero-art::after { background: linear-gradient(180deg, rgba(18,26,36,.45) 0%, rgba(18,26,36,.5) 55%, rgba(18,26,36,.25) 100%); }
+    }
+    @media (max-width: 620px) {
+      .hero-copy { width: calc(100% - 40px); padding: calc(var(--nav-h) + 24px) 0 44px; }
+      .hero-art { aspect-ratio: auto; }
+    }
+
+    /* Hero v2: no nav logo, signature higher and further left */
+    .nav-inner { justify-content: flex-end; }
+    .hero { align-items: flex-start; }
+    .hero-copy {
+      width: auto;
+      margin: 0;
+      padding: calc(var(--nav-h) + clamp(8px, 3vh, 36px)) clamp(22px, 4vw, 64px) 60px;
+    }
+    .hero-logo { margin-top: 0; margin-left: -6px; }
+    @media (max-width: 860px) {
+      .hero-copy { padding: calc(var(--nav-h) + 12px) 20px 48px; }
+    }
+
+    /* ---- Hero opening: painting drifts in while the signature is written ---- */
+    :root { --frame: clamp(20px, 3vw, 44px); }
+    .hero { min-height: 0; height: calc(100svh - 64px); max-height: 980px; }
+    .hero-copy {
+      position: absolute;
+      z-index: 2;
+      top: var(--frame);
+      left: var(--frame);
+      width: auto;
+      margin: 0;
+      padding: 0;
+    }
+    .hero h1 { line-height: 0; }
+    .hero-logo {
+      display: block;
+      width: clamp(200px, 25vw, 400px);
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      filter: drop-shadow(0 2px 10px rgba(20,30,45,.35)) drop-shadow(0 0 1px rgba(20,30,45,.25));
+    }
+    .hero-art img {
+      transform-origin: 40% 38%;
+      transform: scale(1.14);
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .hero-art::after {
+      background:
+        radial-gradient(ellipse 34% 30% at 14% 13%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%),
+        linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 16%);
+    }
+    .sig-box { position: relative; display: block; }
+    .sig-canvas {
+      position: absolute;
+      left: -3.043%;   /* 30 / 986: room for the soft shadow */
+      top: -6.993%;    /* 30 / 429 */
+      width: 106.085%; /* 1046 / 986 */
+      height: 113.986%;/* 489 / 429 */
+      pointer-events: none;
+    }
+    .hero-art img.is-in { animation: heroDrift 9s cubic-bezier(.2,.6,.2,1) both; }
+    .no-drift .hero-art img, html:not(.js) .hero-art img { transform: none; }
+    .js .sig-img { visibility: hidden; }
+    .js .sig-box.sig-done .sig-img, .js .sig-box.sig-fallback .sig-img { visibility: visible; }
+    .sig-box.sig-done .sig-canvas { opacity: 0; transition: opacity .35s ease; }
+    .sig-img { transition: opacity .35s ease; }
+    /* Section pages (/about, /collection, /kesubahs, /prints, /commissions) */
+    .page-intro {
+      background: var(--paper);
+      padding: calc(var(--nav-h) + clamp(44px, 7vw, 96px)) 0 clamp(40px, 6vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+    .page-intro-inner { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; display: grid; gap: 14px; }
+    .page-intro h1 {
+      margin: 0;
+      font: 400 clamp(2.6rem, 6vw, 5rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .page-intro p.page-lede { margin: 6px 0 0; max-width: 62ch; color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.12rem); line-height: 1.65; }
+    .page-intro a.page-home { justify-self: start; margin-top: 10px; font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--wine); text-decoration: none; }
+    .page-intro a.page-home:hover { color: var(--gold); }
+    .subpage #collection { padding-top: clamp(40px, 5vw, 64px); }
+    .subpage-collection .collection-intro { display: none; }
+    .subpage-about #about .about-copy > .section-label, .subpage-about #about-title { display: none; }
+    .hero-byline {
+      margin: 0 0 4px 2px;
+      font-size: clamp(.66rem, .9vw, .8rem);
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.94);
+      text-shadow: 0 1px 10px rgba(20,30,45,.45);
+    }
+    .sig-link { display: inline-block; cursor: pointer; border-radius: 6px; }
+    .sig-link:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 6px; }
+    @keyframes heroDrift { from { transform: scale(1.14); } to { transform: scale(1); } }
+    @media (prefers-reduced-motion: reduce) { .hero-art img, .hero-art img.is-in { animation: none; transform: none; } .js .sig-img { visibility: visible; } }
+    @media (max-width: 860px) {
+      .hero { height: calc(100svh - 56px); }
+      .hero-copy { top: calc(var(--nav-h) + 4px); }
+      .hero-logo { width: clamp(190px, 52vw, 300px); }
+      .hero-art::after { background: radial-gradient(ellipse 60% 26% at 30% 15%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%), linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 14%); }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Avigail",
+    "jobTitle": "Fine Artist",
+    "url": "https://avigailmeyerson.com/",
+    "image": "https://avigailmeyerson.com/assets/avigail-portrait.jpg",
+    "email": "mailto:meyersonavigail@gmail.com",
+    "telephone": "+1-848-373-6066",
+    "knowsAbout": ["Oil Painting", "Watercolor Painting", "Jewish Fine Art", "Portraiture", "Kesubah Illustration"],
+    "makesOffer": {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "VisualArtwork",
+        "artform": "Painting",
+        "artMedium": ["Oil", "Watercolor"]
+      }
+    }
+  }
+  </script>
+</head>
+<body class="subpage subpage-collection" data-page="prints" data-open-tab="prints">
+  <header class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="nav-links" aria-label="Main">
+        <a href="/about" data-section="about">About</a>
+        <a href="/collection" data-open-tab="watercolor">Collection</a>
+        <a href="/kesubahs" data-open-tab="kesubahs">Kesubahs</a>
+        <a href="/prints" data-open-tab="prints">Prints</a>
+        <a href="/commissions" data-open-tab="commission-info">Commission</a>
+        <a class="nav-cta" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="page-intro-inner">
+        <p class="section-label">Prints</p>
+        <h1 id="page-title">Fine-Art Prints</h1>
+        <p class="page-lede">Prints of Avigail&#x27;s watercolor portraits and kesubahs. Select a piece, choose a size, and check out securely; shipping details are collected at checkout.</p>
+        <a class="page-home" href="/">Art by Avigail home</a>
+      </div>
+    </section>
+
+    <section class="section" id="collection" aria-labelledby="collection-title">
+      <div class="collection-intro">
+        <div>
+          <p class="section-label">Selected paintings</p>
+          <h2 class="section-title" id="collection-title">Collection</h2>
+        </div>
+      </div>
+
+      <div class="collection-tabs" aria-label="Browse collection categories">
+        <button class="collection-tab" type="button" data-filter="watercolor" aria-pressed="true">Watercolor Portraits</button>
+        <button class="collection-tab" type="button" data-filter="commissions" aria-pressed="false">Originals</button>
+        <button class="collection-tab" type="button" data-filter="kesubahs" aria-pressed="false">Kesubahs</button>
+        <button class="collection-tab" type="button" data-filter="prints" aria-pressed="false">Prints</button>
+        <button class="collection-tab" type="button" data-filter="commission-info" aria-pressed="false">Commissions</button>
+      </div>
+
+      <div class="gallery wc-grid">
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/kotel-commission-studio.webp" data-title="Radiance at the Western Wall" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/kotel-commission-studio.webp" alt="Framed painting of the Western Wall in golden light beneath a radiant blue sky, displayed in full on a white gallery wall under track lighting" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Radiance at the Western Wall</h3>
+            <p>Golden stone, gathered figures, and a sky opening into light.</p>
+            <span class="medium">Oil painting</span>
+            <div class="buy-row"><span class="sold-out">Sold out</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/oil-portrait-blue.jpg" data-title="Memories of Zaidy" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/oil-portrait-blue.jpg" alt="Framed oil portrait of a smiling bearded man against blue brushwork, displayed above a wooden console in a living room with a vase and armchair" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Memories of Zaidy</h3>
+            <p>A warm expression emerges through layered, tactile strokes of blue and earth.</p>
+            <span class="medium">Oil painting</span>
+            <div class="buy-row"><span class="sold-out">Sold out</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button" type="button" data-src="assets/father-and-daughter.jpg" data-title="Father and Daughter" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/father-and-daughter.jpg" alt="Framed oil portrait displayed on a living-room wall, showing a smiling bearded father in a black hat holding his young daughter against a magenta-purple background" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Father and Daughter</h3>
+            <p>A joyful embrace rendered in expressive strokes of warm color.</p>
+            <span class="medium">Oil painting</span>
+            <div class="buy-row"><span class="sold-out">Sold out</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/ray-of-sunshine.jpg" data-title="Who Is For God" data-medium="Oil painting">
+            <span class="art-frame"><img src="assets/ray-of-sunshine.jpg" alt="Framed oil painting of a radiant golden sunburst with Hebrew lettering and a figure in its glow against a deep blue mountain scene, signed Avigail and displayed in full on a white gallery wall under a spotlight" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Who Is For God</h3>
+            <p>A radiant golden glow rises through Hebrew lettering against a deep blue mountain scene.</p>
+            <span class="medium">Oil painting</span>
+            <div class="buy-row"><span class="sold-out">Sold out</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="commissions" hidden>
+          <button class="art-button no-image-zoom" type="button" data-src="assets/sunshine-on-mountain.jpg" data-title="Stories of Our Mountain" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/sunshine-on-mountain.jpg" alt="Framed watercolor of the Temple beneath rainbow-colored beams of light, Hebrew text, mountains, and tiny figures, displayed in full above a beige sofa in a living room" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Stories of Our Mountain</h3>
+            <p>A profound expression of the enduring bond between Hashem and His people, revealed through the holiness of His chosen mountain and the eternal connection it represents.</p>
+            <span class="medium">Watercolor</span>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="kesubahs" hidden>
+          <button class="art-button" type="button" data-src="assets/ketubah-cropped.jpg" data-title="River in the Valley" data-medium="Watercolor and ink">
+            <span class="art-frame"><img src="assets/ketubah-cropped.jpg" alt="Framed Hebrew text surrounded by a watercolor landscape of hills, trees and a winding river" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>River in the Valley</h3>
+            <p>The words of the kesubah rest within a gentle landscape of hills, trees, and flowing water.</p>
+            <span class="medium">Watercolor and ink</span>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="kesubahs" hidden>
+          <button class="art-button" type="button" data-src="assets/kesubah-mountains-cropped.jpg" data-title="River Rocks" data-medium="Watercolor and ink">
+            <span class="art-frame"><img src="assets/kesubah-mountains-cropped.jpg" alt="Gold-framed kesubah with Hebrew text surrounded by watercolor mountains and a flowing stream" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>River Rocks</h3>
+            <p>The words of the kesubah are framed by layered mountain peaks, green valleys, and clear flowing water.</p>
+            <span class="medium">Watercolor and ink</span>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="kesubahs" hidden>
+          <button class="art-button" type="button" data-src="assets/kesubah-trees-cropped.jpg" data-title="Canopy of Trees" data-medium="Watercolor and ink">
+            <span class="art-frame"><img src="assets/kesubah-trees-cropped.jpg" alt="White-framed kesubah with Hebrew text surrounded by watercolor trees and leafy branches" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Canopy of Trees</h3>
+            <p>Watercolor branches and abundant greenery encircle the words of the kesubah.</p>
+            <span class="medium">Watercolor and ink</span>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rebbe-of-slonim-cropped.jpg" data-title="Rebbe of Slonim" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rebbe-of-slonim-cropped.jpg" alt="Watercolor portrait of a bearded man in a black hat over orange and green washes" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rebbe of Slonim</h3>
+            <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rabbi-lopiansky.jpg" data-title="Rabbi Lopiansky" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rabbi-lopiansky.jpg" alt="Watercolor portrait of a bearded man with glasses wearing a blue striped shirt" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Lopiansky</h3>
+            <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rabbi-dessler.jpg" data-title="Rabbi Dessler" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rabbi-dessler.jpg" alt="Watercolor portrait of a bearded man in a dark hat against yellow, green and blue washes" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Dessler</h3>
+            <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/rabbi-jaeger.jpg" data-title="Rabbi Jaeger" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/rabbi-jaeger.jpg" alt="Watercolor portrait of an older bearded man in a brown hat against pink, green and violet washes" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Jaeger</h3>
+            <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card" data-category="watercolor">
+          <button class="art-button" type="button" data-src="assets/new-watercolor-portrait.jpg" data-title="Rabbi Shmuelevitz" data-medium="Watercolor">
+            <span class="art-frame"><img src="assets/new-watercolor-portrait.jpg" alt="Watercolor portrait of a bearded man in a black hat resting his cheek on his hand against teal-blue washes" loading="lazy" decoding="async" /></span>
+          </button>
+          <figcaption class="card-copy">
+            <h3>Rabbi Shmuelevitz</h3>
+            <span class="medium">Watercolor</span>
+            <div class="buy-row"><button class="buy-now" type="button">Buy print</button></div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="commission-panel" id="commissions" hidden>
+        <div class="cs-banner">
+          <div class="cs-banner-inner">
+            <h3>Commission Artwork</h3>
+            <p>Original kesubahs and oil paintings, created by hand for you and your family.</p>
+          </div>
+        </div>
+
+        <div class="cs-intro">
+          <h4>A Piece Made Only for You</h4>
+          <p>Commissioning a piece from Avigail is an invitation to own something truly one of a kind. Every commission begins with a personal conversation about your vision, the people or places that matter to you, and the space it will live in. Avigail prepares a sketch for your approval, then paints your piece by hand, signed and made to be passed down.</p>
+          <button class="cs-btn" type="button" data-scroll="cm-form">Commission art now</button>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-media"><img src="assets/ketubah-landscape.jpg" alt="Custom watercolor kesubah of a river winding through green hills, framed on a gallery wall" loading="lazy" decoding="async" /></div>
+          <div class="cs-text">
+            <h4>Custom Kesubah</h4>
+            <p>Your kesubah is the first document of your marriage, and it deserves to be beautiful. Avigail surrounds the words of your kesubah with a hand-painted watercolor landscape chosen together with you: rivers, mountains, trees, or a place that holds meaning for you as a couple. The result is a piece of art you'll see in your home every day.</p>
+            <button class="cs-btn" type="button" data-type="Custom kesubah">Let's get started</button>
+          </div>
+        </div>
+
+        <div class="cs-row cs-row-flip">
+          <div class="cs-media"><img src="assets/father-and-daughter.jpg" alt="Commissioned oil portrait of a father holding his daughter, hanging in a living room" loading="lazy" decoding="async" /></div>
+          <div class="cs-text">
+            <h4>Custom Oil Painting</h4>
+            <p>From a portrait of a parent or grandparent to the Kotel at sunrise, Avigail paints in rich, layered oils that capture warmth, character, and light. Each painting is designed with you, from size and composition to color, and painted by hand as a lasting family heirloom.</p>
+            <button class="cs-btn" type="button" data-type="Oil painting">Let's get started</button>
+          </div>
+        </div>
+
+        <div class="cm-form-wrap" id="cm-form">
+          <aside>
+            <p class="cm-kicker">Request a commission</p>
+            <h3 class="cm-heading">Let's create something meaningful.</h3>
+            <p>Tell Avigail what you have in mind. She personally reviews every request and will reach out to talk through your vision, size, and timeline.</p>
+            <p>Prefer email? Write to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a>.</p>
+          </aside>
+          <form class="cm-form" id="commission-form">
+            <div class="form-field"><label for="cm-name">Name</label><input id="cm-name" name="name" required /></div>
+            <div class="form-field"><label for="cm-email">Email</label><input id="cm-email" name="email" type="email" required /></div>
+            <div class="form-field"><label for="cm-phone">Phone</label><input id="cm-phone" name="phone" type="tel" /></div>
+            <div class="form-field"><label for="cm-type">Commission type</label>
+              <select id="cm-type" name="type" required>
+                <option value="" selected disabled>Choose one</option>
+                <option>Custom kesubah</option><option>Oil painting</option>
+              </select></div>
+            <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /></div>
+            <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
+            <button class="cs-btn" type="submit">Send request</button>
+            <p class="payment-note" id="cm-note" hidden></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="about-wrap" id="about" aria-labelledby="about-title">
+      <div class="section about">
+        <div class="about-image">
+          <img src="assets/avigail-portrait.jpg" alt="Avigail standing with arms outstretched before a mountain landscape" loading="lazy" decoding="async" />
+        </div>
+        <div class="about-copy">
+          <p class="section-label">Meet Avigail</p>
+          <h2 class="section-title" id="about-title">About the Artist</h2>
+          <p>Avigail Meyerson is an artist from New Jersey whose passion for creativity and artistic expression has been woven into her life from an early age. Working across pencil, oil, acrylic, and watercolor, she specializes in oil and watercolor painting, combining strong technical skill with a distinctive and expressive artistic voice.</p>
+          <p>Known especially for her ability to capture the likeness and character of her subjects, Avigail brings both precision and personality to her work. Her paintings are vibrant, intentional, and deeply personal—each one created with its own story and meaning.</p>
+          <p>This sense of depth is especially present in her Judaica, where Avigail draws inspiration from Jewish tradition, symbolism, and the stories behind the subjects she paints. Through rich color and thoughtful composition, she strives to create artwork that is not only beautiful, but meaningful—pieces that connect with the viewer on a deeper level.</p>
+          <div class="signature-line" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="faq-wrap" id="faq" aria-labelledby="faq-title">
+      <div class="section faq-grid">
+        <div>
+          <p class="section-label">Questions</p>
+          <h2 class="section-title" id="faq-title">Frequently asked</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>Does Avigail accept commissions?</summary>
+            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, visit the <a href="#commissions" data-open-commissions>Commissions page</a> to see examples and send a request, or <a href="mailto:meyersonavigail@gmail.com">get in touch</a> to discuss your vision and project.</p>
+          </details>
+          <details>
+            <summary>Are prints available?</summary>
+            <p>Yes. Prints are available for the Watercolor Portraits collection in four sizes. Select a portrait to view pricing and request an order.</p>
+          </details>
+          <details>
+            <summary>Can artwork be shipped?</summary>
+            <p>Yes. Original artwork can be shipped.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <p class="section-label">Commissions & inquiries</p>
+    <h2>Bring meaningful art into your space.</h2>
+    <p class="contact-note">For commissions, original artwork, shipping, or other inquiries, email <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> or call <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
+    <div class="footer-line" aria-hidden="true"></div>
+    <p class="footer-legal">&copy; <span id="copyright-year">2026</span> Avigail Meyerson &middot; Art by Avigail. All artwork shown on this site is the original work of Avigail Meyerson and is protected by copyright. No image, artwork, or content from this site may be reproduced, downloaded, distributed, or used for personal or commercial purposes without her prior written permission.</p>
+    <script>try{document.getElementById('copyright-year').textContent=new Date().getFullYear();}catch(e){}</script>
+  </footer>
+
+  <dialog id="lightbox" aria-labelledby="lightbox-title">
+    <div class="lightbox">
+      <div class="lightbox-top">
+        <button class="close" type="button" aria-label="Close artwork view">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+      </div>
+      <div class="lightbox-stage"><img id="lightbox-image" alt="" loading="lazy" decoding="async" /></div>
+      <div class="lightbox-meta"><strong id="lightbox-title"></strong><span id="lightbox-medium"></span></div>
+    </div>
+  </dialog>
+
+  <dialog class="print-dialog" id="print-dialog" aria-labelledby="print-title">
+    <div class="print-modal">
+      <figure class="print-preview">
+        <div class="print-preview-image-wrap"><img id="print-image" alt="" loading="lazy" decoding="async" /></div>
+        <figcaption><strong id="print-artwork-name"></strong><span id="print-medium">Watercolor</span></figcaption>
+      </figure>
+      <div class="print-panel">
+        <button class="close print-close" type="button" aria-label="Close order window">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+        <p class="print-kicker" id="print-kicker">Fine-art print</p>
+        <h2 id="print-title">Make it part of your space.</h2>
+        <p class="print-pitch" id="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.</p>
+        <form class="order-form" id="order-form">
+          <div class="form-field full">
+            <label for="print-size">Print size</label>
+            <select id="print-size" name="size" required></select>
+          </div>
+          <button class="order-submit" type="submit">Continue to secure checkout</button>
+          <p class="payment-note">You'll pay by card on the next screen (Stripe Checkout). Shipping address is collected there.</p>
+          <p class="payment-note" id="order-error" hidden></p>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="confirmation-dialog" id="confirmation-dialog" aria-labelledby="confirmation-title">
+    <div class="confirmation-card">
+      <button class="close print-close" type="button" aria-label="Close order confirmation">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+      <p class="print-kicker">Order confirmed</p>
+      <h2 id="confirmation-title">Thank you.</h2>
+      <p>Your payment went through and Avigail has been notified with your artwork choice, size, and shipping address. You'll also get a receipt by email. Your print will ship soon — reach out to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> with any questions.</p>
+      <button class="confirmation-done" type="button">Done</button>
+    </div>
+  </dialog>
+
+  <script>
+    const tabs = document.querySelectorAll('.collection-tab');
+    const cards = document.querySelectorAll('.art-card');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.filter;
+        tabs.forEach(item => item.setAttribute('aria-pressed', String(item === tab)));
+        cards.forEach(card => {
+          card.hidden = filter === 'prints' ? !card.querySelector('.buy-now') : card.dataset.category !== filter;
+        });
+        const showCommissions = filter === 'commission-info';
+        document.getElementById('commissions').hidden = !showCommissions;
+        document.querySelector('.gallery').hidden = showCommissions;
+      });
+    });
+
+    function openTab(filter, target) {
+      const tab = document.querySelector(`.collection-tab[data-filter="${filter}"]`);
+      if (tab) tab.click();
+      document.getElementById(target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function openCommissions() { openTab('commission-info', 'commissions'); }
+    document.querySelectorAll('[data-open-commissions]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      openCommissions();
+      try { history.replaceState(null, '', '#commissions'); } catch (e) {}
+    }));
+
+    // Navbar
+    const nav = document.getElementById('site-nav');
+    const navToggle = nav.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    function closeMenu() {
+      navLinks.classList.remove('open'); nav.classList.remove('menu-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open menu');
+    }
+    navToggle.addEventListener('click', () => {
+      const open = !navLinks.classList.contains('open');
+      navLinks.classList.toggle('open', open); nav.classList.toggle('menu-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
+      closeMenu();
+      // Each link has its own page address (for Google and for sharing). When that section is
+      // already on this page, go there smoothly instead of reloading, and show the page's address.
+      const filter = link.dataset.openTab, section = link.dataset.section;
+      if (filter || (section && document.getElementById(section))) {
+        event.preventDefault();
+        if (filter) openTab(filter, 'collection');
+        else document.getElementById(section).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        try { history.replaceState(null, '', link.getAttribute('href')); } catch (e) {}
+      }
+    }));
+    const isSubpage = document.body.classList.contains('subpage');
+    const onScroll = () => nav.classList.toggle('scrolled', isSubpage || window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Highlight the section currently in view
+    const navMap = [
+      ['about', 'a[data-section="about"]'],
+      ['collection', 'collection'],
+      ['faq', null],
+      ['contact', 'a[href="#contact"]']
+    ];
+    function markActive() {
+      const y = window.scrollY + window.innerHeight * 0.35;
+      let current = null;
+      navMap.forEach(([id, sel]) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= y) current = sel;
+      });
+      if (current === 'collection') {
+        const pressed = document.querySelector('.collection-tab[aria-pressed="true"]');
+        const f = pressed ? pressed.dataset.filter : 'watercolor';
+        current = `a[data-open-tab="${f === 'commissions' ? 'watercolor' : f}"]`;
+      }
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = 'a[href="#contact"]';
+      if (!current && isSubpage && document.body.dataset.page) current = `a[href="/${document.body.dataset.page}"]`;
+      navLinks.querySelectorAll('a').forEach(a => a.classList.toggle('active', !!current && a.matches(current) && !a.classList.contains('nav-cta')));
+    }
+    window.addEventListener('scroll', markActive, { passive: true });
+    document.querySelectorAll('.collection-tab').forEach(t => t.addEventListener('click', () => setTimeout(markActive, 0)));
+    // Section pages (/kesubahs, /prints, ...) open with their tab already chosen
+    if (document.body.dataset.openTab) {
+      const startTab = document.querySelector(`.collection-tab[data-filter="${document.body.dataset.openTab}"]`);
+      if (startTab) startTab.click();
+    }
+    markActive();
+
+
+    // Signature: painted on a canvas along the path of her pen (A up and down, the word, then the curl that crosses the A).
+    // Canvas is used instead of an SVG mask because iPhone Safari repaints animated masks unreliably.
+    (function () {
+      var STROKES = [{"d":"M9 285 L13 284 L17 282 L21 280 L25 278 L29 275 L33 272 L37 269 L41 267 L45 264 L49 261 L53 258 L57 255 L61 251 L65 248 L69 245 L73 241 L77 238 L81 234 L85 230 L89 227 L93 223 L97 219 L101 215 L104 211 L108 207 L112 203 L116 199 L119 195 L122 191 L130 183 L142 171 L148 163 L150 159 L153 155 L156 151 L159 147 L163 144 L167 142 L171 140 L174 139","w":18,"lift":true},{"d":"M175 138 L177 134 L180 130 L182 126 L185 122 L187 118 L189 114 L192 110 L194 106 L197 102 L199 98 L202 94 L204 90 L207 86 L209 82 L212 78 L214 74 L216 70 L219 66 L221 62 L222 60","w":26,"lift":false},{"d":"M222 60 L220 64 L218 68 L216 72 L213 76 L210 80 L208 84 L206 88 L203 92 L200 96 L198 100 L196 104 L193 108 L191 112 L188 116 L186 120 L183 124 L181 128 L179 132 L176 136 L175 138","w":26,"lift":false},{"d":"M175 139 L176 143 L177 147 L176 151 L175 155 L174 159 L173 163 L170 171 L162 184 L159 192 L158 196 L156 200 L154 204 L153 208 L151 212 L150 215 L150 217","w":18,"lift":false},{"d":"M149 218 L148 222 L146 226 L145 230 L144 234 L143 238 L142 242 L141 246 L140 250 L140 254 L139 258 L139 262 L140 266 L140 270 L141 274 L143 278 L146 282 L150 284 L154 285 L158 286 L162 286 L166 284 L170 282 L174 280 L178 277 L182 273 L186 269 L190 265 L193 261 L197 257 L200 253 L203 249 L206 245 L209 241 L212 237 L215 233 L218 230 L222 227 L226 225 L230 223 L232 220 L234 217 L236 213 L237 209 L239 205 L241 201 L243 197 L245 193 L247 189 L250 185 L252 181 L254 177 L254 175 L254 176 L252 180 L250 184 L248 188 L246 192 L244 196 L242 200 L240 204 L238 208 L236 212 L234 216 L233 220 L234 223 L235 227 L236 231 L236 235 L238 239 L240 243 L243 246 L247 247 L251 248 L255 247 L259 246 L263 244 L267 240 L271 236 L274 232 L278 228 L280 224 L283 220 L286 216 L288 212 L290 208 L292 204 L295 200 L297 196 L299 192 L302 188 L305 185 L306 181 L307 177 L308 173 L309 169 L310 165 L312 161 L312 158","w":26,"lift":false},{"d":"M306 187 L310 189 L314 190 L318 191 L322 191 L326 190 L330 188 L334 186 L338 184 L342 183 L346 182 L350 180 L353 178 L355 175 L357 171 L359 167 L362 163 L364 159 L367 155 L368 152 L368 153 L366 156 L363 160 L361 164 L359 168 L357 172 L355 176 L354 179 L354 183 L354 187 L354 191 L354 195 L354 199 L354 203 L354 208 L352 212 L350 216 L347 220 L345 224 L343 228 L341 232 L340 233 L342 231 L344 227 L346 223 L348 219 L350 215 L352 211 L355 208 L359 205 L363 204 L367 204 L371 204 L375 204 L379 202 L383 200 L386 196 L389 192 L392 188 L395 184 L398 180 L402 177 L405 173 L408 169 L412 166 L416 163 L420 162 L424 161 L428 160 L435 156 L442 152 L441 153 L438 158 L437 161 L437 165 L437 169 L436 173 L435 177 L435 181 L434 185 L433 189 L432 193 L431 197 L430 201 L429 205 L428 209 L428 213 L428 217 L426 220 L424 222 L420 224 L416 225 L412 228 L408 230 L404 233 L400 234 L396 234 L392 234 L388 232 L386 228 L385 224 L384 220 L384 216 L383 212 L383 208 L383 205 L383 204 L383 207 L383 211 L384 215 L384 219 L385 223 L386 227 L388 230 L391 233 L395 234 L399 234 L403 233 L407 231 L411 228 L415 226 L419 224 L423 223 L427 222 L430 224 L431 228 L432 232 L433 236 L434 240 L435 244 L436 247 L435 251 L433 255 L431 259 L428 263 L427 267 L425 271 L423 275 L420 279 L417 283 L414 287 L411 291 L408 295 L405 298 L401 299 L397 300 L393 301 L389 303 L385 306 L381 310 L377 314 L373 318 L369 322 L365 326 L361 330 L357 334 L353 338 L349 342 L345 346 L342 350 L338 354 L334 358 L331 362 L328 366 L324 370 L321 374 L318 378 L315 382 L312 386 L310 390 L307 394 L305 398 L303 402 L302 406 L302 410 L303 414 L306 416 L310 416 L314 415 L318 414 L322 413 L326 411 L330 409 L334 406 L338 403 L342 400 L346 397 L350 394 L354 390 L358 387 L362 383 L365 379 L369 375 L372 371 L375 367 L377 363 L380 359 L382 355 L385 351 L388 347 L390 343 L392 339 L394 335 L396 331 L398 327 L400 323 L402 319 L404 315 L405 311 L406 307 L406 303 L407 299 L409 294 L412 290 L415 286 L418 282 L421 278 L423 274 L426 270 L427 266 L429 262 L431 258 L434 254 L436 250 L438 248 L441 246 L445 244 L449 243 L453 240 L457 237 L461 233 L465 229 L469 225 L473 221 L477 218 L481 214 L485 210 L489 206 L493 203 L497 201 L501 200 L504 198 L507 195 L509 191 L512 187 L515 183 L519 179 L522 175 L526 171 L530 167 L534 163 L538 159 L542 155 L546 151 L549 149 L548 150 L545 152 L541 156 L537 160 L533 164 L529 168 L525 172 L521 176 L518 180 L514 184 L511 188 L508 192 L507 196 L507 200 L508 204 L510 208 L513 212 L517 214 L521 215 L525 215 L529 214 L533 213 L537 211 L541 208 L545 204 L549 202 L553 200 L557 198 L560 196 L561 192 L563 188 L564 184 L565 180 L566 176 L568 172 L569 168 L571 164 L572 160 L574 156 L576 152 L577 150 L576 151 L575 155 L573 159 L571 163 L570 167 L568 171 L567 175 L565 179 L564 183 L563 187 L561 191 L560 195 L561 199 L562 203 L563 207 L564 211 L566 215 L569 218 L573 220 L577 220 L581 220 L585 218 L589 216 L593 213 L597 209 L601 205 L605 201 L609 198 L613 196 L617 194 L620 191 L622 187 L623 183 L625 179 L627 175 L630 171 L632 167 L634 163 L636 159 L638 155 L638 154 L637 156 L635 160 L633 164 L631 168 L629 172 L626 176 L624 180 L622 184 L621 188 L620 192 L621 196 L622 200 L623 204 L624 208 L627 212 L631 215 L635 217 L639 218 L643 219 L647 219 L651 218 L655 217 L659 216 L663 215 L667 213 L671 211 L675 209 L679 207 L683 204 L687 202 L691 200 L695 199 L699 194 L702 187 L702 186 L701 190 L702 190 L704 182 L704 176 L704 172 L704 168 L705 164 L705 160 L706 156 L707 152 L709 148 L710 144 L712 140 L714 136 L715 132 L717 128 L719 124 L721 120 L723 116 L725 112 L727 108 L729 104 L731 100 L734 96 L736 92 L739 88 L742 84 L744 80 L747 76 L750 72 L753 68 L756 64 L760 60 L763 56 L766 52 L769 48 L773 44 L777 40 L781 36 L785 32 L789 29 L793 25 L797 22 L801 19 L805 16 L809 14 L813 12 L817 10 L821 8 L825 7 L829 8 L832 11 L833 15 L834 19 L833 23 L833 27 L832 31 L831 35 L830 39 L828 43 L827 47 L825 51 L823 55 L821 59 L819 63 L817 67 L814 71 L812 75 L809 79 L807 83 L804 87 L801 91 L798 95 L795 99 L792 103 L789 107 L786 111 L782 115 L779 119 L775 123 L771 127 L767 131 L763 135 L760 139 L756 143 L752 147 L748 150 L744 154 L740 158 L736 161 L732 165 L728 168 L724 172 L720 175 L716 177 L712 178 L708 179 L705 181 L703 184 L702 188 L701 192 L701 196 L702 200 L703 204 L704 208 L705 212 L706 216 L708 220 L710 224 L712 228 L715 232 L719 236 L723 240 L727 243 L731 245 L735 247 L739 249 L743 250 L747 251 L751 252 L755 253 L759 254 L763 254 L767 254 L771 254 L775 254 L779 254 L783 253 L787 253 L791 252 L795 252 L799 251 L803 250 L807 249 L811 248 L815 246 L819 245 L823 243 L827 242 L831 240 L835 238 L839 237 L843 235 L847 233 L851 231 L855 229 L859 227 L863 225 L867 223 L871 221 L875 219 L879 217 L883 214 L887 212 L891 210 L895 207 L899 205 L903 203 L907 201 L911 198 L915 196 L919 193 L923 191 L927 188 L931 186 L935 184 L939 181 L943 179 L947 177 L951 174 L955 172 L959 170 L963 167 L967 165 L971 162 L975 160 L979 158 L982 156","w":32,"lift":true},{"d":"M56 191 L52 192 L48 192 L44 192 L40 192 L36 190 L32 188 L28 186 L24 182 L22 178 L20 174 L19 170 L19 166 L20 162 L21 158 L24 154 L27 150 L31 147 L35 145 L39 144 L43 143 L47 143 L51 143 L55 144 L59 146 L63 147 L67 149 L71 152 L75 155 L79 158 L83 160 L87 163 L91 166 L95 168 L99 170 L103 172 L107 173 L111 174 L115 175 L119 176 L123 177 L127 178 L131 178 L135 178 L139 178 L143 177 L146 177 L150 177 L154 177 L158 177 L163 176 L167 176 L171 175 L175 174 L179 173 L183 173 L187 173 L191 172 L195 171 L199 170 L203 169 L207 168 L211 167 L215 166 L219 165 L223 164 L227 163 L231 162 L235 160 L239 160 L243 159 L247 159 L251 158 L255 158 L260 156 L264 154 L268 150 L272 148 L276 146 L280 145 L284 143 L288 142 L292 140 L296 138 L300 137 L304 135 L308 134 L312 132 L316 130 L320 128 L324 127 L328 125 L332 123 L336 121 L340 119 L344 118 L348 116 L352 114 L356 112 L360 110 L364 108 L368 106 L372 104 L376 102 L380 100 L384 98 L388 96 L392 94 L396 91 L399 88 L401 87","w":26,"lift":true}];
+      var W = 986, H = 429, PAD = 30;
+      var box = document.querySelector('.sig-box');
+      var canvas = document.querySelector('.sig-canvas');
+      var img = document.querySelector('.sig-img');
+      var link = document.querySelector('.sig-link');
+      var heroImg = document.querySelector('.hero-art img');
+      if (!box || !canvas || !img || !canvas.getContext) return;
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Pen pieces as point lists with running lengths
+      var pieces = STROKES.map(function (st) {
+        var nums = st.d.replace(/[ML]/g, ' ').trim().split(/\s+/).map(Number), pts = [], cum = [0];
+        for (var k = 0; k < nums.length; k += 2) pts.push([nums[k], nums[k + 1]]);
+        for (var k = 1; k < pts.length; k++) cum.push(cum[k - 1] + Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]));
+        return { pts: pts, cum: cum, L: cum[cum.length - 1], w: st.w, lift: st.lift };
+      });
+      var groups = [];
+      pieces.forEach(function (pc) {
+        if (pc.lift || !groups.length) groups.push({ items: [], total: 0 });
+        var g = groups[groups.length - 1];
+        g.items.push({ pc: pc, from: g.total }); g.total += pc.L;
+      });
+      var at = 450;
+      groups.forEach(function (g) { g.start = at; g.dur = Math.max(300, g.total / 2.0); at += g.dur + 150; });
+      var END = at, SETTLE = 350;
+      var ease = function (t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
+      var easeLong = function (t) { return 1 - Math.pow(1 - t, 1.6); };
+
+      var ctx = canvas.getContext('2d');
+      var ink = document.createElement('canvas'), ictx = ink.getContext('2d');
+      var lastW = 0;
+      var logo = new Image(), scale = 1, dpr = 1, ready = false, raf = 0, lastEl = 0;
+
+      function size() {
+        var r = box.getBoundingClientRect();
+        if (!r.width) return;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        scale = (r.width / W) * dpr;
+        canvas.width = ink.width = Math.round((W + 2 * PAD) * scale);
+        canvas.height = ink.height = Math.round((H + 2 * PAD) * scale);
+        lastW = r.width;
+      }
+      function strokePiece(pc, len) {
+        if (len <= 0) return;
+        var pts = pc.pts, cum = pc.cum;
+        ictx.lineWidth = pc.w;
+        ictx.beginPath();
+        ictx.moveTo(pts[0][0], pts[0][1]);
+        for (var k = 1; k < pts.length; k++) {
+          if (cum[k] <= len) { ictx.lineTo(pts[k][0], pts[k][1]); continue; }
+          var seg = cum[k] - cum[k - 1], f = seg ? (len - cum[k - 1]) / seg : 0;
+          ictx.lineTo(pts[k - 1][0] + (pts[k][0] - pts[k - 1][0]) * f, pts[k - 1][1] + (pts[k][1] - pts[k - 1][1]) * f);
+          break;
+        }
+        ictx.stroke();
+      }
+      function draw(el) {
+        lastEl = el;
+        ictx.setTransform(1, 0, 0, 1, 0, 0);
+        ictx.globalCompositeOperation = 'source-over';
+        ictx.globalAlpha = 1;
+        ictx.clearRect(0, 0, ink.width, ink.height);
+        ictx.setTransform(scale, 0, 0, scale, PAD * scale, PAD * scale);
+        ictx.strokeStyle = '#fff'; ictx.lineCap = 'round'; ictx.lineJoin = 'round';
+        groups.forEach(function (g) {
+          var t = Math.min(1, Math.max(0, (el - g.start) / g.dur));
+          var drawn = g.total * (g.total > 1500 ? easeLong(t) : ease(t));
+          g.items.forEach(function (it) { strokePiece(it.pc, Math.min(it.pc.L, drawn - it.from)); });
+        });
+        ictx.globalCompositeOperation = 'source-in';
+        ictx.drawImage(logo, 0, 0, W, H);
+        ictx.globalCompositeOperation = 'source-over';
+        var settle = Math.min(1, Math.max(0, (el - END) / SETTLE));
+        if (settle > 0) { ictx.globalAlpha = settle; ictx.drawImage(logo, 0, 0, W, H); ictx.globalAlpha = 1; }
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(ink, 0, 0);
+      }
+      // The clock advances by at most ~2 frames per tick, so if the phone stalls (for example while
+      // unpacking the painting) the pen pauses and carries on, instead of jumping to the end.
+      var elapsed = 0, prev = null;
+      function step(now) {
+        var dt = prev === null ? 0 : Math.min(now - prev, 34);
+        prev = now; elapsed += dt;
+        draw(elapsed);
+        if (elapsed < END + SETTLE) raf = requestAnimationFrame(step);
+        else box.classList.add('sig-done');
+      }
+      function startDrift() {
+        if (!heroImg || reduced) return;
+        heroImg.classList.remove('is-in'); void heroImg.offsetWidth; heroImg.classList.add('is-in');
+      }
+      function play() {
+        if (!ready || reduced) return;
+        cancelAnimationFrame(raf);
+        box.classList.remove('sig-done');
+        startDrift();
+        elapsed = 0; prev = null;
+        draw(0);
+        raf = requestAnimationFrame(step);
+      }
+      // Wait until the painting is loaded and decoded, so the drift and the pen start together
+      // and the phone isn't busy unpacking the image while the pen is writing.
+      var paintingReady = new Promise(function (resolve) {
+        if (!heroImg) return resolve();
+        var done = function () {
+          if (heroImg.decode) heroImg.decode().then(resolve, resolve); else resolve();
+        };
+        if (heroImg.complete && heroImg.naturalWidth) done();
+        else { heroImg.addEventListener('load', done, { once: true }); heroImg.addEventListener('error', resolve, { once: true }); }
+        setTimeout(resolve, 2500);
+      });
+      paintingReady.then(function () { if (!ready) startDrift(); });
+      // If the signature can't animate quickly, show it as a plain image
+      var fallbackTimer = setTimeout(function () { if (!ready) box.classList.add('sig-fallback'); }, 3000);
+      logo.onerror = function () { box.classList.add('sig-fallback'); };
+      logo.onload = function () {
+        if (reduced) { box.classList.add('sig-done'); return; }
+        clearTimeout(fallbackTimer);
+        if (box.classList.contains('sig-fallback')) return;
+        size();
+        draw(0);
+        ready = true;
+        canvas.hidden = false;
+        box.classList.add('sig-ready');
+        paintingReady.then(function () {
+          requestAnimationFrame(function () { requestAnimationFrame(play); });
+        });
+      };
+      logo.src = img.currentSrc || img.src;
+
+      // Only redraw when the width really changes (iPhone fires resize as the address bar shows and hides)
+      var resizeTimer = 0;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          var w = box.getBoundingClientRect().width;
+          if (!ready || Math.abs(w - lastW) < 1) return;
+          lastW = w; size(); draw(lastEl);
+        }, 150);
+      });
+
+      // Clicking the signature returns to the top and replays the opening
+      if (link) link.addEventListener('click', function (e) {
+        e.preventDefault();
+        try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {}
+        if (window.scrollY < 4) { play(); return; }
+        window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+        var waited = 0;
+        (function waitTop() {
+          if (window.scrollY < 4 || waited > 1500) { play(); return; }
+          waited += 50; setTimeout(waitTop, 50);
+        })();
+      });
+    })();
+
+    if (location.hash === '#commissions') openCommissions();
+
+
+    document.querySelectorAll('[data-scroll="cm-form"]').forEach(btn => btn.addEventListener('click', () => {
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
+    }));
+    document.querySelectorAll('.cm-type button, .cs-btn[data-type]').forEach(btn => btn.addEventListener('click', () => {
+      document.getElementById('cm-type').value = btn.dataset.type;
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
+    }));
+
+
+    document.getElementById('commission-form').addEventListener('submit', event => {
+      event.preventDefault();
+      const form = event.target;
+      if (!form.reportValidity()) return;
+      const get = id => document.getElementById(id).value.trim();
+      const photos = document.getElementById('cm-photos').files.length;
+      const subject = `Commission request: ${get('cm-type')} from ${get('cm-name')}`;
+      const body = [
+        `Name: ${get('cm-name')}`,
+        `Email: ${get('cm-email')}`,
+        `Phone: ${get('cm-phone') || '-'}`,
+        `Commission type: ${get('cm-type')}`,
+        '',
+        get('cm-details'),
+        '',
+        photos ? `(I have ${photos} reference photo${photos > 1 ? 's' : ''} to attach.)` : '',
+      ].join('\n');
+      window.location.href = `mailto:meyersonavigail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const note = document.getElementById('cm-note');
+      note.textContent = 'Your email app should open with your request filled in. Please attach your reference photos there and press send. If nothing opened, email meyersonavigail@gmail.com directly.';
+      note.hidden = false;
+    });
+
+    const dialog = document.getElementById('lightbox');
+    const dialogImage = document.getElementById('lightbox-image');
+    const dialogTitle = document.getElementById('lightbox-title');
+    const dialogMedium = document.getElementById('lightbox-medium');
+    const printDialog = document.getElementById('print-dialog');
+    const printImage = document.getElementById('print-image');
+    const printArtworkName = document.getElementById('print-artwork-name');
+    const orderForm = document.getElementById('order-form');
+    const orderSubmit = orderForm.querySelector('.order-submit');
+    const orderError = document.getElementById('order-error');
+    const confirmationDialog = document.getElementById('confirmation-dialog');
+    let selectedArtwork = '';
+    let selectedImage = '';
+
+    const PRODUCTS = {
+      watercolor: {
+        kicker: 'Fine-art print',
+        heading: 'Make it part of your space.',
+        medium: 'Watercolor',
+        pitch: 'Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.',
+        sizes: [['10 × 14', 50], ['14 × 20', 80], ['18 × 26', 140], ['26 × 38', 220]],
+      },
+      kesubah: {
+        kicker: 'Kesubah print',
+        heading: 'Begin your home with beauty.',
+        medium: 'Watercolor and ink',
+        pitch: 'A fine-art print of Avigail’s hand-painted kesubah, with the words of the kesubah set within her original watercolor artwork. Checkout is secure and your shipping details are collected on the next step.',
+        sizes: [['12 × 18', 300]],
+      },
+    };
+    const printSize = document.getElementById('print-size');
+    let selectedProduct = 'watercolor';
+
+    function openPrintOrder(button, product = 'watercolor') {
+      const thumb = button.querySelector('img');
+      const config = PRODUCTS[product];
+      selectedProduct = product;
+      selectedArtwork = button.dataset.title;
+      selectedImage = button.dataset.src;
+      printImage.src = button.dataset.src;
+      printImage.alt = thumb.alt;
+      printArtworkName.textContent = selectedArtwork;
+      document.getElementById('print-kicker').textContent = config.kicker;
+      document.getElementById('print-title').textContent = config.heading;
+      document.getElementById('print-medium').textContent = config.medium;
+      document.getElementById('print-pitch').textContent = config.pitch;
+      orderForm.reset();
+      const single = config.sizes.length === 1;
+      printSize.innerHTML = (single ? '' : '<option value="" selected disabled>Select a size</option>') +
+        config.sizes.map(([size, price]) => `<option value="${size}|${price}">${size} — $${price}</option>`).join('');
+      if (single) printSize.selectedIndex = 0;
+      printSize.classList.toggle('single-option', single);
+      printSize.tabIndex = single ? -1 : 0;
+      orderError.hidden = true;
+      orderSubmit.disabled = false;
+      orderSubmit.textContent = 'Continue to secure checkout';
+      printDialog.showModal();
+    }
+
+    document.querySelectorAll('.buy-now').forEach(buyButton => {
+      buyButton.addEventListener('click', () => {
+        openPrintOrder(buyButton.closest('.art-card').querySelector('.art-button'), buyButton.dataset.product || 'watercolor');
+      });
+    });
+
+    document.querySelectorAll('.art-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const thumb = button.querySelector('img');
+        const card = button.closest('.art-card');
+        if (card.dataset.category === 'watercolor') {
+          openPrintOrder(button);
+          return;
+        }
+        dialogImage.src = button.dataset.src;
+        dialogImage.alt = thumb.alt;
+        dialogTitle.textContent = button.dataset.title;
+        dialogMedium.textContent = button.dataset.medium;
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelector('.close').addEventListener('click', () => dialog.close());
+    printDialog.querySelector('.print-close').addEventListener('click', () => printDialog.close());
+    confirmationDialog.querySelector('.print-close').addEventListener('click', () => confirmationDialog.close());
+    confirmationDialog.querySelector('.confirmation-done').addEventListener('click', () => confirmationDialog.close());
+
+    [dialog, printDialog, confirmationDialog].forEach(modal => {
+      modal.addEventListener('click', event => {
+        if (event.target === modal) modal.close();
+      });
+    });
+
+    orderForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!orderForm.reportValidity()) return;
+
+      const [size, amount] = document.getElementById('print-size').value.split('|');
+      orderError.hidden = true;
+      orderSubmit.disabled = true;
+      orderSubmit.textContent = 'Redirecting to checkout…';
+
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ artwork: selectedArtwork, size, amount, image: new URL(selectedImage, window.location.href).href, product: selectedProduct }),
+        });
+        const data = await response.json();
+        if (!response.ok || !data.url) throw new Error(data.error || 'Could not start checkout.');
+        window.location.href = data.url;
+      } catch (err) {
+        orderError.textContent = err.message || 'Something went wrong starting checkout. Please try again.';
+        orderError.hidden = false;
+        orderSubmit.disabled = false;
+        orderSubmit.textContent = 'Continue to secure checkout';
+      }
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('order') === 'success') {
+      confirmationDialog.showModal();
+      params.delete('order');
+      const newUrl = window.location.pathname + (params.toString() ? `?${params}` : '');
+      window.history.replaceState({}, '', newUrl);
+    }
+  </script>
+</body>
+</html>

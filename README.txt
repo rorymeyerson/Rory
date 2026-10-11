@@ -40,3 +40,11 @@ Deploying (Vercel, free tier):
 Print sizes/prices (USD): 10x14 $50, 14x20 $80, 18x26 $140, 26x38 $220.
 These are defined in api/create-checkout-session.js (VALID_SIZES) and in
 the <select> in index.html — update both together if prices change.
+
+Section pages (added 2026-10-11):
+- about.html, collection.html, kesubahs.html, prints.html, commissions.html are
+  GENERATED from index.html by scripts/build_pages.py, so Google can list each
+  section as its own page (avigailmeyerson.com/kesubahs, /prints, ...).
+- After any change to index.html, run:  python3 scripts/build_pages.py
+  and commit the regenerated pages and sitemap.xml along with it.
+- vercel.json turns on clean URLs, so /kesubahs serves kesubahs.html.

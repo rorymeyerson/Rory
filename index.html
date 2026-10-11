@@ -938,6 +938,25 @@
     .js .sig-box.sig-done .sig-img, .js .sig-box.sig-fallback .sig-img { visibility: visible; }
     .sig-box.sig-done .sig-canvas { opacity: 0; transition: opacity .35s ease; }
     .sig-img { transition: opacity .35s ease; }
+    /* Section pages (/about, /collection, /kesubahs, /prints, /commissions) */
+    .page-intro {
+      background: var(--paper);
+      padding: calc(var(--nav-h) + clamp(44px, 7vw, 96px)) 0 clamp(40px, 6vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+    .page-intro-inner { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; display: grid; gap: 14px; }
+    .page-intro h1 {
+      margin: 0;
+      font: 400 clamp(2.6rem, 6vw, 5rem)/.98 "Newsreader", serif;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .page-intro p.page-lede { margin: 6px 0 0; max-width: 62ch; color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.12rem); line-height: 1.65; }
+    .page-intro a.page-home { justify-self: start; margin-top: 10px; font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--wine); text-decoration: none; }
+    .page-intro a.page-home:hover { color: var(--gold); }
+    .subpage #collection { padding-top: clamp(40px, 5vw, 64px); }
+    .subpage-collection .collection-intro { display: none; }
+    .subpage-about #about .about-copy > .section-label, .subpage-about #about-title { display: none; }
     .hero-byline {
       margin: 0 0 4px 2px;
       font-size: clamp(.66rem, .9vw, .8rem);
@@ -987,11 +1006,11 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="nav-links" id="nav-links" aria-label="Main">
-        <a href="#about">About</a>
-        <a href="#collection" data-open-tab="watercolor">Collection</a>
-        <a href="#collection" data-open-tab="kesubahs">Kesubahs</a>
-        <a href="#collection" data-open-tab="prints">Prints</a>
-        <a href="#commissions" data-open-tab="commission-info">Commission</a>
+        <a href="/about" data-section="about">About</a>
+        <a href="/collection" data-open-tab="watercolor">Collection</a>
+        <a href="/kesubahs" data-open-tab="kesubahs">Kesubahs</a>
+        <a href="/prints" data-open-tab="prints">Prints</a>
+        <a href="/commissions" data-open-tab="commission-info">Commission</a>
         <a class="nav-cta" href="#contact">Contact</a>
       </nav>
     </div>
@@ -1385,20 +1404,24 @@
     document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
       closeMenu();
-      const filter = link.dataset.openTab;
-      if (filter) {
+      // Each link has its own page address (for Google and for sharing). When that section is
+      // already on this page, go there smoothly instead of reloading, and show the page's address.
+      const filter = link.dataset.openTab, section = link.dataset.section;
+      if (filter || (section && document.getElementById(section))) {
         event.preventDefault();
-        openTab(filter, 'collection');
-        try { history.replaceState(null, '', filter === 'commission-info' ? '#commissions' : '#collection'); } catch (e) {}
+        if (filter) openTab(filter, 'collection');
+        else document.getElementById(section).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        try { history.replaceState(null, '', link.getAttribute('href')); } catch (e) {}
       }
     }));
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    const isSubpage = document.body.classList.contains('subpage');
+    const onScroll = () => nav.classList.toggle('scrolled', isSubpage || window.scrollY > 8);
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
     // Highlight the section currently in view
     const navMap = [
-      ['about', 'a[href="#about"]'],
+      ['about', 'a[data-section="about"]'],
       ['collection', 'collection'],
       ['faq', null],
       ['contact', 'a[href="#contact"]']
@@ -1416,10 +1439,16 @@
         current = `a[data-open-tab="${f === 'commissions' ? 'watercolor' : f}"]`;
       }
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = 'a[href="#contact"]';
+      if (!current && isSubpage && document.body.dataset.page) current = `a[href="/${document.body.dataset.page}"]`;
       navLinks.querySelectorAll('a').forEach(a => a.classList.toggle('active', !!current && a.matches(current) && !a.classList.contains('nav-cta')));
     }
     window.addEventListener('scroll', markActive, { passive: true });
     document.querySelectorAll('.collection-tab').forEach(t => t.addEventListener('click', () => setTimeout(markActive, 0)));
+    // Section pages (/kesubahs, /prints, ...) open with their tab already chosen
+    if (document.body.dataset.openTab) {
+      const startTab = document.querySelector(`.collection-tab[data-filter="${document.body.dataset.openTab}"]`);
+      if (startTab) startTab.click();
+    }
     markActive();
 
 
