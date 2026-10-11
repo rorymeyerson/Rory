@@ -921,6 +921,17 @@
         radial-gradient(ellipse 34% 30% at 14% 13%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%),
         linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 16%);
     }
+    .hero-byline {
+      margin: 0 0 4px 2px;
+      font-size: clamp(.66rem, .9vw, .8rem);
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.94);
+      text-shadow: 0 1px 10px rgba(20,30,45,.45);
+    }
+    .sig-link { display: inline-block; cursor: pointer; border-radius: 6px; }
+    .sig-link:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 6px; }
     @keyframes heroDrift { from { transform: scale(1.14); } to { transform: scale(1); } }
     @media (prefers-reduced-motion: reduce) { .hero-art img { animation: none; } }
     @media (max-width: 860px) {
@@ -971,7 +982,9 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
+        <p class="hero-byline">Fine Art by</p>
         <h1 id="hero-title" aria-label="Avigail">
+          <a class="sig-link" href="#top" aria-label="Avigail, back to the top">
           <svg class="hero-logo" viewBox="0 0 986 429" aria-hidden="true" focusable="false">
             <defs>
               <mask id="sig-ink" maskUnits="userSpaceOnUse" x="-20" y="-20" width="1026" height="469">
@@ -981,6 +994,7 @@
             </defs>
             <image href="assets/avigail-logo-bright.png" x="0" y="0" width="986" height="429" mask="url(#sig-ink)"></image>
           </svg>
+          </a>
         </h1>
       </div>
       <div class="hero-art">
@@ -1404,16 +1418,15 @@
       var group = document.getElementById('sig-strokes');
       var full = document.getElementById('sig-full');
       if (!group || !full) return;
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var paths = [], lens = [];
       STROKES.forEach(function (st) {
         var p = document.createElementNS(NS, 'path');
         p.setAttribute('d', st.d); p.setAttribute('stroke-width', st.w);
         group.appendChild(p);
         var L = p.getTotalLength(); paths.push(p); lens.push(L);
-        p.style.strokeDasharray = L + ' ' + L; p.style.strokeDashoffset = L;
+        p.style.strokeDasharray = L + ' ' + L;
       });
-      full.setAttribute('opacity', 0);
       var groups = [];
       STROKES.forEach(function (st, i) {
         if (st.lift || !groups.length) groups.push({ items: [], total: 0 });
@@ -1424,7 +1437,8 @@
       groups.forEach(function (g) { g.start = at; g.dur = Math.max(300, g.total / 2.0); at += g.dur + 150; });
       var ease = function (t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
       var easeLong = function (t) { return 1 - Math.pow(1 - t, 1.6); };
-      var start = null;
+      var heroImg = document.querySelector('.hero-art img');
+      var raf = 0, start = null;
       function step(now) {
         if (start === null) start = now;
         var el = now - start, done = true;
@@ -1436,10 +1450,33 @@
           });
           if (t < 1) done = false;
         });
-        if (!done) requestAnimationFrame(step);
+        if (!done) raf = requestAnimationFrame(step);
         else { full.style.transition = 'opacity .35s ease'; full.setAttribute('opacity', 1); }
       }
-      requestAnimationFrame(step);
+      function playSignature() {
+        if (reduced) return;
+        cancelAnimationFrame(raf);
+        full.style.transition = 'none'; full.setAttribute('opacity', 0);
+        paths.forEach(function (p, i) { p.style.strokeDashoffset = lens[i]; });
+        if (heroImg) { heroImg.style.animation = 'none'; void heroImg.offsetWidth; heroImg.style.animation = ''; }
+        start = null;
+        raf = requestAnimationFrame(step);
+      }
+      playSignature();
+
+      // Clicking the signature returns to the top and replays the opening
+      var link = document.querySelector('.sig-link');
+      if (link) link.addEventListener('click', function (e) {
+        e.preventDefault();
+        try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {}
+        if (window.scrollY < 4) { playSignature(); return; }
+        window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+        var waited = 0;
+        (function waitTop() {
+          if (window.scrollY < 4 || waited > 1500) { playSignature(); return; }
+          waited += 50; setTimeout(waitTop, 50);
+        })();
+      });
     })();
 
     if (location.hash === '#commissions') openCommissions();
