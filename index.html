@@ -1014,7 +1014,7 @@
         <div class="faq-list">
           <details>
             <summary>Does Avigail accept commissions?</summary>
-            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, please <a href="mailto:meyersonavigail@gmail.com">get in touch</a> to discuss your vision and project.</p>
+            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, visit the <a href="#commissions" data-open-commissions>Commissions page</a> to see examples and send a request, or <a href="mailto:meyersonavigail@gmail.com">get in touch</a> to discuss your vision and project.</p>
           </details>
           <details>
             <summary>Are prints available?</summary>
@@ -1103,6 +1103,18 @@
         document.querySelector('.gallery').hidden = showCommissions;
       });
     });
+
+    function openCommissions() {
+      const tab = document.querySelector('.collection-tab[data-filter="commission-info"]');
+      if (tab) tab.click();
+      document.getElementById('commissions').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    document.querySelectorAll('[data-open-commissions]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      openCommissions();
+      try { history.replaceState(null, '', '#commissions'); } catch (e) {}
+    }));
+    if (location.hash === '#commissions') openCommissions();
 
 
     document.querySelectorAll('[data-scroll="cm-form"]').forEach(btn => btn.addEventListener('click', () => {
