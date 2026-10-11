@@ -889,6 +889,86 @@
     @media (max-width: 860px) {
       .hero-copy { padding: calc(var(--nav-h) + 12px) 20px 48px; }
     }
+
+    /* ---- Hero variants (preview) ---- */
+    .hero-plaque, .hero-scroll { display: none; }
+    .hero-copy {
+      position: absolute;
+      z-index: 2;
+      top: var(--frame);
+      left: var(--frame);
+      width: auto;
+      margin: 0;
+      padding: 0;
+    }
+    .hero-logo {
+      width: clamp(200px, 25vw, 400px);
+      margin: 0;
+      filter: drop-shadow(0 2px 10px rgba(20,30,45,.35)) drop-shadow(0 0 1px rgba(20,30,45,.25));
+    }
+    .hero-art img { filter: brightness(1.05) saturate(1.04); }
+    .hero-art::after {
+      background:
+        radial-gradient(ellipse 34% 30% at 14% 13%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%),
+        linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 16%);
+    }
+    :root { --frame: clamp(20px, 3vw, 44px); }
+
+    /* Version A: nearly full screen, lighter, signature framed top-left */
+    .hero-v-a .hero { min-height: 0; height: calc(100svh - 64px); max-height: 980px; }
+
+    /* Version B: museum-style reveal */
+    .hero-v-b .hero { min-height: 0; height: 100svh; max-height: 1080px; }
+    .hero-v-b .hero-art img { animation: heroDrift 16s cubic-bezier(.2,.6,.2,1) both; transform-origin: 40% 38%; }
+    .hero-v-b .hero-logo { animation: signWrite 2.4s .5s cubic-bezier(.6,.05,.3,1) both; }
+    .hero-v-b .hero-plaque {
+      display: block;
+      position: absolute;
+      z-index: 2;
+      right: var(--frame);
+      bottom: var(--frame);
+      width: min(320px, calc(100% - 2 * var(--frame)));
+      padding: 20px 22px 18px;
+      background: rgba(251, 249, 245, .93);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 18px 40px rgba(18,30,46,.18);
+      animation: plaqueIn .9s 2.4s ease-out both;
+    }
+    .plaque-title { margin: 0; font: 400 1.32rem/1.15 "Newsreader", serif; color: var(--ink); }
+    .plaque-meta { margin: 6px 0 14px; font-size: .78rem; letter-spacing: .04em; color: var(--muted); }
+    .plaque-links { display: flex; gap: 18px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .plaque-links a { font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: var(--wine); }
+    .plaque-links a:hover { color: var(--gold); }
+    .hero-v-b .hero-scroll {
+      display: block;
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: 22px;
+      width: 26px; height: 42px;
+      margin-left: -13px;
+      border: 1.5px solid rgba(255,255,255,.85);
+      border-radius: 14px;
+      animation: plaqueIn .9s 2.8s ease-out both;
+    }
+    .hero-scroll span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: #fff; animation: scrollDot 1.8s ease-in-out infinite; }
+    @keyframes heroDrift { from { transform: scale(1.14); } to { transform: scale(1); } }
+    @keyframes signWrite { from { clip-path: inset(0 100% 0 0); opacity: .2; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+    @keyframes plaqueIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes scrollDot { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-v-b .hero-art img, .hero-v-b .hero-logo, .hero-v-b .hero-plaque, .hero-v-b .hero-scroll, .hero-scroll span { animation: none; }
+    }
+    @media (max-width: 860px) {
+      .hero-copy { padding: 0; }
+      .hero-logo { width: clamp(190px, 52vw, 300px); }
+      .hero-copy { top: calc(var(--nav-h) + 4px); }
+      .hero-art::after { background: radial-gradient(ellipse 60% 26% at 30% 15%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%), linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 14%); }
+      .hero-v-a .hero { height: calc(100svh - 56px); }
+      .hero-v-b .hero-scroll { display: none; }
+      .hero-v-b .hero-plaque { left: var(--frame); right: var(--frame); width: auto; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -912,7 +992,7 @@
   }
   </script>
 </head>
-<body>
+<body class="hero-v-a">
   <header class="site-nav" id="site-nav">
     <div class="nav-inner">
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
@@ -932,15 +1012,19 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title" aria-label="Avigail"><img class="hero-logo" src="assets/avigail-logo.png" alt="" /></h1>
-        <p class="tagline">Portraits and holy scenes, painted with warmth, reverence, and a vivid sense of color.</p>
-        <a class="cta" href="#collection">
-          Explore Paintings
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
-        </a>
       </div>
       <div class="hero-art">
         <img src="assets/hero-kotel-full.jpg" alt="Painting of the Western Wall beneath a radiant sunburst sky" fetchpriority="high" />
       </div>
+      <aside class="hero-plaque" aria-label="About this painting">
+        <p class="plaque-title">Radiance at the Western Wall</p>
+        <p class="plaque-meta">Oil on canvas &middot; Avigail Meyerson</p>
+        <div class="plaque-links">
+          <a href="#commissions" data-open-tab="commission-info">Commission a piece</a>
+          <a href="#collection" data-open-tab="watercolor">Shop prints</a>
+        </div>
+      </aside>
+      <a class="hero-scroll" href="#about" aria-label="Scroll to About"><span></span></a>
     </section>
 
     <section class="about-wrap" id="about" aria-labelledby="about-title">
@@ -1311,7 +1395,7 @@
     });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
-    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
+    document.querySelectorAll('#nav-links a, .plaque-links a').forEach(link => link.addEventListener('click', event => {
       closeMenu();
       const filter = link.dataset.openTab;
       if (filter) {
