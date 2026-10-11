@@ -46,6 +46,108 @@
       -webkit-font-smoothing: antialiased;
     }
     img { display: block; max-width: 100%; }
+
+    /* Navbar */
+    :root { --nav-h: 68px; }
+    #top, #about, #collection, #commissions, #faq, #contact { scroll-margin-top: var(--nav-h); }
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(245, 240, 232, .9);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .site-nav.scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 6px 24px rgba(39, 29, 25, .06);
+    }
+    .nav-inner {
+      width: min(100% - 40px, var(--max));
+      height: var(--nav-h);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-brand img { width: auto; height: 34px; }
+    .nav-links { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 34px); }
+    .nav-links a {
+      position: relative;
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 6px 0;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.nav-cta {
+      color: var(--paper-light);
+      background: var(--ink);
+      padding: 10px 18px;
+      border-radius: 999px;
+    }
+    .nav-links a.nav-cta::after { display: none; }
+    .nav-links a.nav-cta:hover { background: var(--wine); color: #fff; }
+    .nav-toggle {
+      display: none;
+      width: 44px; height: 44px;
+      margin-right: -10px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      position: relative;
+    }
+    .nav-toggle span {
+      position: absolute;
+      left: 11px; width: 22px; height: 1.5px;
+      background: var(--ink);
+      transition: transform .25s, opacity .2s;
+    }
+    .nav-toggle span:nth-child(1) { top: 15px; }
+    .nav-toggle span:nth-child(2) { top: 21px; }
+    .nav-toggle span:nth-child(3) { top: 27px; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    @media (max-width: 820px) {
+      :root { --nav-h: 60px; }
+      .nav-brand img { height: 28px; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        top: var(--nav-h); left: 0; right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 20px 22px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 18px 30px rgba(39, 29, 25, .08);
+        display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 15px 0; border-bottom: 1px solid var(--line); font-size: .82rem; }
+      .nav-links a::after { display: none; }
+      .nav-links a.nav-cta { margin-top: 16px; text-align: center; border-bottom: 0; padding: 14px 18px; }
+    }
     button, a { font: inherit; }
     a { color: inherit; }
 
@@ -749,7 +851,23 @@
   </script>
 </head>
 <body>
-  <main>
+  <header class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top" aria-label="Art by Avigail, back to top"><img src="assets/avigail-logo.png" alt="" width="986" height="429" /></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="nav-links" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#collection" data-open-tab="watercolor">Collection</a>
+        <a href="#collection" data-open-tab="kesubahs">Kesubahs</a>
+        <a href="#commissions" data-open-tab="commission-info">Commissions</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow">Fine art portfolio</p>
@@ -765,7 +883,7 @@
       </div>
     </section>
 
-    <section class="about-wrap" aria-labelledby="about-title">
+    <section class="about-wrap" id="about" aria-labelledby="about-title">
       <div class="section about">
         <div class="about-image">
           <img src="assets/avigail-portrait.jpg" alt="Avigail standing with arms outstretched before a mountain landscape" loading="lazy" decoding="async" />
@@ -1005,7 +1123,7 @@
       </div>
     </section>
 
-    <section class="faq-wrap" aria-labelledby="faq-title">
+    <section class="faq-wrap" id="faq" aria-labelledby="faq-title">
       <div class="section faq-grid">
         <div>
           <p class="section-label">Questions</p>
@@ -1029,7 +1147,7 @@
     </section>
   </main>
 
-  <footer>
+  <footer id="contact">
     <p class="section-label">Commissions & inquiries</p>
     <h2>Bring meaningful art into your space.</h2>
     <p class="contact-note">For commissions, original artwork, shipping, or other inquiries, email <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> or call <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
@@ -1104,16 +1222,75 @@
       });
     });
 
-    function openCommissions() {
-      const tab = document.querySelector('.collection-tab[data-filter="commission-info"]');
+    function openTab(filter, target) {
+      const tab = document.querySelector(`.collection-tab[data-filter="${filter}"]`);
       if (tab) tab.click();
-      document.getElementById('commissions').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById(target).scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    function openCommissions() { openTab('commission-info', 'commissions'); }
     document.querySelectorAll('[data-open-commissions]').forEach(link => link.addEventListener('click', event => {
       event.preventDefault();
       openCommissions();
       try { history.replaceState(null, '', '#commissions'); } catch (e) {}
     }));
+
+    // Navbar
+    const nav = document.getElementById('site-nav');
+    const navToggle = nav.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    function closeMenu() {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open menu');
+    }
+    navToggle.addEventListener('click', () => {
+      const open = !navLinks.classList.contains('open');
+      navLinks.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
+      closeMenu();
+      const filter = link.dataset.openTab;
+      if (filter) {
+        event.preventDefault();
+        openTab(filter, 'collection');
+        try { history.replaceState(null, '', filter === 'commission-info' ? '#commissions' : '#collection'); } catch (e) {}
+      }
+    }));
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Highlight the section currently in view
+    const navMap = [
+      ['about', 'a[href="#about"]'],
+      ['collection', 'a[data-open-tab="watercolor"]'],
+      ['faq', 'a[href="#faq"]'],
+      ['contact', 'a[href="#contact"]']
+    ];
+    function markActive() {
+      const y = window.scrollY + window.innerHeight * 0.35;
+      let current = null;
+      navMap.forEach(([id, sel]) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= y) current = sel;
+      });
+      if (current === 'a[data-open-tab="watercolor"]') {
+        const commOpen = !document.getElementById('commissions').hidden;
+        const kesOpen = document.querySelector('.collection-tab[data-filter="kesubahs"]').getAttribute('aria-pressed') === 'true';
+        if (commOpen) current = 'a[data-open-tab="commission-info"]';
+        else if (kesOpen) current = 'a[data-open-tab="kesubahs"]';
+      }
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = 'a[href="#contact"]';
+      navLinks.querySelectorAll('a').forEach(a => a.classList.toggle('active', !!current && a.matches(current) && !a.classList.contains('nav-cta')));
+    }
+    window.addEventListener('scroll', markActive, { passive: true });
+    document.querySelectorAll('.collection-tab').forEach(t => t.addEventListener('click', () => setTimeout(markActive, 0)));
+    markActive();
+
     if (location.hash === '#commissions') openCommissions();
 
 
