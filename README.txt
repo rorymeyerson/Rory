@@ -48,3 +48,15 @@ Section pages (added 2026-10-11):
 - After any change to index.html, run:  python3 scripts/build_pages.py
   and commit the regenerated pages and sitemap.xml along with it.
 - vercel.json turns on clean URLs, so /kesubahs serves kesubahs.html.
+
+Commission requests (added 2026-10-21):
+- The commission form posts to /api/commission-request, which emails the
+  request (with up to 5 reference photos, shrunk to JPEG) to
+  meyersonavigail@gmail.com through Resend (https://resend.com). Replying to
+  that email replies straight to the customer.
+- Needs RESEND_API_KEY in Vercel → Settings → Environment Variables.
+  Until it is set, the form falls back to opening the visitor's email app.
+- Optional: COMMISSION_TO (recipient) and COMMISSION_FROM (sender). The default
+  sender, onboarding@resend.dev, only delivers to the email the Resend account
+  was created with. To send from your own domain, verify avigailmeyerson.com in
+  Resend → Domains and set COMMISSION_FROM="Art by Avigail <requests@avigailmeyerson.com>".

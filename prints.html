@@ -802,6 +802,9 @@
     .cm-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .cm-form .form-field.full { grid-column: 1 / -1; }
     .cm-form label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .cm-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .cm-hint { display: block; margin-top: 6px; font-size: .8rem; color: var(--muted); }
+    #cm-note.sent { color: var(--wine); font-weight: 600; }
     .cm-form input[type=file] { padding: 10px; background: #fff; border: 1px dashed var(--line); width: 100%; }
     .cm-form .cm-cta, .cm-form .cs-btn { grid-column: 1 / -1; justify-self: start; }
     .cm-types-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 5vw, 64px); max-width: 920px; margin-left: auto; margin-right: auto; }
@@ -1244,8 +1247,9 @@
                 <option value="" selected disabled>Choose one</option>
                 <option>Custom kesubah</option><option>Oil painting</option>
               </select></div>
-            <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /></div>
+            <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /><small class="cm-hint">Up to 5 photos.</small></div>
             <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
+            <div class="cm-hp" aria-hidden="true"><label for="cm-website">Website</label><input id="cm-website" name="website" tabindex="-1" autocomplete="off" /></div>
             <button class="cs-btn" type="submit">Send request</button>
             <p class="payment-note" id="cm-note" hidden></p>
           </form>
@@ -1621,27 +1625,98 @@
     }));
 
 
-    document.getElementById('commission-form').addEventListener('submit', event => {
+    // Shrinks a photo to a JPEG no larger than 1600px so several fit in one request.
+    function compressPhoto(file) {
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+          const scale = Math.min(1, 1600 / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          URL.revokeObjectURL(url);
+          resolve({ filename: file.name, content: canvas.toDataURL('image/jpeg', 0.8).split(',')[1] });
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error(`Couldn't read ${file.name}`)); };
+        img.src = url;
+      });
+    }
+
+    document.getElementById('commission-form').addEventListener('submit', async event => {
       event.preventDefault();
       const form = event.target;
       if (!form.reportValidity()) return;
       const get = id => document.getElementById(id).value.trim();
-      const photos = document.getElementById('cm-photos').files.length;
-      const subject = `Commission request: ${get('cm-type')} from ${get('cm-name')}`;
-      const body = [
-        `Name: ${get('cm-name')}`,
-        `Email: ${get('cm-email')}`,
-        `Phone: ${get('cm-phone') || '-'}`,
-        `Commission type: ${get('cm-type')}`,
-        '',
-        get('cm-details'),
-        '',
-        photos ? `(I have ${photos} reference photo${photos > 1 ? 's' : ''} to attach.)` : '',
-      ].join('\n');
-      window.location.href = `mailto:meyersonavigail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       const note = document.getElementById('cm-note');
-      note.textContent = 'Your email app should open with your request filled in. Please attach your reference photos there and press send. If nothing opened, email meyersonavigail@gmail.com directly.';
-      note.hidden = false;
+      const submit = form.querySelector('button[type="submit"]');
+      const files = Array.from(document.getElementById('cm-photos').files);
+
+      const openEmailApp = () => {
+        const subject = `Commission request: ${get('cm-type')} from ${get('cm-name')}`;
+        const body = [
+          `Name: ${get('cm-name')}`,
+          `Email: ${get('cm-email')}`,
+          `Phone: ${get('cm-phone') || '-'}`,
+          `Commission type: ${get('cm-type')}`,
+          '',
+          get('cm-details'),
+          '',
+          files.length ? `(I have ${files.length} reference photo${files.length > 1 ? 's' : ''} to attach.)` : '',
+        ].join('\n');
+        window.location.href = `mailto:meyersonavigail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        note.classList.remove('sent');
+        note.textContent = 'Your email app should open with your request filled in. Please attach your reference photos there and press send. If nothing opened, email meyersonavigail@gmail.com directly.';
+        note.hidden = false;
+      };
+
+      if (files.length > 5) {
+        note.classList.remove('sent');
+        note.textContent = 'Please choose up to 5 reference photos.';
+        note.hidden = false;
+        return;
+      }
+
+      note.hidden = true;
+      submit.disabled = true;
+      submit.textContent = files.length ? 'Preparing photos…' : 'Sending…';
+
+      try {
+        const photos = [];
+        for (const file of files) photos.push(await compressPhoto(file));
+        submit.textContent = 'Sending…';
+        const response = await fetch('/api/commission-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: get('cm-name'),
+            email: get('cm-email'),
+            phone: get('cm-phone'),
+            type: get('cm-type'),
+            details: get('cm-details'),
+            website: get('cm-website'),
+            photos,
+          }),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (response.status === 400 || response.status === 413) {
+          note.classList.remove('sent');
+          note.textContent = data.error || 'Please check the form and try again.';
+          note.hidden = false;
+          return;
+        }
+        if (!response.ok) throw new Error(data.error || 'send_failed');
+        form.reset();
+        note.classList.add('sent');
+        note.textContent = 'Thank you! Your request was sent to Avigail. She’ll be in touch by email soon.';
+        note.hidden = false;
+      } catch (err) {
+        openEmailApp();
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Send request';
+      }
     });
 
     const dialog = document.getElementById('lightbox');
