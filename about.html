@@ -509,6 +509,42 @@
       user-select: none;
     }
     .lightbox-stage img { max-width: min(94vw, 1180px); max-height: calc(100dvh - 144px); object-fit: contain; }
+    #lightbox.has-gallery .lightbox-stage img { max-width: min(84vw, 1180px); max-height: calc(100dvh - 230px); }
+    .lb-zoom { overflow: hidden; line-height: 0; cursor: zoom-in; touch-action: pan-y; }
+    .lb-zoom img { display: block; transition: transform .2s ease-out; will-change: transform; }
+    .lb-zoom.zoomed img { transform: scale(2.6); transition: transform .12s ease-out; }
+    .lb-zoom.zoomed { cursor: zoom-out; touch-action: none; }
+    .lb-nav {
+      position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.45); background: rgba(18,14,13,.55); color: #fff;
+      display: grid; place-items: center; cursor: pointer; transition: background .2s;
+    }
+    .lb-nav:hover { background: rgba(255,255,255,.14); }
+    .lb-nav svg { width: 22px; height: 22px; }
+    .lb-prev { left: max(0px, calc(50% - 50vw + 8px)); }
+    .lb-next { right: max(0px, calc(50% - 50vw + 8px)); }
+    .lb-nav[hidden], .lb-thumbs[hidden] { display: none; }
+    .lb-hint {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); margin: 0;
+      padding: 6px 14px; border-radius: 999px; background: rgba(18,14,13,.6); color: #e9e1dc;
+      font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .lb-zoom.zoomed ~ .lb-hint { opacity: 0; }
+    .lb-thumbs { display: flex; justify-content: center; gap: 10px; padding: 0 0 14px; overflow-x: auto; }
+    .lb-thumbs button {
+      flex: none; width: 68px; height: 52px; padding: 0; border: 1px solid rgba(255,255,255,.25);
+      border-radius: 4px; overflow: hidden; background: none; cursor: pointer; opacity: .55; transition: opacity .2s, border-color .2s;
+    }
+    .lb-thumbs button:hover { opacity: .85; }
+    .lb-thumbs button[aria-current="true"] { opacity: 1; border-color: var(--gold); }
+    .lb-thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 620px) {
+      .lb-nav { width: 40px; height: 40px; }
+      #lightbox.has-gallery .lightbox-stage img { max-width: 100%; }
+      .lb-thumbs button { width: 54px; height: 42px; }
+    }
     .lightbox-meta {
       width: min(100%, 1180px);
       margin: 0 auto;
@@ -1143,7 +1179,7 @@
         </figure>
 
         <figure class="art-card" data-category="commissions" hidden>
-          <button class="art-button no-image-zoom" type="button" data-src="assets/sunshine-on-mountain.jpg" data-title="Stories of Our Mountain" data-medium="Watercolor">
+          <button class="art-button no-image-zoom" type="button" data-src="assets/sunshine-on-mountain.jpg" data-title="Stories of Our Mountain" data-medium="Watercolor" data-gallery="assets/sunshine-on-mountain.jpg|On the wall;assets/mountain/full.jpg|The full painting;assets/mountain/temple.jpg|Detail: the Beis HaMikdash;assets/mountain/fire-and-ladder.jpg|Detail: the fire and the ladder;assets/mountain/village.jpg|Detail: the hills below">
             <span class="art-frame"><img src="assets/sunshine-on-mountain.jpg" alt="Framed watercolor of the Temple beneath rainbow-colored beams of light, Hebrew text, mountains, and tiny figures, displayed in full above a beige sofa in a living room" loading="lazy" decoding="async" /></span>
           </button>
           <figcaption class="card-copy">
@@ -1344,7 +1380,17 @@
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
         </button>
       </div>
-      <div class="lightbox-stage"><img id="lightbox-image" alt="" loading="lazy" decoding="async" /></div>
+      <div class="lightbox-stage">
+        <button class="lb-nav lb-prev" type="button" aria-label="Previous view" hidden>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="lb-zoom" id="lb-zoom"><img id="lightbox-image" alt="" decoding="async" /></div>
+        <button class="lb-nav lb-next" type="button" aria-label="Next view" hidden>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <p class="lb-hint" id="lb-hint">Hover to magnify</p>
+      </div>
+      <div class="lb-thumbs" id="lb-thumbs" hidden></div>
       <div class="lightbox-meta"><strong id="lightbox-title"></strong><span id="lightbox-medium"></span></div>
     </div>
   </dialog>
@@ -1839,14 +1885,92 @@
           openPrintOrder(button);
           return;
         }
-        dialogImage.src = button.dataset.src;
-        dialogImage.alt = thumb.alt;
-        dialogTitle.textContent = button.dataset.title;
-        dialogMedium.textContent = button.dataset.medium;
-        dialog.showModal();
+        openLightbox(button, thumb);
       });
     });
 
+    // Lightbox: optional slides (data-gallery="src|caption;src|caption") and a magnifier
+    const lbZoom = document.getElementById('lb-zoom');
+    const lbThumbs = document.getElementById('lb-thumbs');
+    const lbPrev = dialog.querySelector('.lb-prev');
+    const lbNext = dialog.querySelector('.lb-next');
+    const lbHint = document.getElementById('lb-hint');
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let lbSlides = [], lbIndex = 0, lbBaseAlt = '', lbMedium = '';
+
+    function showSlide(i) {
+      lbIndex = (i + lbSlides.length) % lbSlides.length;
+      const slide = lbSlides[lbIndex];
+      lbZoom.classList.remove('zoomed');
+      dialogImage.src = slide.src;
+      dialogImage.alt = slide.caption ? `${lbBaseAlt} (${slide.caption})` : lbBaseAlt;
+      dialogMedium.textContent = lbSlides.length > 1
+        ? `${slide.caption} · ${lbIndex + 1} of ${lbSlides.length}`
+        : lbMedium;
+      lbThumbs.querySelectorAll('button').forEach((b, n) => b.setAttribute('aria-current', String(n === lbIndex)));
+    }
+
+    function openLightbox(button, thumb) {
+      lbBaseAlt = thumb.alt;
+      lbMedium = button.dataset.medium;
+      dialogTitle.textContent = button.dataset.title;
+      lbSlides = button.dataset.gallery
+        ? button.dataset.gallery.split(';').map(item => { const [src, caption = ''] = item.split('|'); return { src: src.trim(), caption: caption.trim() }; })
+        : [{ src: button.dataset.src, caption: '' }];
+      const multi = lbSlides.length > 1;
+      dialog.classList.toggle('has-gallery', multi);
+      lbPrev.hidden = lbNext.hidden = lbThumbs.hidden = !multi;
+      lbThumbs.innerHTML = multi
+        ? lbSlides.map((s, n) => `<button type="button" aria-label="View ${n + 1}: ${s.caption}"><img src="${s.src}" alt="" loading="lazy" /></button>`).join('')
+        : '';
+      lbThumbs.querySelectorAll('button').forEach((b, n) => b.addEventListener('click', () => showSlide(n)));
+      lbHint.textContent = canHover ? 'Hover to magnify' : 'Tap to magnify';
+      showSlide(0);
+      dialog.showModal();
+    }
+
+    lbPrev.addEventListener('click', () => showSlide(lbIndex - 1));
+    lbNext.addEventListener('click', () => showSlide(lbIndex + 1));
+    dialog.addEventListener('keydown', e => {
+      if (lbSlides.length < 2) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); showSlide(lbIndex - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); showSlide(lbIndex + 1); }
+    });
+
+    function aimZoom(clientX, clientY) {
+      const r = lbZoom.getBoundingClientRect();
+      const x = Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100));
+      const y = Math.min(100, Math.max(0, ((clientY - r.top) / r.height) * 100));
+      dialogImage.style.transformOrigin = `${x}% ${y}%`;
+    }
+    if (canHover) {
+      // Desktop: magnify under the cursor while hovering
+      lbZoom.addEventListener('mouseenter', e => { aimZoom(e.clientX, e.clientY); lbZoom.classList.add('zoomed'); });
+      lbZoom.addEventListener('mousemove', e => aimZoom(e.clientX, e.clientY));
+      lbZoom.addEventListener('mouseleave', () => lbZoom.classList.remove('zoomed'));
+    } else {
+      // Touch: tap to magnify, drag to look around, tap again to zoom out; swipe to change view
+      let startX = 0, startY = 0, moved = false;
+      lbZoom.addEventListener('touchstart', e => {
+        const t = e.touches[0]; startX = t.clientX; startY = t.clientY; moved = false;
+      }, { passive: true });
+      lbZoom.addEventListener('touchmove', e => {
+        const t = e.touches[0];
+        if (Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8) moved = true;
+        if (lbZoom.classList.contains('zoomed')) { e.preventDefault(); aimZoom(t.clientX, t.clientY); }
+      }, { passive: false });
+      lbZoom.addEventListener('touchend', e => {
+        const t = e.changedTouches[0], dx = t.clientX - startX;
+        if (!moved) {
+          aimZoom(t.clientX, t.clientY);
+          lbZoom.classList.toggle('zoomed');
+        } else if (!lbZoom.classList.contains('zoomed') && lbSlides.length > 1 && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(t.clientY - startY)) {
+          showSlide(lbIndex + (dx < 0 ? 1 : -1));
+        }
+      });
+    }
+
+    dialog.addEventListener('close', () => lbZoom.classList.remove('zoomed'));
     dialog.querySelector('.close').addEventListener('click', () => dialog.close());
     printDialog.querySelector('.print-close').addEventListener('click', () => printDialog.close());
     confirmationDialog.querySelector('.print-close').addEventListener('click', () => confirmationDialog.close());
