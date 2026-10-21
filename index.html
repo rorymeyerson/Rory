@@ -797,6 +797,7 @@
     .cm-step p { color: var(--muted); font-size: .93rem; line-height: 1.6; margin: 0; }
     .cm-occasions { display: flex; flex-wrap: wrap; gap: 10px; margin: 30px 0 0; }
     .cm-occasions span { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-size: .82rem; color: var(--muted); background: var(--paper-light); }
+    #cm-form { scroll-margin-top: calc(var(--nav-h) + 28px); }
     .cm-form-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 70px); align-items: start; }
     .cm-form-wrap aside p { color: var(--muted); line-height: 1.7; }
     .cm-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -1318,7 +1319,7 @@
         <div class="faq-list">
           <details>
             <summary>Does Avigail accept commissions?</summary>
-            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, visit the <a href="#commissions" data-open-commissions>Commissions page</a> to see examples and send a request, or <a href="mailto:meyersonavigail@gmail.com">get in touch</a> to discuss your vision and project.</p>
+            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, visit the <a href="#commissions" data-open-commissions>Commissions page</a> to see examples and send a request, or <a href="#cm-form" data-open-commission-form>get in touch</a> to discuss your vision and project.</p>
           </details>
           <details>
             <summary>Are prints available?</summary>
@@ -1417,6 +1418,15 @@
     document.querySelectorAll('[data-open-commissions]').forEach(link => link.addEventListener('click', event => {
       event.preventDefault();
       openCommissions();
+      try { history.replaceState(null, '', '#commissions'); } catch (e) {}
+    }));
+    // Links that go straight to the commission request form
+    document.querySelectorAll('[data-open-commission-form]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      const tab = document.querySelector('.collection-tab[data-filter="commission-info"]');
+      if (tab) tab.click();
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => document.getElementById('cm-name').focus({ preventScroll: true }), 700);
       try { history.replaceState(null, '', '#commissions'); } catch (e) {}
     }));
 
