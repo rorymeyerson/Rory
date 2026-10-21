@@ -14,6 +14,11 @@ const PRICES = {
   },
 };
 
+// One-of-a-kind original paintings for sale, keyed by artwork title (USD).
+const ORIGINALS = {
+  'Stories of Our Mountain': 1800,
+};
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
@@ -21,7 +26,8 @@ module.exports = async (req, res) => {
   }
 
   const { artwork, size, image, product = 'watercolor' } = req.body || {};
-  const sizes = PRICES[product];
+  const isOriginal = product === 'original';
+  const sizes = isOriginal ? { Original: ORIGINALS[artwork] } : PRICES[product];
   if (!sizes) {
     res.status(400).json({ error: 'Invalid product.' });
     return;
@@ -33,7 +39,7 @@ module.exports = async (req, res) => {
   }
   const amount = sizes[size];
   if (!amount) {
-    res.status(400).json({ error: 'Invalid print size.' });
+    res.status(400).json({ error: isOriginal ? 'This original is not available.' : 'Invalid print size.' });
     return;
   }
 
@@ -49,7 +55,9 @@ module.exports = async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `${artwork} — ${size} ${product === 'kesubah' ? 'kesubah print' : 'print'}`,
+              name: isOriginal
+                ? `${artwork} — original watercolor painting`
+                : `${artwork} — ${size} ${product === 'kesubah' ? 'kesubah print' : 'print'}`,
               images: imageUrl ? [imageUrl] : undefined,
             },
             unit_amount: amount * 100,

@@ -761,6 +761,8 @@
     .sold-out { display: inline-block; border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 9px 18px; font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; background: var(--paper); }
     .buy-row { display: flex; justify-content: flex-end; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
     .buy-now { background: var(--wine); color: #fff; border: 0; border-radius: 999px; padding: 11px 22px; font-weight: 600; font-size: .88rem; cursor: pointer; box-shadow: 0 6px 16px rgba(49, 95, 120, .25); transition: background .2s; }
+    .buy-row.has-price { justify-content: space-between; align-items: center; gap: 12px; }
+    .price { font-family: "Newsreader", Georgia, serif; font-size: 1.35rem; font-weight: 500; color: var(--ink); letter-spacing: .01em; }
     .buy-now:hover { background: #274d62; }
     .buy-now:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     @media (max-width: 900px) { .gallery.wc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 18px; } }
@@ -1122,6 +1124,7 @@
             <h3>Stories of Our Mountain</h3>
             <p>A profound expression of the enduring bond between Hashem and His people, revealed through the holiness of His chosen mountain and the eternal connection it represents.</p>
             <span class="medium">Watercolor</span>
+            <div class="buy-row has-price"><span class="price">$1,800</span><button class="buy-now" type="button" data-product="original">Buy original</button></div>
           </figcaption>
         </figure>
 
@@ -1334,7 +1337,7 @@
         <p class="print-pitch" id="print-pitch">Created for collectors who value expressive portraiture, each print preserves the vivid color, quiet presence, and intimate character of Avigail’s original watercolor. Choose the size that best suits your space; checkout is secure and your shipping details are collected on the next step.</p>
         <form class="order-form" id="order-form">
           <div class="form-field full">
-            <label for="print-size">Print size</label>
+            <label for="print-size" id="print-size-label">Print size</label>
             <select id="print-size" name="size" required></select>
           </div>
           <button class="order-submit" type="submit">Continue to secure checkout</button>
@@ -1352,7 +1355,7 @@
       </button>
       <p class="print-kicker">Order confirmed</p>
       <h2 id="confirmation-title">Thank you.</h2>
-      <p>Your payment went through and Avigail has been notified with your artwork choice, size, and shipping address. You'll also get a receipt by email. Your print will ship soon — reach out to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> with any questions.</p>
+      <p>Your payment went through and Avigail has been notified with your artwork choice, size, and shipping address. You'll also get a receipt by email. Your order will ship soon — reach out to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> with any questions.</p>
       <button class="confirmation-done" type="button">Done</button>
     </div>
   </dialog>
@@ -1365,7 +1368,7 @@
         const filter = tab.dataset.filter;
         tabs.forEach(item => item.setAttribute('aria-pressed', String(item === tab)));
         cards.forEach(card => {
-          card.hidden = filter === 'prints' ? !card.querySelector('.buy-now') : card.dataset.category !== filter;
+          card.hidden = filter === 'prints' ? !card.querySelector('.buy-now:not([data-product="original"])') : card.dataset.category !== filter;
         });
         const showCommissions = filter === 'commission-info';
         document.getElementById('commissions').hidden = !showCommissions;
@@ -1676,6 +1679,14 @@
         pitch: 'A fine-art print of Avigail’s hand-painted kesubah, with the words of the kesubah set within her original watercolor artwork. Checkout is secure and your shipping details are collected on the next step.',
         sizes: [['12 × 18', 300]],
       },
+      original: {
+        kicker: 'Original painting',
+        heading: 'Own the original.',
+        medium: 'Original watercolor',
+        pitch: 'This is Avigail’s one-of-a-kind original watercolor, painted by hand. Only one exists. Checkout is secure and your shipping details are collected on the next step.',
+        sizeLabel: 'Edition',
+        sizes: [['Original', 1800]],
+      },
     };
     const printSize = document.getElementById('print-size');
     let selectedProduct = 'watercolor';
@@ -1693,10 +1704,11 @@
       document.getElementById('print-title').textContent = config.heading;
       document.getElementById('print-medium').textContent = config.medium;
       document.getElementById('print-pitch').textContent = config.pitch;
+      document.getElementById('print-size-label').textContent = config.sizeLabel || 'Print size';
       orderForm.reset();
       const single = config.sizes.length === 1;
       printSize.innerHTML = (single ? '' : '<option value="" selected disabled>Select a size</option>') +
-        config.sizes.map(([size, price]) => `<option value="${size}|${price}">${size} — $${price}</option>`).join('');
+        config.sizes.map(([size, price]) => `<option value="${size}|${price}">${size} — $${price.toLocaleString('en-US')}</option>`).join('');
       if (single) printSize.selectedIndex = 0;
       printSize.classList.toggle('single-option', single);
       printSize.tabIndex = single ? -1 : 0;
