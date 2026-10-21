@@ -3,13 +3,14 @@
 //
 // Optional environment variables:
 //   COMMISSION_TO   - where requests go (default: meyersonavigail@gmail.com)
-//   COMMISSION_FROM - sender address (default: Resend's shared test sender, which can
-//                     only deliver to the email the Resend account was created with;
-//                     after verifying avigailmeyerson.com in Resend, set this to e.g.
-//                     "Art by Avigail <requests@avigailmeyerson.com>")
+//   COMMISSION_FROM - sender address (default: requests@avigailmeyerson.com).
+// Until avigailmeyerson.com is verified in Resend → Domains, Resend rejects that
+// sender, so the email is automatically resent from Resend's shared address
+// (onboarding@resend.dev), which only delivers to the Resend account's own email.
 
 const TO = process.env.COMMISSION_TO || 'meyersonavigail@gmail.com';
-const FROM = process.env.COMMISSION_FROM || 'Art by Avigail <onboarding@resend.dev>';
+const FROM = process.env.COMMISSION_FROM || 'Art by Avigail <requests@avigailmeyerson.com>';
+const FALLBACK_FROM = 'Art by Avigail <onboarding@resend.dev>';
 const MAX_PHOTOS = 5;
 const MAX_TOTAL_BYTES = 3.5 * 1024 * 1024; // keeps the request under Vercel's 4.5 MB body limit
 
@@ -82,23 +83,30 @@ module.exports = async (req, res) => {
       <p style="font-family:Arial,sans-serif;font-size:12px;color:#6b5c54;margin-top:24px">Reply to this email to answer ${escapeHtml(name)} directly.</p>
     </div>`;
 
+  const message = {
+    to: [TO],
+    reply_to: email,
+    subject: `Commission request: ${type} from ${name}`,
+    text,
+    html,
+    attachments: attachments.length ? attachments : undefined,
+  };
+  const send = from => fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ from, ...message }),
+  });
+
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: FROM,
-        to: [TO],
-        reply_to: email,
-        subject: `Commission request: ${type} from ${name}`,
-        text,
-        html,
-        attachments: attachments.length ? attachments : undefined,
-      }),
-    });
+    let response = await send(FROM);
+    if (!response.ok && FROM !== FALLBACK_FROM && (response.status === 403 || response.status === 422)) {
+      // Most likely the domain isn't verified in Resend yet; use the shared sender instead.
+      console.warn('Sender rejected, retrying with fallback:', response.status, await response.text());
+      response = await send(FALLBACK_FROM);
+    }
 
     if (!response.ok) {
       console.error('Resend error:', response.status, await response.text());

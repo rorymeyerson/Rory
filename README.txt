@@ -59,4 +59,5 @@ Commission requests (added 2026-10-21):
 - Optional: COMMISSION_TO (recipient) and COMMISSION_FROM (sender). The default
   sender, onboarding@resend.dev, only delivers to the email the Resend account
   was created with. To send from your own domain, verify avigailmeyerson.com in
-  Resend → Domains and set COMMISSION_FROM="Art by Avigail <requests@avigailmeyerson.com>".
+  Resend → Domains; emails then come from requests@avigailmeyerson.com
+  automatically (until then the code falls back to the shared sender).
