@@ -75,10 +75,12 @@ module.exports = async (req, res) => {
         },
       ],
       shipping_address_collection: { allowed_countries: ['US', 'CA'] },
+      phone_number_collection: { enabled: true },
       success_url: `${origin}/?order=success`,
       cancel_url: `${origin}/?order=cancelled&cs={CHECKOUT_SESSION_ID}`,
+      // Read by /api/stripe-webhook to send the print to FinerWorks.
+      metadata: { artwork: artwork.slice(0, 450), size, product, ...(isOriginal && { original: artwork }) },
       ...(isOriginal && {
-        metadata: { original: artwork },
         payment_intent_data: { metadata: { original: artwork } },
         expires_at: Math.floor(Date.now() / 1000) + RESERVATION_MINUTES * 60 + 60,
       }),

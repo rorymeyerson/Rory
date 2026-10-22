@@ -83,3 +83,23 @@ Images (added 2026-10-22):
 - When adding a new piece: put the full image in assets/, make a 900px-wide
   WebP copy in assets/web/ for the card's <img src>, and point data-src at
   the full image.
+
+Automatic print fulfillment with FinerWorks (added 2026-10-22):
+- When a checkout is paid, Stripe notifies /api/stripe-webhook. It fetches the
+  order from Stripe and, for a print, places it with FinerWorks
+  (api/_finerworks.js → POST /v3/submit_orders_v2) using the buyer's shipping
+  address. Avigail gets an email either way.
+- Originals, kesubah prints, and prints with no SKU set are NOT sent; Avigail is
+  emailed the order details to handle by hand.
+- Setup:
+  1. FinerWorks: upload each hi-res image to your inventory, create the four
+     print sizes as products, and paste each product's SKU into PRINT_SKUS in
+     api/_finerworks.js. Keep a payment method on file in FinerWorks.
+  2. Vercel env vars: FINERWORKS_WEB_API_KEY, FINERWORKS_APP_KEY.
+     Orders go in TEST MODE until FINERWORKS_LIVE=true is also set.
+  3. Stripe → Developers → Webhooks → Add endpoint:
+     https://www.avigailmeyerson.com/api/stripe-webhook, event
+     checkout.session.completed. (No signing secret needed: the endpoint
+     re-reads every event from Stripe directly.)
+- The FinerWorks order number is saved on the Stripe payment (metadata
+  finerworks_order), which also prevents duplicate orders.
