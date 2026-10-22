@@ -1,4 +1,5 @@
 const Stripe = require('stripe');
+const { ORIGINALS, RESERVATION_MINUTES, originalStatus } = require('./_originals');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -12,11 +13,6 @@ const PRICES = {
   kesubah: {
     '12 × 18': 300,
   },
-};
-
-// One-of-a-kind original paintings for sale, keyed by artwork title (USD).
-const ORIGINALS = {
-  'Stories of Our Mountain': 1800,
 };
 
 module.exports = async (req, res) => {
@@ -47,6 +43,19 @@ module.exports = async (req, res) => {
   const imageUrl = typeof image === 'string' && image.startsWith('http') ? image : undefined;
 
   try {
+    if (isOriginal) {
+      // Only one buyer can ever pay for an original.
+      const status = await originalStatus(stripe, artwork);
+      if (status === 'sold') {
+        res.status(409).json({ error: 'Sorry, this original painting has already been sold.', sold: true });
+        return;
+      }
+      if (status === 'reserved') {
+        res.status(409).json({ error: 'Someone is checking out with this painting right now. If they don’t complete the purchase, it will be available again within 30 minutes.' });
+        return;
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
@@ -67,7 +76,12 @@ module.exports = async (req, res) => {
       ],
       shipping_address_collection: { allowed_countries: ['US', 'CA'] },
       success_url: `${origin}/?order=success`,
-      cancel_url: `${origin}/?order=cancelled`,
+      cancel_url: `${origin}/?order=cancelled&cs={CHECKOUT_SESSION_ID}`,
+      ...(isOriginal && {
+        metadata: { original: artwork },
+        payment_intent_data: { metadata: { original: artwork } },
+        expires_at: Math.floor(Date.now() / 1000) + RESERVATION_MINUTES * 60 + 60,
+      }),
     });
 
     res.status(200).json({ url: session.url });

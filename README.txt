@@ -61,3 +61,25 @@ Commission requests (added 2026-10-21):
   was created with. To send from your own domain, verify avigailmeyerson.com in
   Resend → Domains; emails then come from requests@avigailmeyerson.com
   automatically (until then the code falls back to the shared sender).
+
+Original paintings (added 2026-10-22):
+- Originals for sale are listed in api/_originals.js (ORIGINALS: title -> USD
+  price). The title must match data-title on the painting's card in index.html,
+  and its button uses data-product="original".
+- Stripe is the record of what sold — no database. Each original's checkout is
+  tagged with metadata.original. Once a paid order exists, /api/originals
+  reports it as sold, the page swaps its button to "Sold" automatically
+  (within about a minute), and checkout refuses any further purchase.
+- While one buyer is on the Stripe payment page, the painting is held for them
+  for up to 30 minutes; if they press back/cancel it is released immediately
+  (/api/release-checkout).
+- After a sale you may still want to change the card to the static
+  <span class="sold-out">Sold</span> so it shows even if Stripe is unreachable.
+
+Images (added 2026-10-22):
+- The page shows light WebP copies from assets/web/ (cards 900px wide). The
+  full-size originals in assets/ are only loaded when a visitor clicks a piece
+  (lightbox, magnifier, print order window, Stripe product image).
+- When adding a new piece: put the full image in assets/, make a 900px-wide
+  WebP copy in assets/web/ for the card's <img src>, and point data-src at
+  the full image.
