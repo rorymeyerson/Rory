@@ -89,7 +89,8 @@ Automatic print fulfillment with FinerWorks (added 2026-10-22):
   order from Stripe and, for a print, places it with FinerWorks
   (api/_finerworks.js → POST /v3/submit_orders_v2) using the buyer's shipping
   address. Avigail gets an email either way.
-- Originals, kesubah prints, and prints with no SKU set are NOT sent; Avigail is
+- Portrait and kesubah prints are sent (SKUs in PRINT_SKUS / KESUBAH_SKUS).
+  Originals and prints with no SKU set are NOT sent; Avigail is
   emailed the order details to handle by hand.
 - Setup:
   1. FinerWorks: upload each hi-res image to your inventory, create the four

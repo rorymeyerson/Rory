@@ -10,7 +10,8 @@
 //
 // What happens for each paid order:
 //   - Print with a FinerWorks SKU  -> order placed with FinerWorks automatically
-//   - Print without a SKU, a kesubah, or an original -> Gail is emailed to handle it
+//   - Print or kesubah print with a FinerWorks SKU -> placed with FinerWorks automatically
+//   - Print without a SKU, or an original -> Gail is emailed to handle it
 // Stripe is the record: the result is saved on the payment (metadata
 // finerworks_order / finerworks_status), so repeat notifications never
 // place a second order.
@@ -105,9 +106,8 @@ module.exports = async (req, res) => {
     // Things FinerWorks shouldn't print automatically: Gail handles these herself.
     let manualReason = '';
     if (product === 'original') manualReason = 'This is the ORIGINAL painting, so it ships from you, not FinerWorks.';
-    else if (product === 'kesubah') manualReason = 'Kesubah prints are not sent to FinerWorks automatically, since they may need the couple’s details.';
     else if (!product || !size) manualReason = 'This order was placed before automatic printing was set up.';
-    else if (!skuFor(artwork, size)) manualReason = `There is no FinerWorks SKU yet for “${artwork}” at ${size} (api/_finerworks.js), so please place this print order in FinerWorks yourself.`;
+    else if (!skuFor(artwork, size, product)) manualReason = `There is no FinerWorks SKU yet for “${artwork}” at ${size} (api/_finerworks.js), so please place this print order in FinerWorks yourself.`;
     else if (!isConfigured()) manualReason = 'FinerWorks API keys are not set in Vercel yet, so please place this print order in FinerWorks yourself.';
     else if (!ship) manualReason = 'Stripe did not collect a shipping address for this order.';
 
@@ -122,7 +122,7 @@ module.exports = async (req, res) => {
       const { orderId, testMode } = await submitOrder({
         orderPo: pi.id,
         recipient: recipientFrom(ship),
-        sku: skuFor(artwork, size),
+        sku: skuFor(artwork, size, product),
         title: `${artwork} ${size}`,
       });
       await stripe.paymentIntents.update(pi.id, {

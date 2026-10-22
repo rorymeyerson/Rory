@@ -10,7 +10,8 @@
 //   FINERWORKS_SHIPPING     - optional shipping method code (default "SD" = ground;
 //                             "EC" = economy, "FS" = fastest available)
 
-// Which FinerWorks product to print for each print sold on the site.
+// Which FinerWorks product to print for each print sold on the site
+// (watercolor portrait prints in PRINT_SKUS, kesubah prints in KESUBAH_SKUS).
 // Each print size of each painting is a product in Gail's FinerWorks
 // "virtual inventory" (upload the hi-res image there, create the print sizes,
 // and copy each product's SKU here). Titles and sizes must match the site exactly.
@@ -24,11 +25,18 @@ const PRINT_SKUS = {
   'Rabbi Shmuelevitz': { '10 × 14': '', '14 × 20': '', '18 × 26': '', '26 × 38': '' },
 };
 
+const KESUBAH_SKUS = {
+  'River in the Valley': { '12 × 18': '' },
+  'River Rocks': { '12 × 18': '' },
+  'Canopy of Trees': { '12 × 18': '' },
+};
+
 const API_URL = 'https://v2.api.finerworks.com/v3/submit_orders_v2';
 
 const isLive = () => process.env.FINERWORKS_LIVE === 'true';
 const isConfigured = () => Boolean(process.env.FINERWORKS_WEB_API_KEY && process.env.FINERWORKS_APP_KEY);
-const skuFor = (artwork, size) => ((PRINT_SKUS[artwork] || {})[size] || '').trim();
+const skuFor = (artwork, size, product = 'watercolor') =>
+  (((product === 'kesubah' ? KESUBAH_SKUS : PRINT_SKUS)[artwork] || {})[size] || '').trim();
 
 const cut = (value, max) => String(value || '').trim().slice(0, max);
 
@@ -92,4 +100,4 @@ async function submitOrder({ orderPo, recipient, sku, title, qty = 1 }) {
   return { orderId: String(order.order_id || order.order_confirmation_id), testMode };
 }
 
-module.exports = { PRINT_SKUS, isLive, isConfigured, skuFor, recipientFrom, submitOrder };
+module.exports = { PRINT_SKUS, KESUBAH_SKUS, isLive, isConfigured, skuFor, recipientFrom, submitOrder };
