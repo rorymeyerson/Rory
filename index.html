@@ -1042,6 +1042,29 @@
       .hero-logo { width: clamp(190px, 52vw, 300px); }
       .hero-art::after { background: radial-gradient(ellipse 60% 26% at 30% 15%, rgba(18,30,46,.30), rgba(18,30,46,0) 100%), linear-gradient(180deg, rgba(18,30,46,.22) 0%, rgba(18,30,46,0) 14%); }
     }
+
+    /* Conversion fixes (2026-11): hero buttons, prices on cards, size + type chips */
+    .hero .tagline { font-family: "DM Sans", sans-serif; font-size: clamp(1.05rem, 1.6vw, 1.3rem); margin: 22px 0 26px; max-width: 420px; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-ctas .cta { border-radius: 999px; padding: 15px 26px; justify-content: center; }
+    .hero-ctas .cta-primary { background: var(--wine); color: #fff; }
+    .hero-ctas .cta-primary:hover { background: #24485c; }
+    @media (max-width: 620px) {
+      .hero-ctas { flex-direction: column; max-width: 300px; }
+      .hero-ctas .cta { align-self: stretch; font-size: .95rem; }
+    }
+    .sr-select { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; opacity: 0; }
+    .chip-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .chip-group button { border: 1.5px solid var(--line); background: #fff; border-radius: 12px; padding: 12px 12px; text-align: left; color: var(--ink); cursor: pointer; font-size: .92rem; line-height: 1.3; transition: border-color .15s, background .15s; }
+    .chip-group button b { display: block; font-family: "Newsreader", Georgia, serif; font-size: 1.2rem; font-weight: 500; }
+    .chip-group button[aria-pressed="true"] { border-color: var(--wine); background: #eaf1f5; box-shadow: inset 0 0 0 1px var(--wine); }
+    .chip-group button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .chip-group.invalid button { border-color: #b3261e; }
+    .type-chips button { text-align: center; padding: 14px 10px; }
+    @media (max-width: 620px) {
+      .print-pitch { display: none; }
+      .print-panel h2 { font-size: 1.9rem; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -1097,6 +1120,11 @@
           </span>
           </a>
         </h1>
+        <p class="tagline">Hand-painted Jewish portraits, kesubahs and oil paintings.</p>
+        <div class="hero-ctas">
+          <a class="cta cta-primary" href="/prints" data-hero-tab="prints">Shop prints · from $50</a>
+          <a class="cta" href="/commissions" data-open-commission-form>Commission a piece</a>
+        </div>
       </div>
       <div class="hero-art">
         <img src="assets/web/hero-kotel-full.webp" alt="Painting of the Western Wall beneath a radiant sunburst sky" fetchpriority="high" />
@@ -1328,14 +1356,18 @@
             <p>Prefer email? Write to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a>.</p>
           </aside>
           <form class="cm-form" id="commission-form">
-            <div class="form-field"><label for="cm-name">Name</label><input id="cm-name" name="name" required /></div>
-            <div class="form-field"><label for="cm-email">Email</label><input id="cm-email" name="email" type="email" required /></div>
-            <div class="form-field"><label for="cm-phone">Phone</label><input id="cm-phone" name="phone" type="tel" /></div>
-            <div class="form-field"><label for="cm-type">Commission type</label>
-              <select id="cm-type" name="type" required>
+            <div class="form-field full"><label for="cm-type" id="cm-type-label">What would you like?</label>
+              <select id="cm-type" name="type" class="sr-select" required>
                 <option value="" selected disabled>Choose one</option>
                 <option>Custom kesubah</option><option>Oil painting</option>
-              </select></div>
+              </select>
+              <div class="chip-group type-chips" role="group" aria-labelledby="cm-type-label">
+                <button type="button" data-value="Custom kesubah" aria-pressed="false">Custom kesubah</button>
+                <button type="button" data-value="Oil painting" aria-pressed="false">Oil painting</button>
+              </div></div>
+            <div class="form-field"><label for="cm-name">Name</label><input id="cm-name" name="name" required /></div>
+            <div class="form-field"><label for="cm-email">Email</label><input id="cm-email" name="email" type="email" required /></div>
+            <div class="form-field"><label for="cm-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></label><input id="cm-phone" name="phone" type="tel" /></div>
             <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /><small class="cm-hint">Up to 5 photos.</small></div>
             <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
             <div class="cm-hp" aria-hidden="true"><label for="cm-website">Website</label><input id="cm-website" name="website" tabindex="-1" autocomplete="off" /></div>
@@ -1418,6 +1450,7 @@
           <div class="form-field full">
             <label for="print-size" id="print-size-label">Print size</label>
             <select id="print-size" name="size" required></select>
+            <div class="chip-group size-chips" role="group" aria-labelledby="print-size-label" hidden></div>
           </div>
           <button class="order-submit" type="submit">Continue to secure checkout</button>
           <p class="payment-note">You'll pay by card on the next screen (Stripe Checkout). Shipping address is collected there.</p>
@@ -1466,6 +1499,12 @@
       openCommissions();
       try { history.replaceState(null, '', '#commissions'); } catch (e) {}
     }));
+    // Hero "Shop prints" button: open the Prints tab without reloading
+    document.querySelectorAll('[data-hero-tab]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      openTab(link.dataset.heroTab, 'collection');
+      try { history.replaceState(null, '', link.getAttribute('href')); } catch (e) {}
+    }));
     // Links that go straight to the commission request form
     document.querySelectorAll('[data-open-commission-form]').forEach(link => link.addEventListener('click', event => {
       event.preventDefault();
@@ -1500,7 +1539,7 @@
       const filter = link.dataset.openTab, section = link.dataset.section;
       if (filter || (section && document.getElementById(section))) {
         event.preventDefault();
-        if (filter) openTab(filter, 'collection');
+        if (filter) openTab(filter, filter === 'commission-info' ? 'cm-form' : 'collection');
         else document.getElementById(section).scrollIntoView({ behavior: 'smooth', block: 'start' });
         try { history.replaceState(null, '', link.getAttribute('href')); } catch (e) {}
       }
@@ -1709,8 +1748,19 @@
     document.querySelectorAll('[data-scroll="cm-form"]').forEach(btn => btn.addEventListener('click', () => {
       document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
     }));
+    // Commission type: two tap targets that drive the (visually hidden) select
+    const cmType = document.getElementById('cm-type');
+    const typeChips = document.querySelector('.type-chips');
+    function setCommissionType(value) {
+      cmType.value = value;
+      typeChips.classList.remove('invalid');
+      typeChips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.value === value)));
+    }
+    typeChips.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setCommissionType(b.dataset.value)));
+    cmType.addEventListener('change', () => setCommissionType(cmType.value));
+    cmType.addEventListener('invalid', () => { typeChips.classList.add('invalid'); typeChips.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
     document.querySelectorAll('.cm-type button, .cs-btn[data-type]').forEach(btn => btn.addEventListener('click', () => {
-      document.getElementById('cm-type').value = btn.dataset.type;
+      setCommissionType(btn.dataset.type);
       document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth' });
     }));
 
@@ -1848,7 +1898,25 @@
       },
     };
     const printSize = document.getElementById('print-size');
+    const sizeChips = document.querySelector('.size-chips');
     let selectedProduct = 'watercolor';
+    sizeChips.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      printSize.value = b.dataset.value;
+      sizeChips.classList.remove('invalid');
+      sizeChips.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    });
+    printSize.addEventListener('invalid', () => sizeChips.classList.add('invalid'));
+
+    // Show the starting price on every card that doesn't already show one
+    document.querySelectorAll('.buy-row:not(.has-price) .buy-now').forEach(btn => {
+      const config = PRODUCTS[btn.dataset.product || 'watercolor'];
+      if (!config) return;
+      const low = Math.min(...config.sizes.map(([, price]) => price));
+      const label = (config.sizes.length > 1 ? 'From $' : '$') + low.toLocaleString('en-US');
+      btn.insertAdjacentHTML('beforebegin', `<span class="price">${label}</span>`);
+      btn.parentElement.classList.add('has-price');
+    });
 
     function openPrintOrder(button, product = 'watercolor') {
       const thumb = button.querySelector('img');
@@ -1871,6 +1939,12 @@
       if (single) printSize.selectedIndex = 0;
       printSize.classList.toggle('single-option', single);
       printSize.tabIndex = single ? -1 : 0;
+      // Several sizes: show them as tap-to-pick buttons (the select stays for the form value)
+      printSize.classList.toggle('sr-select', !single);
+      sizeChips.hidden = single;
+      sizeChips.classList.remove('invalid');
+      sizeChips.innerHTML = single ? '' : config.sizes.map(([size, price]) =>
+        `<button type="button" data-value="${size}|${price}" aria-pressed="false"><b>$${price.toLocaleString('en-US')}</b>${size} in</button>`).join('');
       orderError.hidden = true;
       orderSubmit.disabled = false;
       orderSubmit.textContent = 'Continue to secure checkout';
