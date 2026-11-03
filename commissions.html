@@ -1049,9 +1049,19 @@
     .hero-ctas .cta { border-radius: 999px; padding: 15px 26px; justify-content: center; }
     .hero-ctas .cta-primary { background: var(--wine); color: #fff; }
     .hero-ctas .cta-primary:hover { background: #24485c; }
-    @media (max-width: 620px) {
-      .hero-ctas { flex-direction: column; max-width: 300px; }
-      .hero-ctas .cta { align-self: stretch; font-size: .95rem; }
+    /* Desktop: tagline + buttons float just under the signature, as before */
+    .hero-actions { position: absolute; z-index: 2; left: var(--frame); top: calc(var(--frame) + 1.6rem + clamp(200px, 25vw, 400px) * .435); }
+    .hero-actions .tagline { margin-top: 18px; }
+    /* Phones and tablets: painting gets the whole frame; text and buttons sit in a strip below it */
+    @media (max-width: 860px) {
+      .hero { display: flex; flex-direction: column; align-items: stretch; }
+      .hero-art { width: 100%; position: relative; inset: auto; flex: 1 1 auto; min-height: 0; }
+      .hero-actions { position: static; flex: none; background: var(--paper); padding: 14px 20px 16px; }
+      .hero .hero-actions .tagline { color: var(--ink); text-shadow: none; font-size: .95rem; line-height: 1.4; margin: 0 0 12px; max-width: none; }
+      .hero-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .hero-ctas { max-width: 560px; }
+      .hero-ctas .cta { padding: 13px 8px; font-size: clamp(.78rem, 3.6vw, .9rem); letter-spacing: .01em; white-space: nowrap; }
+      .hero-ctas .cta:not(.cta-primary) { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
     }
     .sr-select { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; opacity: 0; }
     .chip-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
