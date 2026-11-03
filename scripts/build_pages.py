@@ -53,10 +53,10 @@ PAGES = [
     {
         "slug": "prints",
         "title": "Fine-Art Prints | Art by Avigail",
-        "description": "Fine-art prints of Avigail Meyerson's watercolor portraits and kesubahs. Choose a size and check out securely; your print ships to you.",
+        "description": "Fine-art prints of Avigail Meyerson's watercolor portraits in four sizes from $50, shipping included to the US and Canada.",
         "kicker": "Prints",
         "h1": "Fine-Art Prints",
-        "lede": "Prints of Avigail's watercolor portraits and kesubahs. Select a piece, choose a size, and check out securely; shipping details are collected at checkout.",
+        "lede": "Unframed prints of Avigail's watercolor portraits in four sizes, from $50, with shipping included to the US and Canada. Kesubah prints are on the Kesubahs page.",
         "first": "collection",
         "tab": "prints",
         "body_class": "subpage subpage-collection",

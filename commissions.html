@@ -1443,19 +1443,19 @@
           <!-- Keep these answers in step with PRODUCTS / SHOP in the script and api/_shop.js -->
           <details>
             <summary>What print sizes and prices are there?</summary>
-            <p>Watercolor portrait prints come in four sizes: 10 × 14 in ($50), 14 × 20 in ($80), 18 × 26 in ($140) and 26 × 38 in ($220). Kesubah prints are 12 × 18 in ($300) and show the kesubah exactly as pictured. All prices are in US dollars. <a href="/prints" data-hero-tab="prints">See the prints</a>.</p>
+            <p>Watercolor portrait prints come in four sizes: 10 × 14 in ($50), 14 × 20 in ($80), 18 × 26 in ($140) and 26 × 38 in ($220). Prints are unframed. Kesubah prints are 12 × 18 in ($300) and are on the <a href="/kesubahs">Kesubahs</a> page. All prices are in US dollars. <a href="/prints" data-hero-tab="prints">See the prints</a>.</p>
           </details>
           <details>
             <summary>Where do prints ship, and what does shipping cost?</summary>
-            <p>Prints ship to the United States and Canada, and shipping is free. You enter your shipping address at checkout.</p>
+            <p>Prints ship to the United States and Canada, and shipping is included in the price. You enter your shipping address at checkout.</p>
           </details>
           <details>
             <summary>Can I order more than one print?</summary>
             <p>Yes. Choose a quantity (up to 5 copies) in the order window. To order two different portraits, check out once for each.</p>
           </details>
           <details>
-            <summary>Can I get a kesubah with our own names or colors?</summary>
-            <p>The kesubah prints are of the kesubahs as pictured. For your own names, wording, colors or landscape, <a href="/commissions" data-open-commission-form>request a custom kesubah</a> and Avigail will paint one for you.</p>
+            <summary>How do names and dates go on a kesubah?</summary>
+            <p>Kesubah prints come as pictured, with space for your names and dates to be added later. For your own colors or landscape, <a href="/commissions" data-open-commission-form>request a custom kesubah</a> and Avigail will paint one for you. Commissions take 3–4 weeks, depending on size.</p>
           </details>
           <details>
             <summary>Does Avigail accept commissions?</summary>
@@ -1558,7 +1558,7 @@
     const CONTACT = {
       bookingUrl: null,        // Calendly / Cal.com link; when null, "Book a call" opens the call-request form
       replyDays: null,         // e.g. 2 → "within 2 days"
-      commissionPricing: null, // e.g. 'Kesubahs from $X · Oil portraits from $Y · usually N–M weeks'
+      commissionPricing: 'Commissions take 3–4 weeks, depending on size.', // timing / price line shown above the form
     };
     const tabs = document.querySelectorAll('.collection-tab');
     const cards = document.querySelectorAll('.art-card');
@@ -1567,7 +1567,7 @@
         const filter = tab.dataset.filter;
         tabs.forEach(item => item.setAttribute('aria-pressed', String(item === tab)));
         cards.forEach(card => {
-          card.hidden = filter === 'prints' ? !card.querySelector('.buy-now:not([data-product="original"])') : card.dataset.category !== filter;
+          card.hidden = filter === 'prints' ? !card.querySelector('.buy-now:not([data-product])') : card.dataset.category !== filter;
         });
         const showCommissions = filter === 'commission-info';
         document.getElementById('commissions').hidden = !showCommissions;
@@ -1997,7 +1997,7 @@
         kicker: 'Kesubah print',
         heading: 'Begin your home with beauty.',
         medium: 'Watercolor and ink',
-        pitch: 'A fine-art print of Avigail’s hand-painted kesubah, with the words of the kesubah set within her original watercolor artwork. Checkout is secure and your shipping details are collected on the next step.',
+        pitch: 'A fine-art print of Avigail’s hand-painted kesubah, with the words of the kesubah set within her original watercolor artwork and space for your names and dates to be added later. Checkout is secure and your shipping details are collected on the next step.',
         sizes: [['12 × 18', 300]],
       },
       original: {
@@ -2015,7 +2015,7 @@
       shipsTo: 'US & Canada',
       shippingUsd: 0,          // what the buyer pays for shipping (0 = free)
       deliveryDays: null,      // e.g. { min: 7, max: 12 } business days
-      printDetails: null,      // e.g. 'Archival giclée on cotton rag paper · unframed'
+      printDetails: 'Unframed',  // one line about the physical print (framing may be offered later)
       maxQty: 5,
     };
     const printSize = document.getElementById('print-size');
@@ -2040,10 +2040,10 @@
       const total = item + SHOP.shippingUsd;
       const rows = [
         `<div class="row"><span>${isOriginal ? 'Original painting' : `${size} in print`}${qty > 1 ? ` × ${qty}` : ''}</span><span>${usd(item)}</span></div>`,
-        `<div class="row"><span>Shipping to ${SHOP.shipsTo}</span><span>${SHOP.shippingUsd ? usd(SHOP.shippingUsd) : 'Free'}</span></div>`,
+        `<div class="row"><span>Shipping to ${SHOP.shipsTo}</span><span>${SHOP.shippingUsd ? usd(SHOP.shippingUsd) : 'Included'}</span></div>`,
         SHOP.deliveryDays ? `<div class="row muted"><span>Delivery</span><span>${SHOP.deliveryDays.min}–${SHOP.deliveryDays.max} business days</span></div>` : '',
         SHOP.printDetails && !isOriginal ? `<div class="row muted"><span>${SHOP.printDetails}</span></div>` : '',
-        selectedProduct === 'kesubah' ? '<div class="row muted"><span>Print of this kesubah exactly as pictured. Want your own names or wording? <a href="/commissions" data-open-commission-form>Commission a custom kesubah</a>.</span></div>' : '',
+        selectedProduct === 'kesubah' ? '<div class="row muted"><span>Printed as pictured, with space for your names and dates to be added later. Want your own design? <a href="/commissions" data-open-commission-form>Commission a custom kesubah</a>.</span></div>' : '',
         `<div class="row total"><span>Total</span><span>${usd(total)}</span></div>`,
       ];
       orderSummary.innerHTML = rows.join('');

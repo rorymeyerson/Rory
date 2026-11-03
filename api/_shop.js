@@ -11,7 +11,7 @@ module.exports = {
   DELIVERY_DAYS: null,
   // One line describing the physical print, e.g. 'Archival giclée on cotton rag paper · unframed'.
   // null = not shown.
-  PRINT_DETAILS: null,
+  PRINT_DETAILS: 'Unframed',
   // Most copies of one print allowed in a single order.
   MAX_QTY: 5,
 };

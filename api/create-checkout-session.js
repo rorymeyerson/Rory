@@ -98,7 +98,7 @@ module.exports = async (req, res) => {
         {
           shipping_rate_data: {
             type: 'fixed_amount',
-            display_name: SHOP.SHIPPING_USD ? 'Shipping (US & Canada)' : 'Free shipping (US & Canada)',
+            display_name: SHOP.SHIPPING_USD ? 'Shipping (US & Canada)' : 'Shipping included (US & Canada)',
             fixed_amount: { amount: SHOP.SHIPPING_USD * 100, currency: 'usd' },
             ...(delivery && { delivery_estimate: delivery }),
           },
