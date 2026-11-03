@@ -1075,6 +1075,41 @@
       .print-pitch { display: none; }
       .print-panel h2 { font-size: 1.9rem; }
     }
+
+    /* Order summary in the print window */
+    .qty-field { display: flex; align-items: center; justify-content: space-between; }
+    .qty-label { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .qty { display: inline-flex; align-items: center; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; }
+    .qty button { width: 42px; height: 40px; border: 0; background: none; font-size: 1.25rem; color: var(--ink); cursor: pointer; }
+    .qty button:disabled { color: var(--line); cursor: default; }
+    .qty output { min-width: 28px; text-align: center; font-weight: 600; }
+    .order-summary { grid-column: 1 / -1; background: var(--paper); border-radius: 12px; padding: 12px 14px; font-size: .9rem; line-height: 1.5; color: var(--ink); }
+    .order-summary .row { display: flex; justify-content: space-between; gap: 12px; }
+    .order-summary .muted { color: var(--muted); }
+    .order-summary .total { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; font-weight: 600; font-size: 1rem; }
+    .order-summary .hint { color: var(--muted); }
+
+    /* Commission form first, with "what happens next" and call option */
+    #cm-form { scroll-margin-top: calc(var(--nav-h) + 12px); }
+    .commission-panel > .cm-form-wrap { margin-top: 0; margin-bottom: clamp(48px, 7vw, 90px); }
+    .cm-next { margin: 4px 0 16px; padding-left: 20px; color: var(--muted); line-height: 1.55; font-size: .95rem; }
+    .cm-next li { margin-bottom: 6px; } .cm-next strong { color: var(--ink); font-weight: 600; }
+    .cm-pricing { background: var(--paper); border-radius: 12px; padding: 10px 14px; font-size: .92rem; line-height: 1.5; color: var(--ink); }
+    .cm-alt { font-size: .9rem; color: var(--muted); }
+    .cm-form .opt { text-transform: none; letter-spacing: 0; font-weight: 400; }
+    .type-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cm-form .call-only { display: none; }
+    .cm-form.is-call .call-only { display: grid; }
+    .cm-form.is-call .commission-only { display: none; }
+    @media (max-width: 620px) {
+      .cm-next { font-size: .9rem; }
+      .type-chips button { padding: 12px 4px; font-size: .88rem; }
+    }
+
+    .footer-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 22px 0 6px; }
+    .footer-ctas .cta { border-radius: 999px; padding: 14px 24px; align-self: auto; }
+    .footer-ctas .cta-primary { background: var(--wine); color: #fff; }
+    .footer-ctas .cta:not(.cta-primary) { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
   </style>
   <script type="application/ld+json">
   {
@@ -1114,7 +1149,7 @@
         <a href="/kesubahs" data-open-tab="kesubahs">Kesubahs</a>
         <a href="/prints" data-open-tab="prints">Prints</a>
         <a href="/commissions" data-open-tab="commission-info">Commission</a>
-        <a class="nav-cta" href="#contact">Contact</a>
+        <a class="nav-cta" href="/commissions" data-book-call>Book a call</a>
       </nav>
     </div>
   </header>
@@ -1244,7 +1279,7 @@
             <h3>River in the Valley</h3>
             <p>The words of the kesubah rest within a gentle landscape of hills, trees, and flowing water.</p>
             <span class="medium">Watercolor and ink</span>
-            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -1256,7 +1291,7 @@
             <h3>River Rocks</h3>
             <p>The words of the kesubah are framed by layered mountain peaks, green valleys, and clear flowing water.</p>
             <span class="medium">Watercolor and ink</span>
-            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -1268,7 +1303,7 @@
             <h3>Canopy of Trees</h3>
             <p>Watercolor branches and abundant greenery encircle the words of the kesubah.</p>
             <span class="medium">Watercolor and ink</span>
-            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy Kesubah</button></div>
+            <div class="buy-row"><button class="buy-now" type="button" data-product="kesubah">Buy print</button></div>
           </figcaption>
         </figure>
 
@@ -1340,6 +1375,44 @@
       </div>
 
       <div class="commission-panel" id="commissions" hidden>
+        <div class="cm-form-wrap" id="cm-form">
+          <aside>
+            <p class="cm-kicker">Request a commission or a call</p>
+            <h3 class="cm-heading">Let's create something meaningful.</h3>
+            <p class="cm-pricing" id="cm-pricing" hidden></p>
+            <ol class="cm-next">
+              <li><strong>You send this form</strong> with your idea and any photos.</li>
+              <li><strong>Avigail reads it herself</strong> and gets back to you<span id="cm-reply-time"></span> to talk through size, timeline and price.</li>
+              <li><strong>She sketches your piece</strong> for your approval before she starts painting.</li>
+            </ol>
+            <p class="cm-alt">Prefer to talk now? Call or WhatsApp <a href="tel:+18483736066">+1 848 373 6066</a>, or email <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a>.</p>
+          </aside>
+          <form class="cm-form" id="commission-form">
+            <div class="form-field full"><label for="cm-type" id="cm-type-label">What would you like?</label>
+              <select id="cm-type" name="type" class="sr-select" required>
+                <option value="" selected disabled>Choose one</option>
+                <option>Custom kesubah</option><option>Oil painting</option><option>Phone call</option>
+              </select>
+              <div class="chip-group type-chips" role="group" aria-labelledby="cm-type-label">
+                <button type="button" data-value="Custom kesubah" aria-pressed="false">Kesubah</button>
+                <button type="button" data-value="Oil painting" aria-pressed="false">Oil painting</button>
+                <button type="button" data-value="Phone call" aria-pressed="false">Just a call</button>
+              </div></div>
+            <div class="form-field"><label for="cm-name">Name</label><input id="cm-name" name="name" autocomplete="name" required /></div>
+            <div class="form-field"><label for="cm-email">Email</label><input id="cm-email" name="email" type="email" autocomplete="email" required /></div>
+            <div class="form-field"><label for="cm-phone">Phone <span class="opt" id="cm-phone-opt">(optional)</span></label><input id="cm-phone" name="phone" type="tel" autocomplete="tel" /></div>
+            <div class="form-field call-only"><label for="cm-besttime">Best time to call <span class="opt">(your time zone)</span></label><input id="cm-besttime" name="bestTime" placeholder="e.g. weekday evenings after 7pm EST" /></div>
+            <div class="form-field commission-only"><label for="cm-size">Size <span class="opt">(optional)</span></label><input id="cm-size" name="size" placeholder="e.g. 16 × 20 in, or not sure yet" /></div>
+            <div class="form-field commission-only"><label for="cm-budget">Budget <span class="opt">(optional)</span></label><input id="cm-budget" name="budget" placeholder="e.g. $500–800" /></div>
+            <div class="form-field commission-only"><label for="cm-deadline">Needed by <span class="opt">(optional)</span></label><input id="cm-deadline" name="deadline" type="date" /></div>
+            <div class="form-field full commission-only"><label for="cm-photos">Reference photos <span class="opt">(optional)</span></label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /><small class="cm-hint">Up to 5 photos.</small></div>
+            <div class="form-field full"><label for="cm-details" id="cm-details-label">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, colors, a wedding date, anything meaningful…"></textarea></div>
+            <div class="cm-hp" aria-hidden="true"><label for="cm-website">Website</label><input id="cm-website" name="website" tabindex="-1" autocomplete="off" /></div>
+            <button class="cs-btn" type="submit" id="cm-submit">Send request</button>
+            <p class="payment-note" id="cm-note" hidden></p>
+          </form>
+        </div>
+
         <div class="cs-banner">
           <div class="cs-banner-inner">
             <h3>Commission Artwork</h3>
@@ -1370,34 +1443,6 @@
             <button class="cs-btn" type="button" data-type="Oil painting">Let's get started</button>
           </div>
         </div>
-
-        <div class="cm-form-wrap" id="cm-form">
-          <aside>
-            <p class="cm-kicker">Request a commission</p>
-            <h3 class="cm-heading">Let's create something meaningful.</h3>
-            <p>Tell Avigail what you have in mind. She personally reviews every request and will reach out to talk through your vision, size, and timeline.</p>
-            <p>Prefer email? Write to <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a>.</p>
-          </aside>
-          <form class="cm-form" id="commission-form">
-            <div class="form-field full"><label for="cm-type" id="cm-type-label">What would you like?</label>
-              <select id="cm-type" name="type" class="sr-select" required>
-                <option value="" selected disabled>Choose one</option>
-                <option>Custom kesubah</option><option>Oil painting</option>
-              </select>
-              <div class="chip-group type-chips" role="group" aria-labelledby="cm-type-label">
-                <button type="button" data-value="Custom kesubah" aria-pressed="false">Custom kesubah</button>
-                <button type="button" data-value="Oil painting" aria-pressed="false">Oil painting</button>
-              </div></div>
-            <div class="form-field"><label for="cm-name">Name</label><input id="cm-name" name="name" required /></div>
-            <div class="form-field"><label for="cm-email">Email</label><input id="cm-email" name="email" type="email" required /></div>
-            <div class="form-field"><label for="cm-phone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></label><input id="cm-phone" name="phone" type="tel" /></div>
-            <div class="form-field full"><label for="cm-photos">Reference photos</label><input id="cm-photos" name="photos" type="file" accept="image/*" multiple /><small class="cm-hint">Up to 5 photos.</small></div>
-            <div class="form-field full"><label for="cm-details">Tell us about your idea</label><textarea id="cm-details" name="details" placeholder="Who or what should be painted, preferred size, colors, anything meaningful…"></textarea></div>
-            <div class="cm-hp" aria-hidden="true"><label for="cm-website">Website</label><input id="cm-website" name="website" tabindex="-1" autocomplete="off" /></div>
-            <button class="cs-btn" type="submit">Send request</button>
-            <p class="payment-note" id="cm-note" hidden></p>
-          </form>
-        </div>
       </div>
     </section>
 
@@ -1408,16 +1453,29 @@
           <h2 class="section-title" id="faq-title">Frequently asked</h2>
         </div>
         <div class="faq-list">
+          <!-- Keep these answers in step with PRODUCTS / SHOP in the script and api/_shop.js -->
+          <details>
+            <summary>What print sizes and prices are there?</summary>
+            <p>Watercolor portrait prints come in four sizes: 10 × 14 in ($50), 14 × 20 in ($80), 18 × 26 in ($140) and 26 × 38 in ($220). Kesubah prints are 12 × 18 in ($300) and show the kesubah exactly as pictured. All prices are in US dollars. <a href="/prints" data-hero-tab="prints">See the prints</a>.</p>
+          </details>
+          <details>
+            <summary>Where do prints ship, and what does shipping cost?</summary>
+            <p>Prints ship to the United States and Canada, and shipping is free. You enter your shipping address at checkout.</p>
+          </details>
+          <details>
+            <summary>Can I order more than one print?</summary>
+            <p>Yes. Choose a quantity (up to 5 copies) in the order window. To order two different portraits, check out once for each.</p>
+          </details>
+          <details>
+            <summary>Can I get a kesubah with our own names or colors?</summary>
+            <p>The kesubah prints are of the kesubahs as pictured. For your own names, wording, colors or landscape, <a href="/commissions" data-open-commission-form>request a custom kesubah</a> and Avigail will paint one for you.</p>
+          </details>
           <details>
             <summary>Does Avigail accept commissions?</summary>
-            <p>Yes — Avigail absolutely accepts commissions and creates custom artwork tailored to her clients. If you are interested in commissioning a piece, visit the <a href="#commissions" data-open-commissions>Commissions page</a> to see examples and send a request, or <a href="#cm-form" data-open-commission-form>get in touch</a> to discuss your vision and project.</p>
+            <p>Yes: custom kesubahs and oil paintings, from portraits of parents and grandparents to places that matter to you. <a href="/commissions" data-open-commission-form>Send a request</a> with your idea and photos, or <a href="/commissions" data-book-call>book a call</a> to talk it through first.</p>
           </details>
           <details>
-            <summary>Are prints available?</summary>
-            <p>Yes. Prints are available for the Watercolor Portraits collection in four sizes. Select a portrait to view pricing and request an order.</p>
-          </details>
-          <details>
-            <summary>Can artwork be shipped?</summary>
+            <summary>Can original paintings be shipped?</summary>
             <p>Yes. Original artwork can be shipped.</p>
           </details>
         </div>
@@ -1428,7 +1486,11 @@
   <footer id="contact">
     <p class="section-label">Commissions & inquiries</p>
     <h2>Bring meaningful art into your space.</h2>
-    <p class="contact-note">For commissions, original artwork, shipping, or other inquiries, email <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> or call <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
+    <div class="footer-ctas">
+      <a class="cta cta-primary" href="/commissions" data-book-call>Book a call</a>
+      <a class="cta" href="/commissions" data-open-commission-form>Request a commission</a>
+    </div>
+    <p class="contact-note">Or reach Avigail directly: email <a href="mailto:meyersonavigail@gmail.com">meyersonavigail@gmail.com</a> or call / WhatsApp <a href="tel:+18483736066">+1 848 373 6066</a>.</p>
     <div class="footer-line" aria-hidden="true"></div>
     <p class="footer-legal">&copy; <span id="copyright-year">2026</span> Avigail Meyerson &middot; Art by Avigail. All artwork shown on this site is the original work of Avigail Meyerson and is protected by copyright. No image, artwork, or content from this site may be reproduced, downloaded, distributed, or used for personal or commercial purposes without her prior written permission.</p>
     <script>try{document.getElementById('copyright-year').textContent=new Date().getFullYear();}catch(e){}</script>
@@ -1475,8 +1537,17 @@
             <select id="print-size" name="size" required></select>
             <div class="chip-group size-chips" role="group" aria-labelledby="print-size-label" hidden></div>
           </div>
+          <div class="form-field full qty-field" id="qty-field">
+            <span class="qty-label" id="qty-label">Quantity</span>
+            <div class="qty" role="group" aria-labelledby="qty-label">
+              <button type="button" data-step="-1" aria-label="One fewer">−</button>
+              <output id="print-qty" aria-live="polite">1</output>
+              <button type="button" data-step="1" aria-label="One more">+</button>
+            </div>
+          </div>
+          <div class="order-summary" id="order-summary" aria-live="polite"></div>
           <button class="order-submit" type="submit">Continue to secure checkout</button>
-          <p class="payment-note">You'll pay by card on the next screen (Stripe Checkout). Shipping address is collected there.</p>
+          <p class="payment-note">Next you'll enter your card and shipping address on Stripe's secure checkout. All prices are in US dollars.</p>
           <p class="payment-note" id="order-error" hidden></p>
         </form>
       </div>
@@ -1496,6 +1567,12 @@
   </dialog>
 
   <script>
+    // Contact facts. Anything left null is not shown — never put a guess here.
+    const CONTACT = {
+      bookingUrl: null,        // Calendly / Cal.com link; when null, "Book a call" opens the call-request form
+      replyDays: null,         // e.g. 2 → "within 2 days"
+      commissionPricing: null, // e.g. 'Kesubahs from $X · Oil portraits from $Y · usually N–M weeks'
+    };
     const tabs = document.querySelectorAll('.collection-tab');
     const cards = document.querySelectorAll('.art-card');
     tabs.forEach(tab => {
@@ -1774,13 +1851,32 @@
     // Commission type: two tap targets that drive the (visually hidden) select
     const cmType = document.getElementById('cm-type');
     const typeChips = document.querySelector('.type-chips');
+    const cmForm = document.getElementById('commission-form');
     function setCommissionType(value) {
       cmType.value = value;
+      const call = value === 'Phone call';
+      cmForm.classList.toggle('is-call', call);
+      document.getElementById('cm-phone').required = call;
+      document.getElementById('cm-phone-opt').hidden = call;
+      document.getElementById('cm-details-label').textContent = call ? 'What would you like to talk about? (optional)' : 'Tell us about your idea';
+      document.getElementById('cm-submit').textContent = call ? 'Request a call' : 'Send request';
       typeChips.classList.remove('invalid');
       typeChips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.value === value)));
     }
     typeChips.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setCommissionType(b.dataset.value)));
     cmType.addEventListener('change', () => setCommissionType(cmType.value));
+    if (CONTACT.commissionPricing) { const el = document.getElementById('cm-pricing'); el.textContent = CONTACT.commissionPricing; el.hidden = false; }
+    if (CONTACT.replyDays) document.getElementById('cm-reply-time').textContent = ` within ${CONTACT.replyDays} day${CONTACT.replyDays > 1 ? 's' : ''}`;
+    // "Book a call": the scheduling page when there is one, otherwise the call-request form
+    document.querySelectorAll('[data-book-call]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      if (CONTACT.bookingUrl) { window.open(CONTACT.bookingUrl, '_blank', 'noopener'); return; }
+      const tab = document.querySelector('.collection-tab[data-filter="commission-info"]');
+      if (tab) tab.click();
+      setCommissionType('Phone call');
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      try { history.replaceState(null, '', '/commissions#call'); } catch (e) {}
+    }));
     cmType.addEventListener('invalid', () => { typeChips.classList.add('invalid'); typeChips.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
     document.querySelectorAll('.cm-type button, .cs-btn[data-type]').forEach(btn => btn.addEventListener('click', () => {
       setCommissionType(btn.dataset.type);
@@ -1822,7 +1918,9 @@
           `Name: ${get('cm-name')}`,
           `Email: ${get('cm-email')}`,
           `Phone: ${get('cm-phone') || '-'}`,
-          `Commission type: ${get('cm-type')}`,
+          `Request: ${get('cm-type')}`,
+          ...[['Best time to call', 'cm-besttime'], ['Size', 'cm-size'], ['Budget', 'cm-budget'], ['Needed by', 'cm-deadline']]
+            .filter(([, id]) => get(id)).map(([k, id]) => `${k}: ${get(id)}`),
           '',
           get('cm-details'),
           '',
@@ -1856,6 +1954,10 @@
             name: get('cm-name'),
             email: get('cm-email'),
             phone: get('cm-phone'),
+            size: get('cm-size'),
+            budget: get('cm-budget'),
+            deadline: get('cm-deadline'),
+            bestTime: get('cm-besttime'),
             type: get('cm-type'),
             details: get('cm-details'),
             website: get('cm-website'),
@@ -1920,14 +2022,69 @@
         sizes: [['Original', 1800]],
       },
     };
+    // Shop facts shown in the order window. Keep in step with api/_shop.js.
+    // Anything left null is not shown — never put a guess here.
+    const SHOP = {
+      shipsTo: 'US & Canada',
+      shippingUsd: 0,          // what the buyer pays for shipping (0 = free)
+      deliveryDays: null,      // e.g. { min: 7, max: 12 } business days
+      printDetails: null,      // e.g. 'Archival giclée on cotton rag paper · unframed'
+      maxQty: 5,
+    };
     const printSize = document.getElementById('print-size');
     const sizeChips = document.querySelector('.size-chips');
+    const qtyField = document.getElementById('qty-field');
+    const qtyOut = document.getElementById('print-qty');
+    const orderSummary = document.getElementById('order-summary');
+    let qty = 1;
+    const usd = n => '$' + n.toLocaleString('en-US');
+    function renderSummary() {
+      const [size, price] = (printSize.value || '').split('|');
+      qtyOut.textContent = qty;
+      qtyField.querySelector('[data-step="-1"]').disabled = qty <= 1;
+      qtyField.querySelector('[data-step="1"]').disabled = qty >= SHOP.maxQty;
+      if (!size) {
+        orderSummary.innerHTML = '<span class="hint">Choose a size to see your total.</span>';
+        orderSubmit.textContent = 'Continue to secure checkout';
+        return;
+      }
+      const isOriginal = selectedProduct === 'original';
+      const item = Number(price) * qty;
+      const total = item + SHOP.shippingUsd;
+      const rows = [
+        `<div class="row"><span>${isOriginal ? 'Original painting' : `${size} in print`}${qty > 1 ? ` × ${qty}` : ''}</span><span>${usd(item)}</span></div>`,
+        `<div class="row"><span>Shipping to ${SHOP.shipsTo}</span><span>${SHOP.shippingUsd ? usd(SHOP.shippingUsd) : 'Free'}</span></div>`,
+        SHOP.deliveryDays ? `<div class="row muted"><span>Delivery</span><span>${SHOP.deliveryDays.min}–${SHOP.deliveryDays.max} business days</span></div>` : '',
+        SHOP.printDetails && !isOriginal ? `<div class="row muted"><span>${SHOP.printDetails}</span></div>` : '',
+        selectedProduct === 'kesubah' ? '<div class="row muted"><span>Print of this kesubah exactly as pictured. Want your own names or wording? <a href="/commissions" data-open-commission-form>Commission a custom kesubah</a>.</span></div>' : '',
+        `<div class="row total"><span>Total</span><span>${usd(total)}</span></div>`,
+      ];
+      orderSummary.innerHTML = rows.join('');
+      orderSubmit.textContent = `Pay ${usd(total)} securely`;
+    }
+    qtyField.addEventListener('click', e => {
+      const b = e.target.closest('[data-step]'); if (!b) return;
+      qty = Math.min(SHOP.maxQty, Math.max(1, qty + Number(b.dataset.step)));
+      renderSummary();
+    });
+    printSize.addEventListener('change', renderSummary);
+    // "Commission a custom kesubah" link inside the order summary
+    orderSummary.addEventListener('click', e => {
+      const link = e.target.closest('[data-open-commission-form]'); if (!link) return;
+      e.preventDefault();
+      printDialog.close();
+      const tab = document.querySelector('.collection-tab[data-filter="commission-info"]');
+      if (tab) tab.click();
+      setCommissionType('Custom kesubah');
+      document.getElementById('cm-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     let selectedProduct = 'watercolor';
     sizeChips.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
       printSize.value = b.dataset.value;
       sizeChips.classList.remove('invalid');
       sizeChips.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      renderSummary();
     });
     printSize.addEventListener('invalid', () => sizeChips.classList.add('invalid'));
 
@@ -1936,7 +2093,7 @@
       const config = PRODUCTS[btn.dataset.product || 'watercolor'];
       if (!config) return;
       const low = Math.min(...config.sizes.map(([, price]) => price));
-      const label = (config.sizes.length > 1 ? 'From $' : '$') + low.toLocaleString('en-US');
+      const label = (config.sizes.length > 1 ? 'From $' : '$') + low.toLocaleString('en-US') + (config.sizes.length === 1 ? ` · ${config.sizes[0][0]} print` : '');
       btn.insertAdjacentHTML('beforebegin', `<span class="price">${label}</span>`);
       btn.parentElement.classList.add('has-price');
     });
@@ -1971,6 +2128,9 @@
       orderError.hidden = true;
       orderSubmit.disabled = false;
       orderSubmit.textContent = 'Continue to secure checkout';
+      qty = 1;
+      qtyField.hidden = product === 'original';
+      renderSummary();
       printDialog.showModal();
     }
 
@@ -2098,7 +2258,7 @@
         const response = await fetch('/api/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ artwork: selectedArtwork, size, amount, image: new URL(selectedImage, window.location.href).href, product: selectedProduct }),
+          body: JSON.stringify({ artwork: selectedArtwork, size, amount, quantity: qty, image: new URL(selectedImage, window.location.href).href, product: selectedProduct }),
         });
         const data = await response.json();
         if (data.sold) markOriginalSold(selectedArtwork);
@@ -2108,7 +2268,7 @@
         orderError.textContent = err.message || 'Something went wrong starting checkout. Please try again.';
         orderError.hidden = false;
         orderSubmit.disabled = false;
-        orderSubmit.textContent = 'Continue to secure checkout';
+        renderSummary();
       }
     });
 

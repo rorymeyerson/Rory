@@ -42,6 +42,11 @@ module.exports = async (req, res) => {
   const phone = clean(body.phone, 60);
   const type = clean(body.type, 120);
   const details = clean(body.details, 5000);
+  const size = clean(body.size, 120);
+  const budget = clean(body.budget, 120);
+  const deadline = clean(body.deadline, 120);
+  const bestTime = clean(body.bestTime, 200);
+  const isCall = type === 'Phone call';
 
   if (!name || !type || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     res.status(400).json({ error: 'Please fill in your name, a valid email, and the commission type.' });
@@ -67,14 +72,18 @@ module.exports = async (req, res) => {
     ['Name', name],
     ['Email', email],
     ['Phone', phone || '-'],
-    ['Commission type', type],
+    ['Request', type],
+    ...(bestTime ? [['Best time to call', bestTime]] : []),
+    ...(size ? [['Size', size]] : []),
+    ...(budget ? [['Budget', budget]] : []),
+    ...(deadline ? [['Needed by', deadline]] : []),
     ['Reference photos', attachments.length ? `${attachments.length} attached` : 'none'],
   ];
 
   const text = [...lines.map(([k, v]) => `${k}: ${v}`), '', 'Their idea:', details || '(no details given)', '', 'Reply to this email to answer them directly.'].join('\n');
   const html = `
     <div style="font-family:Georgia,serif;color:#271d19;max-width:600px">
-      <h2 style="font-weight:500;margin:0 0 16px">New commission request</h2>
+      <h2 style="font-weight:500;margin:0 0 16px">${isCall ? 'New call request' : 'New commission request'}</h2>
       <table style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px">
         ${lines.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;color:#6b5c54">${k}</td><td style="padding:4px 0"><strong>${escapeHtml(v)}</strong></td></tr>`).join('')}
       </table>
@@ -86,7 +95,7 @@ module.exports = async (req, res) => {
   const message = {
     to: [TO],
     reply_to: email,
-    subject: `Commission request: ${type} from ${name}`,
+    subject: isCall ? `Call request from ${name}` : `Commission request: ${type} from ${name}`,
     text,
     html,
     attachments: attachments.length ? attachments : undefined,

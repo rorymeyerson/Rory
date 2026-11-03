@@ -92,10 +92,12 @@ module.exports = async (req, res) => {
     const product = meta.product || (meta.original ? 'original' : '');
     const artwork = meta.artwork || meta.original || '(unknown — see Stripe)';
     const size = meta.size || '';
+    const qty = Math.max(1, Math.trunc(Number(meta.qty) || 1));
     const ship = shippingOf(session);
     const rows = [
       ['Artwork', artwork],
       ['Item', product === 'original' ? 'Original painting' : product === 'kesubah' ? `Kesubah print, ${size}` : `Print, ${size}`],
+      ['Quantity', String(qty)],
       ['Paid', money(session.amount_total || 0)],
       ['Buyer email', (session.customer_details || {}).email || '-'],
       ['Ship to', addressLines(ship)],
@@ -124,6 +126,7 @@ module.exports = async (req, res) => {
         recipient: recipientFrom(ship),
         sku: skuFor(artwork, size, product),
         title: `${artwork} ${size}`,
+        qty,
       });
       await stripe.paymentIntents.update(pi.id, {
         metadata: { finerworks_order: orderId, finerworks_test: String(testMode), finerworks_status: 'handled' },
