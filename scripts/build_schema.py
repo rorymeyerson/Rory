@@ -137,7 +137,7 @@ def business():
             "contactType": "commissions and orders",
             "email": EMAIL,
             "telephone": PHONE,
-            "availableLanguage": ["English", "Hebrew"],
+            "availableLanguage": ["English"],
         },
         "knowsAbout": ["Jewish art", "Judaica", "Gedolim portraits", "Kesubahs", "Ketubah art"],
     }
