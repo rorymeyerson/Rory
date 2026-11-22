@@ -12,6 +12,10 @@ Run this after every change to index.html:
 import html
 import pathlib
 import re
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import build_schema  # noqa: E402  (structured data for Google / AI answer engines)
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://avigailmeyerson.com"
@@ -103,6 +107,7 @@ def set_meta(doc, page):
 
 def build(page, source):
     doc = set_meta(source, page)
+    doc = build_schema.apply(doc, page["slug"], page["title"], page["description"])
 
     # Replace the homepage opening with this page's heading and introduction
     doc, _hero = cut_section(doc, '    <section class="hero"')
@@ -148,7 +153,12 @@ def write_sitemap(today):
 
 if __name__ == "__main__":
     import datetime
-    source = (ROOT / "index.html").read_text()
+    # Refresh the homepage's structured data first, then build the section pages from it
+    index = ROOT / "index.html"
+    source = index.read_text()
+    source = build_schema.apply(source, None, *build_schema.page_meta(source))
+    index.write_text(source)
+    print("updated index.html structured data")
     for page in PAGES:
         print("built", build(page, source).name)
     write_sitemap(datetime.date.today().isoformat())
