@@ -9,6 +9,7 @@
 
 // Titles must match data-title on the painting's card in index.html. Price in USD.
 const ORIGINALS = {
+  'Rav Chaim Kanievsky': 1800,
   'Stories of Our Mountain': 1800,
 };
 
