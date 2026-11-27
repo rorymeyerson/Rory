@@ -60,7 +60,7 @@ PAGES = [
         "description": "Fine-art prints of Avigail Meyerson's watercolor portraits in four sizes from $50, with free shipping to the US and Canada on orders of $100 or more.",
         "kicker": "Prints",
         "h1": "Fine-Art Prints",
-        "lede": "Unframed prints of Avigail's watercolor portraits in four sizes, from $50. Free shipping to the US and Canada on orders of $100 or more; $10 under $100. Kesubah prints are on the Kesubahs page.",
+        "lede": "Unframed prints of Avigail's watercolor portraits in four sizes, from $50. Free shipping to the US and Canada on orders of $100 or more.",
         "first": "collection",
         "tab": "prints",
         "body_class": "subpage subpage-collection",
