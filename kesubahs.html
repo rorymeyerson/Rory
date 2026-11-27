@@ -2292,7 +2292,7 @@
       window.history.replaceState({}, '', newUrl);
     }
   </script>
-  <!-- Chanukah sale pop-up (shows once per visit until the sale ends; edit SALE_END below) -->
+  <!-- Chanukah sale pop-up (shows on every page load until the sale ends; edit SALE_END below) -->
   <style>
     .cs-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(39,29,25,.55);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
     .cs-overlay.is-open{opacity:1;visibility:visible}
@@ -2312,7 +2312,8 @@
     .cs-price{display:block;margin:8px 0 4px;font:500 2.1rem/1 "Newsreader",serif}
     .cs-price s{margin-right:8px;font-size:1.2rem;color:var(--muted,#6b5c54);text-decoration-color:#a0522d;text-decoration-thickness:2px}
     .cs-note{display:block;font:400 .9rem/1.35 "DM Sans",sans-serif;color:var(--muted,#6b5c54)}
-    .cs-actions{display:flex;flex-direction:column;gap:10px;align-items:center}
+    .cs-actions{display:flex;flex-direction:column;gap:6px;align-items:center}
+    a.cs-later{display:inline-flex;align-items:center}
     .cs-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 1rem/1 "DM Sans",sans-serif;text-decoration:none;background:var(--ink,#271d19);color:#fff}
     .cs-btn:hover,.cs-btn:focus-visible{background:#3a2c26}
     .cs-later{min-height:44px;border:0;background:transparent;font:500 .95rem/1 "DM Sans",sans-serif;color:var(--muted,#6b5c54);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
@@ -2325,7 +2326,7 @@
       <button class="cs-close" type="button" aria-label="Close" data-cs-close>&times;</button>
       <p class="cs-kicker">Chanukah Sale</p>
       <h2 class="cs-title" id="cs-title">The perfect gift</h2>
-      <p class="cs-sub">Hand-painted portraits of gedolim</p>
+      <p class="cs-sub">Hand-painted portraits of gedolim · Sale ends Friday, December 11</p>
       <div class="cs-art">
         <img src="/assets/chanukah-sale-1.webp" alt="Watercolor portrait of a gadol in a black yarmulke" width="420" height="597" loading="lazy">
         <img src="/assets/chanukah-sale-2.webp" alt="Watercolor portrait of a gadol in a black hat and glasses" width="418" height="600" loading="lazy">
@@ -2346,6 +2347,7 @@
       </div>
       <div class="cs-actions">
         <a class="cs-btn" href="https://wa.me/972533657781?text=Hi%20Avigail%2C%20I%27m%20interested%20in%20the%20Chanukah%20sale!" target="_blank" rel="noopener">Order on WhatsApp</a>
+        <a class="cs-later" href="/chanukah-sale">See the sale details</a>
         <button class="cs-later" type="button" data-cs-close>Continue to the gallery</button>
         <p class="cs-small">Or WhatsApp / SMS +972 53 365 7781 · Limited custom commissions</p>
       </div>
@@ -2353,13 +2355,10 @@
   </div>
   <script>
   (function () {
-    var SALE_END = new Date('2026-12-13T00:00:00+02:00'); // pop-up stops after Chanukah
-    var KEY = 'cs-chanukah-2026-seen';
+    var SALE_END = new Date('2026-12-12T00:00:00+02:00'); // pop-up disappears after Friday, December 11
     var overlay = document.getElementById('cs-overlay');
     if (!overlay) return;
-    var seen = false;
-    try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
-    if (new Date() >= SALE_END || seen || /[?&]order=/.test(location.search)) { overlay.remove(); return; }
+    if (new Date() >= SALE_END || /[?&]order=/.test(location.search)) { overlay.remove(); return; }
     var lastFocus = null;
     function open() {
       lastFocus = document.activeElement;
@@ -2367,7 +2366,6 @@
       overlay.setAttribute('aria-hidden', 'false');
       document.documentElement.style.overflow = 'hidden';
       overlay.querySelector('.cs-btn').focus();
-      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
     }
     function close() {
       overlay.classList.remove('is-open');
