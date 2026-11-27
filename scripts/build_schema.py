@@ -155,10 +155,14 @@ def website():
     }
 
 
-def shipping():
+SHIPPING_USD = 10          # flat shipping under the free-shipping minimum (keep in step with api/_shop.js)
+FREE_SHIPPING_MIN_USD = 100
+
+
+def shipping(price=FREE_SHIPPING_MIN_USD):
     return {
         "@type": "OfferShippingDetails",
-        "shippingRate": {"@type": "MonetaryAmount", "value": 0, "currency": "USD"},
+        "shippingRate": {"@type": "MonetaryAmount", "value": 0 if price >= FREE_SHIPPING_MIN_USD else SHIPPING_USD, "currency": "USD"},
         "shippingDestination": [{"@type": "DefinedRegion", "addressCountry": c} for c in SHIPS_TO],
     }
 
@@ -172,7 +176,7 @@ def offer(price, url, sold=False):
         "itemCondition": "https://schema.org/NewCondition",
         "url": url,
         "seller": {"@id": BUSINESS_ID},
-        "shippingDetails": shipping(),
+        "shippingDetails": shipping(price),
     }
 
 
@@ -209,7 +213,7 @@ def portrait_print(card, sizes):
         "name": f"{card['title']} — Gedolim watercolor portrait print",
         "description": (f"Unframed fine-art print of Avigail Meyerson's original watercolor portrait of "
                         f"{card['title']}. Available in {', '.join(s + ' in' for s in sizes)}. "
-                        "Shipping to the US and Canada is included."),
+                        "Free shipping to the US and Canada on orders of $100 or more; $10 under $100."),
         "image": card["image"],
         "brand": {"@id": BUSINESS_ID},
         "category": "Jewish art prints > Gedolim portraits",
@@ -235,8 +239,8 @@ def kesubah_print(card, sizes):
         "@id": f"{url}#{slugify(card['title'])}",
         "name": f"{card['title']} — kesubah print",
         "description": (f"{card['description']} Fine-art print of Avigail Meyerson's watercolor kesubah, "
-                        f"{size} in, with space for names and dates to be added. Shipping to the US and "
-                        "Canada is included."),
+                        f"{size} in, with space for names and dates to be added. Ships free to the US and "
+                        "Canada."),
         "image": card["image"],
         "brand": {"@id": BUSINESS_ID},
         "category": "Judaica > Kesubahs (ketubahs)",

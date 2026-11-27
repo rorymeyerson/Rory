@@ -1460,7 +1460,7 @@
           </details>
           <details>
             <summary>Where do prints ship, and what does shipping cost?</summary>
-            <p>Prints ship to the United States and Canada, and shipping is included in the price. You enter your shipping address at checkout.</p>
+            <p>Prints ship to the United States and Canada. Shipping is free on orders of $100 or more; under $100, shipping is a flat $10. You enter your shipping address at checkout.</p>
           </details>
           <details>
             <summary>Can I order more than one print?</summary>
@@ -2026,7 +2026,8 @@
     // Anything left null is not shown — never put a guess here.
     const SHOP = {
       shipsTo: 'US & Canada',
-      shippingUsd: 0,          // what the buyer pays for shipping (0 = free)
+      shippingUsd: 10,         // what the buyer pays for shipping on orders under freeShippingMinUsd
+      freeShippingMinUsd: 100, // orders of this much or more (items only) ship free
       deliveryDays: null,      // e.g. { min: 7, max: 12 } business days
       printDetails: 'Unframed',  // one line about the physical print (framing may be offered later)
       maxQty: 5,
@@ -2050,10 +2051,12 @@
       }
       const isOriginal = selectedProduct === 'original';
       const item = Number(price) * qty;
-      const total = item + SHOP.shippingUsd;
+      const ship = item >= SHOP.freeShippingMinUsd ? 0 : SHOP.shippingUsd;
+      const total = item + ship;
       const rows = [
         `<div class="row"><span>${isOriginal ? 'Original painting' : `${size} in print`}${qty > 1 ? ` × ${qty}` : ''}</span><span>${usd(item)}</span></div>`,
-        `<div class="row"><span>Shipping to ${SHOP.shipsTo}</span><span>${SHOP.shippingUsd ? usd(SHOP.shippingUsd) : 'Included'}</span></div>`,
+        `<div class="row"><span>Shipping to ${SHOP.shipsTo}</span><span>${ship ? usd(ship) : 'Free'}</span></div>`,
+        ship ? `<div class="row muted"><span>Add ${usd(SHOP.freeShippingMinUsd - item)} more for free shipping (orders of ${usd(SHOP.freeShippingMinUsd)}+)</span></div>` : '',
         SHOP.deliveryDays ? `<div class="row muted"><span>Delivery</span><span>${SHOP.deliveryDays.min}–${SHOP.deliveryDays.max} business days</span></div>` : '',
         SHOP.printDetails && !isOriginal ? `<div class="row muted"><span>${SHOP.printDetails}</span></div>` : '',
         selectedProduct === 'kesubah' ? '<div class="row muted"><span>Printed as pictured, with space for your names and dates to be added later. Want your own design? <a href="/commissions" data-open-commission-form>Commission a custom kesubah</a>.</span></div>' : '',

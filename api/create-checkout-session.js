@@ -54,6 +54,11 @@ module.exports = async (req, res) => {
     ? { minimum: { unit: 'business_day', value: SHOP.DELIVERY_DAYS.min }, maximum: { unit: 'business_day', value: SHOP.DELIVERY_DAYS.max } }
     : undefined;
 
+  // Flat-rate shipping, free once the items come to FREE_SHIPPING_MIN_USD or more.
+  const subtotal = amount * qty;
+  const freeShipping = SHOP.FREE_SHIPPING_MIN_USD != null && subtotal >= SHOP.FREE_SHIPPING_MIN_USD;
+  const shippingUsd = freeShipping ? 0 : SHOP.SHIPPING_USD;
+
   const origin = req.headers.origin || `https://${req.headers.host}`;
   const imageUrl = typeof image === 'string' && image.startsWith('http') ? image : undefined;
 
@@ -98,8 +103,8 @@ module.exports = async (req, res) => {
         {
           shipping_rate_data: {
             type: 'fixed_amount',
-            display_name: SHOP.SHIPPING_USD ? 'Shipping (US & Canada)' : 'Shipping included (US & Canada)',
-            fixed_amount: { amount: SHOP.SHIPPING_USD * 100, currency: 'usd' },
+            display_name: shippingUsd ? 'Shipping (US & Canada)' : 'Free shipping (US & Canada)',
+            fixed_amount: { amount: shippingUsd * 100, currency: 'usd' },
             ...(delivery && { delivery_estimate: delivery }),
           },
         },

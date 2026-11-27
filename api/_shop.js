@@ -5,8 +5,10 @@
 module.exports = {
   // Countries Stripe will ship to.
   SHIP_COUNTRIES: ['US', 'CA'],
-  // What the buyer pays for shipping, in USD. 0 = free shipping (current behaviour).
-  SHIPPING_USD: 0,
+  // What the buyer pays for shipping, in USD, when the order is under FREE_SHIPPING_MIN_USD.
+  SHIPPING_USD: 10,
+  // Orders of this amount or more (items only, before shipping) ship free. null = never free.
+  FREE_SHIPPING_MIN_USD: 100,
   // Delivery estimate in business days, e.g. { min: 7, max: 12 }. null = not shown.
   DELIVERY_DAYS: null,
   // One line describing the physical print, e.g. 'Archival giclée on cotton rag paper · unframed'.
