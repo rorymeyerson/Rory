@@ -2051,19 +2051,16 @@
       }
       const isOriginal = selectedProduct === 'original';
       const item = Number(price) * qty;
-      const ship = item >= SHOP.freeShippingMinUsd ? 0 : SHOP.shippingUsd;
-      const total = item + ship;
       const rows = [
         `<div class="row"><span>${isOriginal ? 'Original painting' : `${size} in print`}${qty > 1 ? ` × ${qty}` : ''}</span><span>${usd(item)}</span></div>`,
-        `<div class="row"><span>Shipping to ${SHOP.shipsTo}</span><span>${ship ? usd(ship) : 'Free'}</span></div>`,
-        ship ? `<div class="row muted"><span>Add ${usd(SHOP.freeShippingMinUsd - item)} more for free shipping (orders of ${usd(SHOP.freeShippingMinUsd)}+)</span></div>` : '',
+        `<div class="row muted"><span>Free shipping to ${SHOP.shipsTo} on orders of ${usd(SHOP.freeShippingMinUsd)}+</span></div>`,
         SHOP.deliveryDays ? `<div class="row muted"><span>Delivery</span><span>${SHOP.deliveryDays.min}–${SHOP.deliveryDays.max} business days</span></div>` : '',
         SHOP.printDetails && !isOriginal ? `<div class="row muted"><span>${SHOP.printDetails}</span></div>` : '',
         selectedProduct === 'kesubah' ? '<div class="row muted"><span>Printed as pictured, with space for your names and dates to be added later. Want your own design? <a href="/commissions" data-open-commission-form>Commission a custom kesubah</a>.</span></div>' : '',
-        `<div class="row total"><span>Total</span><span>${usd(total)}</span></div>`,
+        `<div class="row total"><span>Subtotal</span><span>${usd(item)}</span></div>`,
       ];
       orderSummary.innerHTML = rows.join('');
-      orderSubmit.textContent = `Pay ${usd(total)} securely`;
+      orderSubmit.textContent = 'Continue to secure checkout';
     }
     qtyField.addEventListener('click', e => {
       const b = e.target.closest('[data-step]'); if (!b) return;
