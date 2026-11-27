@@ -2305,5 +2305,104 @@
       window.history.replaceState({}, '', newUrl);
     }
   </script>
+  <!-- Chanukah sale pop-up (shows once per visit until the sale ends; edit SALE_END below) -->
+  <style>
+    .cs-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(39,29,25,.55);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+    .cs-overlay.is-open{opacity:1;visibility:visible}
+    .cs-card{position:relative;width:min(560px,100%);max-height:calc(100vh - 40px);overflow:auto;background:var(--paper-light,#fbf9f5);color:var(--ink,#271d19);border-radius:6px;box-shadow:0 24px 60px rgba(39,29,25,.35);text-align:center;padding:34px 32px 28px;transform:translateY(14px) scale(.98);transition:transform .4s ease}
+    .cs-overlay.is-open .cs-card{transform:none}
+    .cs-close{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;background:transparent;color:var(--ink,#271d19);font-size:28px;line-height:1;cursor:pointer;border-radius:50%}
+    .cs-close:hover,.cs-close:focus-visible{background:rgba(39,29,25,.07)}
+    .cs-kicker{margin:0;font:600 .78rem/1 "DM Sans",sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--gold,#b88132)}
+    .cs-title{margin:10px 0 4px;font:400 clamp(2.3rem,7vw,3.1rem)/1 "Newsreader",serif}
+    .cs-sub{margin:0;font:italic 400 1.25rem/1.3 "Newsreader",serif;color:var(--muted,#6b5c54)}
+    .cs-art{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0 20px;align-items:center}
+    .cs-art img{display:block;width:100%;height:auto;background:#fff;padding:6px;border:1px solid var(--line,#d7cbbd);box-sizing:border-box}
+    .cs-art img:nth-child(2){transform:translateY(-6px)}
+    .cs-prices{display:grid;grid-template-columns:1fr 1px 1fr;gap:14px;align-items:start;margin:0 0 18px}
+    .cs-prices hr{margin:0;border:0;width:1px;height:100%;background:var(--line,#d7cbbd)}
+    .cs-label{display:block;font:600 .72rem/1 "DM Sans",sans-serif;letter-spacing:.18em;text-transform:uppercase}
+    .cs-price{display:block;margin:8px 0 4px;font:500 2.1rem/1 "Newsreader",serif}
+    .cs-price s{margin-right:8px;font-size:1.2rem;color:var(--muted,#6b5c54);text-decoration-color:#a0522d;text-decoration-thickness:2px}
+    .cs-note{display:block;font:400 .9rem/1.35 "DM Sans",sans-serif;color:var(--muted,#6b5c54)}
+    .cs-actions{display:flex;flex-direction:column;gap:10px;align-items:center}
+    .cs-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:999px;font:600 1rem/1 "DM Sans",sans-serif;text-decoration:none;background:var(--ink,#271d19);color:#fff}
+    .cs-btn:hover,.cs-btn:focus-visible{background:#3a2c26}
+    .cs-later{min-height:44px;border:0;background:transparent;font:500 .95rem/1 "DM Sans",sans-serif;color:var(--muted,#6b5c54);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+    .cs-small{margin:4px 0 0;font:400 .8rem/1.3 "DM Sans",sans-serif;color:var(--muted,#6b5c54)}
+    @media (max-width:480px){.cs-card{padding:30px 18px 22px}.cs-art{gap:8px;margin:18px 0 16px}.cs-price{font-size:1.8rem}}
+    @media (prefers-reduced-motion:reduce){.cs-overlay,.cs-card{transition:none}}
+  </style>
+  <div class="cs-overlay" id="cs-overlay" aria-hidden="true">
+    <div class="cs-card" role="dialog" aria-modal="true" aria-labelledby="cs-title">
+      <button class="cs-close" type="button" aria-label="Close" data-cs-close>&times;</button>
+      <p class="cs-kicker">Chanukah Sale</p>
+      <h2 class="cs-title" id="cs-title">The perfect gift</h2>
+      <p class="cs-sub">Hand-painted portraits of gedolim</p>
+      <div class="cs-art">
+        <img src="/assets/chanukah-sale-1.webp" alt="Watercolor portrait of a gadol in a black yarmulke" width="420" height="597" loading="lazy">
+        <img src="/assets/chanukah-sale-2.webp" alt="Watercolor portrait of a gadol in a black hat and glasses" width="418" height="600" loading="lazy">
+        <img src="/assets/chanukah-sale-3.webp" alt="Watercolor portrait of a gadol learning at a sefer" width="420" height="593" loading="lazy">
+      </div>
+      <div class="cs-prices">
+        <div>
+          <span class="cs-label">Ready-made</span>
+          <span class="cs-price"><s aria-label="was 499 shekels">₪499</s>₪399</span>
+          <span class="cs-note">Take one home this week</span>
+        </div>
+        <hr>
+        <div>
+          <span class="cs-label">Custom portrait</span>
+          <span class="cs-price"><s aria-label="was 599 shekels">₪599</s>₪499</span>
+          <span class="cs-note">Any gadol you choose, ready for Chanukah</span>
+        </div>
+      </div>
+      <div class="cs-actions">
+        <a class="cs-btn" href="https://wa.me/972533657781?text=Hi%20Avigail%2C%20I%27m%20interested%20in%20the%20Chanukah%20sale!" target="_blank" rel="noopener">Order on WhatsApp</a>
+        <button class="cs-later" type="button" data-cs-close>Continue to the gallery</button>
+        <p class="cs-small">Or WhatsApp / SMS +972 53 365 7781 · Limited custom commissions</p>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var SALE_END = new Date('2026-12-13T00:00:00+02:00'); // pop-up stops after Chanukah
+    var KEY = 'cs-chanukah-2026-seen';
+    var overlay = document.getElementById('cs-overlay');
+    if (!overlay) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+    if (new Date() >= SALE_END || seen || /[?&]order=/.test(location.search)) { overlay.remove(); return; }
+    var lastFocus = null;
+    function open() {
+      lastFocus = document.activeElement;
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      overlay.querySelector('.cs-btn').focus();
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    }
+    function close() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay || e.target.closest('[data-cs-close]')) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'Tab') {
+        var f = overlay.querySelectorAll('a[href], button');
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    setTimeout(open, 1500);
+  })();
+  </script>
 </body>
 </html>
