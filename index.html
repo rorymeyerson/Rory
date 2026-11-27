@@ -106,6 +106,9 @@
       border-radius: 999px;
     }
     .nav-links a.nav-cta::after { display: none; }
+    .nav-links a.nav-sale { color: #a0522d; font-weight: 600; display: inline-flex; align-items: center; gap: 7px; }
+    .nav-links a.nav-sale::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #c8892f; flex: none; }
+    .site-nav:not(.scrolled):not(.menu-open) .nav-links a.nav-sale { color: #f3d08a; }
     .nav-links a.nav-cta:hover { background: var(--wine); color: #fff; }
     .nav-toggle {
       display: none;
@@ -1136,6 +1139,7 @@
         <a href="/kesubahs" data-open-tab="kesubahs">Kesubahs</a>
         <a href="/prints" data-open-tab="prints">Prints</a>
         <a href="/commissions" data-open-tab="commission-info">Commission</a>
+        <a class="nav-sale" href="/chanukah-sale" data-chanukah>Chanukah Sale</a>
         <a class="nav-cta" href="/commissions" data-book-call>Book a call</a>
       </nav>
     </div>
@@ -2381,8 +2385,12 @@
   (function () {
     var SALE_END = new Date('2026-12-12T00:00:00+02:00'); // pop-up disappears after Friday, December 11
     var overlay = document.getElementById('cs-overlay');
-    if (!overlay) return;
-    if (new Date() >= SALE_END || /[?&]order=/.test(location.search)) { overlay.remove(); return; }
+    if (!overlay) { if (new Date() >= SALE_END) document.querySelectorAll('[data-chanukah]').forEach(function (el) { el.remove(); }); return; }
+    if (new Date() >= SALE_END) {
+      document.querySelectorAll('[data-chanukah]').forEach(function (el) { el.remove(); });
+      overlay.remove(); return;
+    }
+    if (/[?&]order=/.test(location.search)) { overlay.remove(); return; }
     var lastFocus = null;
     function open() {
       lastFocus = document.activeElement;
