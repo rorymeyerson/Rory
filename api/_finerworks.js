@@ -18,6 +18,7 @@
 // A blank SKU means that print is NOT sent automatically; Gail gets an email
 // with the order details instead, so she can place it by hand.
 const PRINT_SKUS = {
+  'Chafetz Chaim': { '10 × 14': '', '14 × 20': '', '18 × 26': '', '26 × 38': '' },
   'Rebbe of Slonim': { '10 × 14': '', '14 × 20': '', '18 × 26': '', '26 × 38': '' },
   'Rabbi Lopiansky': { '10 × 14': '', '14 × 20': '', '18 × 26': '', '26 × 38': '' },
   'Rabbi Dessler': { '10 × 14': '', '14 × 20': '', '18 × 26': '', '26 × 38': '' },
